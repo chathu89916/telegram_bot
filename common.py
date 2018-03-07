@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+import re
+import dbFunction
+import configuration
+
+def getName(name):
+    if(name.username == None):
+        return name.first_name
+    else:
+        return '@'+name.username
+
+def exceptionHandling(message, bot, types, name):
+    inline = types.InlineKeyboardMarkup()
+    START = types.InlineKeyboardButton(text='START', callback_data='START')
+    inline.row(START)
+    bot.send_message(message.chat.id, text='Agent ' + getName(name) +' Click the START button to Activate the @LKResistanceBot', reply_markup=inline)
+
+def allCheck(text):
+    search = re.findall(r'[@][a][l][l]', text, re.I)
+    if(len(search)>0):
+        return True
+    else:
+        return False
+
+def checkAdmin(bot, chatID, userID):
+    for chat in bot.get_chat_administrators(chatID):
+        if(chat.user.id==userID and chat.user.is_bot==False):
+            return True
+    if(isUserSuperAdmin(userID)):
+        return True
+    return False
+
+def isUserSuperAdmin(userID):
+    for admin in dbFunction.getAdmin():
+        if(admin==str(userID)):
+            return True
+    return False
+
+def mentionedList(groupID, text):
+    mentionedList = []
+    listAT = re.findall(r'[@]\w*\b', text)
+    listAT = list(set(listAT))
+    if(len(listAT)>0):
+        for uname in listAT:
+            username = re.split(r'[@]', uname)[1]
+            userID = dbFunction.getMentionedUser(groupID, username.lower())
+            if userID != '':
+                mentionedList.append(userID)
+    listSUB = re.split('\W+', text)
+    listSUB = list(set(listSUB))
+    if (len(listSUB) > 0):
+        for subname in listSUB:
+            userID = dbFunction.getSubscribeUser(subname.lower())
+            if(len(userID)>0):
+                for uID in userID:
+                    mentionedList.append(uID)
+    mentionedList = list(set(mentionedList))
+    finalMentionedUsers = []
+    for getAllUsers in dbFunction.getAllUsers(groupID):
+        for mentionUsers in mentionedList:
+            if(str(getAllUsers)==str(mentionUsers)):
+                finalMentionedUsers.append(mentionUsers)
+    return finalMentionedUsers
+
+def isBotAdmin(bot, message):
+    for getID in bot.get_chat_administrators(message.chat.id):
+        if(getID.user.id==configuration.botID):
+            if(getID.can_delete_messages):
+                return True
+    return False
+
+def stringToBoolean(text):
+    if(text=='True'):
+        return True
+    else:
+        return False
+
+def updateGroupID(message):
+    for IDTitle in dbFunction.getGroupIDTitle():
+        if(str(message.chat.id) == IDTitle[0]):
+            dbFunction.updateGroupTitle(message.chat.id, message.chat.title)
+            return
+        if(message.chat.title==IDTitle[1]):
+            dbFunction.updateGroupID(message.chat.id, message.chat.title)
+
+def autoAddDetails(message, bot, types):
+    dbFunction.addToUser(message.chat.id, message.from_user.id)
+    if (dbFunction.addToAllUser(message.from_user) == 'success'):
+        for admin in bot.get_chat_administrators(chat_id=message.chat.id):
+            try:
+                bot.send_message(chat_id=admin.user.id, text='<b>Tell</b> ' + getName(message.from_user) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ getName(message.from_user),  parse_mode='HTML')
+            except:
+                print('Cannot send message to admin')
+        exceptionHandling(message, bot, types, message.from_user)
+        return
+    dbFunction.updateToAllUser(message.from_user)
