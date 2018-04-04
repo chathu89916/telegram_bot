@@ -8,7 +8,7 @@ admin = configuration.admin
 def privateSticker(bot, message):
     if (message.from_user.id == admin and message.reply_to_message != None):
         try:
-            bot.send_message(chat_id=message.reply_to_message.forward_from.id, text=message.text, parse_mode='HTML')
+            bot.send_sticker(chat_id=message.reply_to_message.forward_from.id, data=message.sticker.file_id)
         except:
             print('Cannot send message to pm user')
         return
