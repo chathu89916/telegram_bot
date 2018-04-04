@@ -1,13 +1,16 @@
 def botVesion():
-    BOT_VERSION = """\n\n<b>What's New in Version 2.1</b>
+    BOT_VERSION = """\n\n<b>What's New in Version 2.2</b>
 
-* If someone mention you or your subscribe word in a reply text, you will be notified."""
+* All the Super Admin commands can be used in bot private window only."""
 
     return BOT_VERSION
 
-
 def changeLOG():
-    changeLOG = """\n\n<b>Version 2.1</b>
+    changeLOG = """\n\n<b>Version 2.2</b>
+
+* All the Super Admin commands can be used in bot private window only.
+    
+<b>Version 2.1</b>
 
 * If someone mention you or your subscribe word in a reply text, you will be notified.
     
@@ -19,7 +22,7 @@ def changeLOG():
     
 <b>Version 1.3.0</b>
 
-* You can't play Games in <b>ResistanceLK</b> anymore.
+* You can't play Games in groups anymore.
 
 <b>Version 1.2.2</b>
 
@@ -27,7 +30,7 @@ def changeLOG():
 
 <b>Version 1.2.1</b>
 
-* When you use stickers in <b>ResistanceLK</b>, it will be automatically deleted by the BOT.
+* When you use stickers in group, it will be automatically deleted by the BOT.
 
 <b>Version 1.1.0</b>
 
