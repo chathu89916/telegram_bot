@@ -230,149 +230,185 @@ def welcomemessage(bot, message):
 
 def test(bot, message):
     if (common.isUserSuperAdmin(message.from_user.id)):
-        userID = message.from_user.id
-        subList = re.split(r'/test\W', message.text, 1)
-        if (len(subList) == 2):
-            if (subList[1] != ''):
-                allMessage = str(subList[1]) + '\n\n/test by ' + common.getName(message.from_user)
-                try:
-                    bot.send_message(chat_id=userID, text=allMessage, parse_mode='HTML')
-                except:
-                    print("all message failed in sending")
-            else:
-                try:
-                    bot.send_message(chat_id=userID, text='All Message cannot be empty')
-                except:
-                    print('All Message cannot be empty')
-        elif (len(subList) == 1):
+        if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=userID, text='Please add a Valid All Message')
+                bot.send_message(chat_id=message.from_user.id, text="Please use /test command in here")
             except:
-                print('valid All message failed')
+                print('/test trying failed')
+        else:
+            userID = message.from_user.id
+            subList = re.split(r'/test\W', message.text, 1)
+            if (len(subList) == 2):
+                if (subList[1] != ''):
+                    allMessage = str(subList[1]) + '\n\n/test by ' + common.getName(message.from_user)
+                    try:
+                        bot.send_message(chat_id=userID, text=allMessage, parse_mode='HTML')
+                    except:
+                        print("all message failed in sending")
+                else:
+                    try:
+                        bot.send_message(chat_id=userID, text='All Message cannot be empty')
+                    except:
+                        print('All Message cannot be empty')
+            elif (len(subList) == 1):
+                try:
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Message')
+                except:
+                    print('valid All message failed')
 
 def all(bot, message):
     if (common.isUserSuperAdmin(message.from_user.id)):
-        userID = message.from_user.id
-        subList = re.split(r'/all\W', message.text, 1)
-        if (len(subList) == 2):
-            if (subList[1] != ''):
-                allMessage = str(subList[1]) + '\n\n/all by ' + common.getName(message.from_user)
-                for allID in dbFunction.all():
-                    try:
-                        bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
-                    except:
-                        print("all message failed in sending")
-            else:
-                try:
-                    bot.send_message(chat_id=userID, text='All Message cannot be empty')
-                except:
-                    print('All Message cannot be empty')
-        elif (len(subList) == 1):
+        if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=userID, text='Please add a Valid All Message')
+                bot.send_message(chat_id=message.from_user.id, text="Please use /all command in here")
             except:
-                print('valid All message failed')
+                print('/all trying failed')
+        else:
+            userID = message.from_user.id
+            subList = re.split(r'/all\W', message.text, 1)
+            if (len(subList) == 2):
+                if (subList[1] != ''):
+                    allMessage = str(subList[1]) + '\n\n/all by ' + common.getName(message.from_user)
+                    for allID in dbFunction.all():
+                        try:
+                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
+                        except:
+                            print("all message failed in sending")
+                else:
+                    try:
+                        bot.send_message(chat_id=userID, text='All Message cannot be empty')
+                    except:
+                        print('All Message cannot be empty')
+            elif (len(subList) == 1):
+                try:
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Message')
+                except:
+                    print('valid All message failed')
 
 def allusers(bot, message):
     if (common.isUserSuperAdmin(message.from_user.id)):
-        userID = message.from_user.id
-        subList = re.split(r'/allusers\W', message.text, 1)
-        if (len(subList) == 2):
-            if (subList[1] != ''):
-                allMessage = str(subList[1]) + '\n\n/allusers by ' + common.getName(message.from_user)
-                for allID in dbFunction.allusers():
-                    try:
-                        bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
-                    except:
-                        print("All Users message failed in sending")
-            else:
-                try:
-                    bot.send_message(chat_id=userID, text='All Users Message cannot be empty')
-                except:
-                    print('All Users Message cannot be empty')
-        elif (len(subList) == 1):
+        if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=userID, text='Please add a Valid All Users Message')
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allusers command in here")
             except:
-                print('valid All Users message failed')
+                print('/allusers trying failed')
+        else:
+            userID = message.from_user.id
+            subList = re.split(r'/allusers\W', message.text, 1)
+            if (len(subList) == 2):
+                if (subList[1] != ''):
+                    allMessage = str(subList[1]) + '\n\n/allusers by ' + common.getName(message.from_user)
+                    for allID in dbFunction.allusers():
+                        try:
+                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
+                        except:
+                            print("All Users message failed in sending")
+                else:
+                    try:
+                        bot.send_message(chat_id=userID, text='All Users Message cannot be empty')
+                    except:
+                        print('All Users Message cannot be empty')
+            elif (len(subList) == 1):
+                try:
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Users Message')
+                except:
+                    print('valid All Users message failed')
 
 def allgroups(bot, message):
     if (common.isUserSuperAdmin(message.from_user.id)):
-        userID = message.from_user.id
-        subList = re.split(r'/allgroups\W', message.text, 1)
-        if (len(subList) == 2):
-            if (subList[1] != ''):
-                allMessage = str(subList[1]) + '\n\n/allgroups by ' + common.getName(message.from_user)
-                for allID in dbFunction.allgroups():
-                    try:
-                        bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
-                    except:
-                        print("All Groups message failed in sending")
-            else:
-                try:
-                    bot.send_message(chat_id=userID, text='All Groups Message cannot be empty')
-                except:
-                    print('All Groups Message cannot be empty')
-        elif (len(subList) == 1):
+        if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=userID, text='Please add a Valid All Groups Message')
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroups command in here")
             except:
-                print('valid All Groups message failed')
+                print('/allgroups trying failed')
+        else:
+            userID = message.from_user.id
+            subList = re.split(r'/allgroups\W', message.text, 1)
+            if (len(subList) == 2):
+                if (subList[1] != ''):
+                    allMessage = str(subList[1]) + '\n\n/allgroups by ' + common.getName(message.from_user)
+                    for allID in dbFunction.allgroups():
+                        try:
+                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
+                        except:
+                            print("All Groups message failed in sending")
+                else:
+                    try:
+                        bot.send_message(chat_id=userID, text='All Groups Message cannot be empty')
+                    except:
+                        print('All Groups Message cannot be empty')
+            elif (len(subList) == 1):
+                try:
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Groups Message')
+                except:
+                    print('valid All Groups message failed')
 
 def allgroupsadmins(bot, message):
     if (common.isUserSuperAdmin(message.from_user.id)):
-        adminList = []
-        userID = message.from_user.id
-        subList = re.split(r'/allgroupsadmins\W', message.text, 1)
-        if (len(subList) == 2):
-            if (subList[1] != ''):
-                allMessage = str(subList[1]) + '\n\n/allgroupsadmins by ' + common.getName(message.from_user)
-                for allID in dbFunction.allgroups():
-                    try:
-                        for admin in bot.get_chat_administrators(allID):
-                            if (admin.user.is_bot == False):
-                                adminList.append(admin.user.id)
-                    except:
-                        print("Getdmins ID failed in  : " + str(allID))
-                adminList = list(set(adminList))
-                for adminID in adminList:
-                    try:
-                        bot.send_message(chat_id=adminID, text=allMessage, parse_mode='HTML')
-                    except:
-                        print("All Groups Admin message failed in sending")
-            else:
-                try:
-                    bot.send_message(chat_id=userID, text='All Groups Admin Message cannot be empty')
-                except:
-                    print('All Groups Admin Message cannot be empty')
-        elif (len(subList) == 1):
+        if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=userID, text='Please add a Valid All Groups Admin Message')
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroupsadmins command in here")
             except:
-                print('valid All Groups Admin message failed')
+                print('/allgroupsadmins trying failed')
+        else:
+            adminList = []
+            userID = message.from_user.id
+            subList = re.split(r'/allgroupsadmins\W', message.text, 1)
+            if (len(subList) == 2):
+                if (subList[1] != ''):
+                    allMessage = str(subList[1]) + '\n\n/allgroupsadmins by ' + common.getName(message.from_user)
+                    for allID in dbFunction.allgroups():
+                        try:
+                            for admin in bot.get_chat_administrators(allID):
+                                if (admin.user.is_bot == False):
+                                    adminList.append(admin.user.id)
+                        except:
+                            print("Getdmins ID failed in  : " + str(allID))
+                    adminList = list(set(adminList))
+                    for adminID in adminList:
+                        try:
+                            bot.send_message(chat_id=adminID, text=allMessage, parse_mode='HTML')
+                        except:
+                            print("All Groups Admin message failed in sending")
+                else:
+                    try:
+                        bot.send_message(chat_id=userID, text='All Groups Admin Message cannot be empty')
+                    except:
+                        print('All Groups Admin Message cannot be empty')
+            elif (len(subList) == 1):
+                try:
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Groups Admin Message')
+                except:
+                    print('valid All Groups Admin message failed')
 
 def allsuperadmins(bot, message):
     if (common.isUserSuperAdmin(message.from_user.id)):
-        userID = message.from_user.id
-        subList = re.split(r'/allsuperadmins\W', message.text, 1)
-        if (len(subList) == 2):
-            if (subList[1] != ''):
-                allMessage = str(subList[1]) + '\n\n/allsuperadmins by ' + common.getName(message.from_user)
-                for allID in dbFunction.getAdmin():
-                    try:
-                        bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
-                    except:
-                        print("All Groups Super Admin message failed in sending")
-            else:
-                try:
-                    bot.send_message(chat_id=userID, text='All Groups Super Admin Message cannot be empty')
-                except:
-                    print('All Groups Super Admin Message cannot be empty')
-        elif (len(subList) == 1):
+        if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=userID, text='Please add a Valid All Groups Super Admin Message')
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allsuperadmins command in here")
             except:
-                print('valid All Groups Super Admin message failed')
+                print('/allsuperadmins trying failed')
+        else:
+            userID = message.from_user.id
+            subList = re.split(r'/allsuperadmins\W', message.text, 1)
+            if (len(subList) == 2):
+                if (subList[1] != ''):
+                    allMessage = str(subList[1]) + '\n\n/allsuperadmins by ' + common.getName(message.from_user)
+                    for allID in dbFunction.getAdmin():
+                        try:
+                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
+                        except:
+                            print("All Groups Super Admin message failed in sending")
+                else:
+                    try:
+                        bot.send_message(chat_id=userID, text='All Groups Super Admin Message cannot be empty')
+                    except:
+                        print('All Groups Super Admin Message cannot be empty')
+            elif (len(subList) == 1):
+                try:
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Groups Super Admin Message')
+                except:
+                    print('valid All Groups Super Admin message failed')
 
 def start(bot, message):
     if (dbFunction.addToAllUser(message.from_user) == 'failed'):
