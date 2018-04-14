@@ -8,7 +8,7 @@ admin = configuration.admin
 def privateDocument(bot, message):
     if(message.from_user.id == admin and message.reply_to_message != None):
         try:
-            bot.send_document(chat_id=message.reply_to_message.forward_from.id, data=message.document.file_id, caption=message.caption)
+            bot.send_document(chat_id=message.reply_to_message.forward_from.id, data=message.document.file_id, caption=message.caption, parse_mode='HTML')
         except:
             print('Cannot send message to pm user')
         return
@@ -19,10 +19,10 @@ def mentionAll(bot, message):
     if (common.checkAdmin(bot, message.chat.id, message.from_user.id)):
         if(message.chat.type != 'private'):
             mentionedUser = common.getName(message.from_user)
-            text = mentionedUser + ' @ ' + message.chat.title + ' : ' + message.caption
+            text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
             for userid in dbFunction.getAllUsers(message.chat.id):
                 try:
-                    bot.send_document(chat_id=userid, data=message.document.file_id, caption=text)
+                    bot.send_document(chat_id=userid, data=message.document.file_id, caption=text, parse_mode='HTML')
                 except:
                     print('@all mention failed')
 
@@ -43,9 +43,9 @@ def mentionOne(bot, message):
                     listUser = list(set(listUser))
         if(len(listUser)>0):
             mentionedUser = common.getName(message.from_user)
-            text = mentionedUser + ' @ ' + message.chat.title + ' : ' + message.caption
+            text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
             for uname in listUser:
                 try:
-                    bot.send_document(chat_id=uname, data=message.document.file_id, caption=text)
+                    bot.send_document(chat_id=uname, data=message.document.file_id, caption=text, parse_mode='HTML')
                 except:
                     print('single mention/subscribe failed')
