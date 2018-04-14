@@ -47,7 +47,7 @@ def unsubscribe(bot, message):
             subname = subList[2].lower()
             subNameList = dbFunction.subscribelist(userID)
             for snm in subNameList:
-                if(str(snm)==subname):
+                if(snm==subname):
                     if(dbFunction.unsubscribe(subname)=='success'):
                         try:
                             bot.send_message(chat_id=userID, text='Subscribe name Successfully Removed')
@@ -108,7 +108,7 @@ def hhhpermission(bot, message):
             subList = re.split('\W+', message.text, re.U)
             if (len(subList) == 3):
                 if (subList[2] != ''):
-                    subname = str(subList[2].lower())
+                    subname = subList[2].lower()
                     if(subname == "false"):
                         hhhpermission = False
                     elif(subname == "true"):
@@ -157,7 +157,7 @@ def stickerpermission(bot, message):
             subList = re.split('\W+', message.text, re.U)
             if (len(subList) == 3):
                 if (subList[2] != ''):
-                    subname = str(subList[2].lower())
+                    subname = subList[2].lower()
                     if(subname == "false"):
                         hhhpermission = False
                     elif(subname == "true"):
@@ -206,7 +206,7 @@ def welcomemessage(bot, message):
             subList = re.split(r'/welcomemessage\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    welcomeMessage = str(subList[1])
+                    welcomeMessage = subList[1]
                     if (dbFunction.updateWelcomeMessage(welcomeMessage, message.chat.id) == 'success'):
                         try:
                             bot.send_message(chat_id=userID, text='Welcome Message successfully changed')
@@ -240,7 +240,7 @@ def test(bot, message):
             subList = re.split(r'/test\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = str(subList[1]) + '\n\n/test by ' + common.getName(message.from_user)
+                    allMessage = subList[1] + '\n\n/test by ' + common.getName(message.from_user)
                     try:
                         bot.send_message(chat_id=userID, text=allMessage, parse_mode='HTML')
                     except:
@@ -268,7 +268,7 @@ def all(bot, message):
             subList = re.split(r'/all\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = str(subList[1]) + '\n\n/all by ' + common.getName(message.from_user)
+                    allMessage = subList[1] + '\n\n/all by ' + common.getName(message.from_user)
                     for allID in dbFunction.all():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
@@ -297,7 +297,7 @@ def allusers(bot, message):
             subList = re.split(r'/allusers\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = str(subList[1]) + '\n\n/allusers by ' + common.getName(message.from_user)
+                    allMessage = subList[1] + '\n\n/allusers by ' + common.getName(message.from_user)
                     for allID in dbFunction.allusers():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
@@ -326,7 +326,7 @@ def allgroups(bot, message):
             subList = re.split(r'/allgroups\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = str(subList[1]) + '\n\n/allgroups by ' + common.getName(message.from_user)
+                    allMessage = subList[1] + '\n\n/allgroups by ' + common.getName(message.from_user)
                     for allID in dbFunction.allgroups():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
@@ -356,7 +356,7 @@ def allgroupsadmins(bot, message):
             subList = re.split(r'/allgroupsadmins\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = str(subList[1]) + '\n\n/allgroupsadmins by ' + common.getName(message.from_user)
+                    allMessage = subList[1] + '\n\n/allgroupsadmins by ' + common.getName(message.from_user)
                     for allID in dbFunction.allgroups():
                         try:
                             for admin in bot.get_chat_administrators(allID):
@@ -393,7 +393,7 @@ def allsuperadmins(bot, message):
             subList = re.split(r'/allsuperadmins\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = str(subList[1]) + '\n\n/allsuperadmins by ' + common.getName(message.from_user)
+                    allMessage = subList[1] + '\n\n/allsuperadmins by ' + common.getName(message.from_user)
                     for allID in dbFunction.getAdmin():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
