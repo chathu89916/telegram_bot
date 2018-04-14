@@ -10,6 +10,9 @@ def addingBot(bot, message):
     if(dbFunction.addToGroup(message.chat.id, message.chat.title)=='success'):
         bot.send_message(chat_id=admin, text='Successfully Added me for ' + str(message.chat.title) + ' ' + str(
             message.chat.type) + ' and added me by ' + common.getName(message.from_user))
+        bot.send_message(chat_id=message.chat.id,
+                         text='Thank you '+ common.getName(message.from_user) + ' for adding me to <b>' + str(message.chat.title) + '</b> ' + str(message.chat.type) + '. All the group details and user details are successfully added to the database.',
+                         parse_mode='HTML')
     else:
         bot.send_message(chat_id=admin, text='Failed to Add bot for ' + str(message.chat.title) + ' ' + str(
             message.chat.type) + '. Try to added me by ' + common.getName(message.from_user))
