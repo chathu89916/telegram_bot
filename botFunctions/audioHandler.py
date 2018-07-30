@@ -15,7 +15,7 @@ def privateAudio(bot, message):
     if(message.from_user.id != admin):
         bot.forward_message(chat_id=admin, from_chat_id=message.chat.id, message_id=message.message_id)
 
-def mentionAll(bot, message):
+def mentionAllAudio(bot, message):
     if(common.checkAdmin(bot, message.chat.id, message.from_user.id)):
         if(message.chat.type != 'private'):
             mentionedUser = common.getName(message.from_user)
@@ -26,7 +26,7 @@ def mentionAll(bot, message):
                 except:
                     print('@all mention failed')
 
-def mentionOne(bot, message):
+def mentionOneAudio(bot, message):
     if (message.chat.type != 'private'):
         listUser = common.mentionedList(message.chat.id, message.caption)
         if (message.reply_to_message != None):

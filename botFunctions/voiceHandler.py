@@ -5,28 +5,28 @@ import dbFunction
 
 admin = configuration.admin
 
-def privatePhoto(bot, message):
+def privateVoice(bot, message):
     if(message.from_user.id == admin and message.reply_to_message != None):
         try:
-            bot.send_photo(chat_id=message.reply_to_message.forward_from.id, photo=message.photo[-1].file_id, caption=message.caption, parse_mode='HTML')
+            bot.send_voice(chat_id=message.reply_to_message.forward_from.id, data=message.voice.file_id, caption=message.caption, parse_mode='HTML')
         except:
             print('Cannot send message to pm user')
         return
     if(message.from_user.id != admin):
         bot.forward_message(chat_id=admin, from_chat_id=message.chat.id, message_id=message.message_id)
 
-def mentionAll(bot, message):
+def mentionAllVoice(bot, message):
     if (common.checkAdmin(bot, message.chat.id, message.from_user.id)):
         if(message.chat.type != 'private'):
             mentionedUser = common.getName(message.from_user)
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
             for userid in dbFunction.getAllUsers(message.chat.id):
                 try:
-                    bot.send_photo(chat_id=userid, photo=message.photo[-1].file_id, caption=text, parse_mode='HTML')
+                    bot.send_voice(chat_id=userid, data=message.voice.file_id, caption=text, parse_mode='HTML')
                 except:
                     print('@all mention failed')
 
-def mentionOne(bot, message):
+def mentionOneVoice(bot, message):
     if (message.chat.type != 'private'):
         listUser = common.mentionedList(message.chat.id, message.caption)
         if (message.reply_to_message != None):
@@ -46,6 +46,6 @@ def mentionOne(bot, message):
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
             for uname in listUser:
                 try:
-                    bot.send_photo(chat_id=uname, photo=message.photo[-1].file_id, caption=text, parse_mode='HTML')
+                    bot.send_voice(chat_id=uname, data=message.voice.file_id, caption=text, parse_mode='HTML')
                 except:
                     print('single mention/subscribe failed')
