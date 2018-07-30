@@ -4,7 +4,7 @@ from .botVersionLog import botVesion
 from .botVersionLog import changeLOG
 from .dbFunction import getHHHPermission
 from .dbFunction import kikBotDB
-from .dbFunction import updateGroupID
+from .dbFunction import updateGroupIDDB
 from .dbFunction import subscribelistDB
 from .dbFunction import subscribeDB
 from .dbFunction import unsubscribeDB

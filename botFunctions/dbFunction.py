@@ -367,7 +367,7 @@ def getGroupIDTitle():
         conn.close()
         return groupsArray
 
-def updateGroupID(oldID, newID):
+def updateGroupIDDB(oldID, newID):
     status = ''
     try:
         conn, c = connectDB()
