@@ -416,7 +416,7 @@ def leftOfKikMember(groupID, userID):
         conn.close()
         return status
 
-def kikBot(groupID):
+def kikBotDB(groupID):
     status = ''
     try:
         conn, c = connectDB()
