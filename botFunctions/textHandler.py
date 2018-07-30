@@ -17,24 +17,25 @@ def privateText(bot, message):
         bot.forward_message(chat_id=admin, from_chat_id=message.chat.id, message_id=message.message_id)
 
 def hhhFunc(bot, message):
-    if(message.text.lower() == 'hi'):
-        try:
-            bot.send_message(chat_id=message.chat.id, text='Hi ' + botFunctions.getName(message.from_user))
-        except:
-            bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
-        return
-    if(message.text.lower() == 'hello'):
-        try:
-            bot.send_message(chat_id=message.chat.id, text='hello ' + botFunctions.getName(message.from_user))
-        except:
-            bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
-        return
-    if(message.text.lower() == 'how are you' or message.text.lower() == 'how are you?'):
-        try:
-            bot.send_message(chat_id=message.chat.id, text='Im fine. How about you ' + botFunctions.getName(message.from_user))
-        except:
-            bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
-        return
+    if(message.forward_from==None):
+        if(message.text.lower() == 'hi'):
+            try:
+                bot.send_message(chat_id=message.chat.id, text='Hi ' + botFunctions.getName(message.from_user))
+            except:
+                bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
+            return
+        if(message.text.lower() == 'hello'):
+            try:
+                bot.send_message(chat_id=message.chat.id, text='hello ' + botFunctions.getName(message.from_user))
+            except:
+                bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
+            return
+        if(message.text.lower() == 'how are you' or message.text.lower() == 'how are you?'):
+            try:
+                bot.send_message(chat_id=message.chat.id, text='Im fine. How about you ' + botFunctions.getName(message.from_user))
+            except:
+                bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
+            return
 
 def mentionAllText(bot, message):
     if (botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id)):
