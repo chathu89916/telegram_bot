@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import configuration
-import common
 import botFunctions
 import re
 
@@ -20,27 +19,27 @@ def privateText(bot, message):
 def hhhFunc(bot, message):
     if(message.text.lower() == 'hi'):
         try:
-            bot.send_message(chat_id=message.chat.id, text='Hi ' + common.getName(message.from_user))
+            bot.send_message(chat_id=message.chat.id, text='Hi ' + botFunctions.getName(message.from_user))
         except:
             bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
         return
     if(message.text.lower() == 'hello'):
         try:
-            bot.send_message(chat_id=message.chat.id, text='hello ' + common.getName(message.from_user))
+            bot.send_message(chat_id=message.chat.id, text='hello ' + botFunctions.getName(message.from_user))
         except:
             bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
         return
     if(message.text.lower() == 'how are you' or message.text.lower() == 'how are you?'):
         try:
-            bot.send_message(chat_id=message.chat.id, text='Im fine. How about you ' + common.getName(message.from_user))
+            bot.send_message(chat_id=message.chat.id, text='Im fine. How about you ' + botFunctions.getName(message.from_user))
         except:
             bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
         return
 
-def mentionAll(bot, message):
-    if (common.checkAdmin(bot, message.chat.id, message.from_user.id)):
+def mentionAllText(bot, message):
+    if (botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id)):
         if(message.chat.type != 'private'):
-            mentionedUser = common.getName(message.from_user)
+            mentionedUser = botFunctions.getName(message.from_user)
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.text
             for userid in botFunctions.getAllUsers(message.chat.id):
                 try:
@@ -48,9 +47,9 @@ def mentionAll(bot, message):
                 except:
                     print('@all mention failed')
 
-def mentionOne(bot, message):
+def mentionOneText(bot, message):
     if (message.chat.type != 'private'):
-        listUsers = common.mentionedList(message.chat.id, message.text)
+        listUsers = botFunctions.mentionedList(message.chat.id, message.text)
         if (message.reply_to_message != None):
             if (message.reply_to_message.from_user.is_bot == False):
                 if (botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id)):
@@ -59,7 +58,7 @@ def mentionOne(bot, message):
         listSUB = re.split('\W+', message.text)
         listSUB = list(set(listSUB))
         if(len(listUsers)>0):
-            mentionedUser = common.getName(message.from_user)
+            mentionedUser = botFunctions.getName(message.from_user)
             for uname in listUsers:
                 content = message.text
                 for subName in botFunctions.getSubscribeName(uname):

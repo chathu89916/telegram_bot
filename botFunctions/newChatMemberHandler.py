@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import configuration
-import common
+import botFunctions
 import botFunctions
 import re
 
@@ -9,13 +9,13 @@ admin = configuration.admin
 def addingBot(bot, message):
     if(botFunctions.addToGroup(message.chat.id, message.chat.title)=='success'):
         bot.send_message(chat_id=admin, text='Successfully Added me for ' + str(message.chat.title) + ' ' + str(
-            message.chat.type) + ' and added me by ' + common.getName(message.from_user))
+            message.chat.type) + ' and added me by ' + botFunctions.getName(message.from_user))
         bot.send_message(chat_id=message.chat.id,
-                         text='Thank you '+ common.getName(message.from_user) + ' for adding me to <b>' + str(message.chat.title) + '</b> ' + str(message.chat.type) + '. All the group details and user details are successfully added to the database.',
+                         text='Thank you '+ botFunctions.getName(message.from_user) + ' for adding me to <b>' + str(message.chat.title) + '</b> ' + str(message.chat.type) + '. All the group details and user details are successfully added to the database.',
                          parse_mode='HTML')
     else:
         bot.send_message(chat_id=admin, text='Failed to Add bot for ' + str(message.chat.title) + ' ' + str(
-            message.chat.type) + '. Try to added me by ' + common.getName(message.from_user))
+            message.chat.type) + '. Try to added me by ' + botFunctions.getName(message.from_user))
 
     for chat in bot.get_chat_administrators(message.chat.id):
         if(chat.user.is_bot==False):
@@ -30,10 +30,10 @@ def getOtherAdmins(bot, message):
         adminMessage = adminMessage + str(admin.user.first_name) + ' ' + str(admin.user.last_name) + ' @' + str(admin.user.username) + ' - ' + str(admin.status) + '\n'
 
     bot.send_message(chat_id=message.chat.id,
-                     text= common.getName(message.from_user) + ' you have no permission to add me to ' + str(message.chat.title) + ' ' + message.chat.type + '. It will be reported to creator of this Bot\n\nThank You')
+                     text= botFunctions.getName(message.from_user) + ' you have no permission to add me to ' + str(message.chat.title) + ' ' + message.chat.type + '. It will be reported to creator of this Bot\n\nThank You')
     bot.leave_chat(chat_id=message.chat.id)
 
-    adminMessage = adminMessage + "\nAdded me by " + common.getName(message.from_user)
+    adminMessage = adminMessage + "\nAdded me by " + botFunctions.getName(message.from_user)
     bot.send_message(chat_id=configuration.admin, text=adminMessage)
 
 def addingUser(bot, message, types):
@@ -42,8 +42,8 @@ def addingUser(bot, message, types):
         botFunctions.updateToAllUser(message.new_chat_member)
     else:
         try:
-            bot.send_message(chat_id=message.from_user.id, text='<b>Tell</b> ' + common.getName(message.new_chat_member) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ common.getName(message.new_chat_member),  parse_mode='HTML')
-            common.exceptionHandling(message, bot, types, message.new_chat_member)
+            bot.send_message(chat_id=message.from_user.id, text='<b>Tell</b> ' + botFunctions.getName(message.new_chat_member) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ botFunctions.getName(message.new_chat_member),  parse_mode='HTML')
+            botFunctions.exceptionHandling(message, bot, types, message.new_chat_member)
         except:
             print('Cannot send message to admin')
 
@@ -65,7 +65,7 @@ def welcomeToUser(bot, meessage):
         print("welcome message sending failed")
 
 def checkAndAdd(bot, message):
-    if (common.isUserSuperAdmin(message.from_user.id)):
+    if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         addingBot(bot, message)
     else:
         getOtherAdmins(bot, message)

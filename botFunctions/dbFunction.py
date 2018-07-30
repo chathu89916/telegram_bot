@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sqlite3
-import common
+import botFunctions
 import configuration
 
 dbName = configuration.dbName
@@ -106,7 +106,7 @@ def isAvailable(groupID, useID):
         else:
             return True
 
-def subscribe(userID, subname):
+def subscribeDB(userID, subname):
     status = ''
     try:
         conn, c = connectDB()
@@ -122,7 +122,7 @@ def subscribe(userID, subname):
         conn.close()
         return status
 
-def unsubscribe(subname):
+def unsubscribeDB(subname):
     status = ''
     try:
         conn, c = connectDB()
@@ -138,7 +138,7 @@ def unsubscribe(subname):
         conn.close()
         return status
 
-def subscribelist(userID):
+def subscribelistDB(userID):
     subscribersList = []
     try:
         conn, c = connectDB()
@@ -159,7 +159,7 @@ def getStickerPermission(groupID):
         conn, c = connectDB()
         c.execute("SELECT stickerPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
         for permission in c.fetchall():
-            stickerPermission = common.stringToBoolean(permission[0])
+            stickerPermission = botFunctions.stringToBoolean(permission[0])
     except Exception as e:
         stickerPermission = True
         conn.rollback()
@@ -175,7 +175,7 @@ def getHHHPermission(groupID):
         conn, c = connectDB()
         c.execute("SELECT hhhPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
         for permission in c.fetchall():
-            hhhPermission = common.stringToBoolean(permission[0])
+            hhhPermission = botFunctions.stringToBoolean(permission[0])
     except Exception as e:
         hhhPermission = True
         conn.rollback()
@@ -313,7 +313,7 @@ def updateWelcomeMessage(msg, groupID):
         conn.close()
         return status
 
-def allusers():
+def allusersDB():
     usersArray = []
     try:
         conn, c = connectDB()
@@ -328,7 +328,7 @@ def allusers():
         conn.close()
         return usersArray
 
-def allgroups():
+def allgroupsDB():
     groupsArray = []
     try:
         conn, c = connectDB()
@@ -343,11 +343,11 @@ def allgroups():
         conn.close()
         return groupsArray
 
-def all():
+def allDB():
     all = []
-    for userID in allusers():
+    for userID in allusersDB():
         all.append(userID)
-    for groupID in allgroups():
+    for groupID in allgroupsDB():
         all.append(groupID)
     return all
 

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import configuration
-import common
 import botFunctions
 
 admin = configuration.admin
@@ -13,12 +12,12 @@ def privateSticker(bot, message):
             print('Cannot send message to pm user')
         return
     if (message.from_user.id != admin):
-        bot.send_message(chat_id=admin, text='>>> private sticker send by ' + common.getName(message.from_user))
+        bot.send_message(chat_id=admin, text='>>> private sticker send by ' + botFunctions.getName(message.from_user))
         bot.forward_message(chat_id=admin, from_chat_id=message.chat.id, message_id=message.message_id)
 
 def deleteSticker(bot, message):
     if(not(botFunctions.getStickerPermission(message.chat.id))):
-        if(common.isBotAdmin(bot, message)):
+        if(botFunctions.isBotAdmin(bot, message)):
             try:
                 bot.delete_message(message.chat.id, message.message_id)
             except:

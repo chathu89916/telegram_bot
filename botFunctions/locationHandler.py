@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import configuration
-import common
 import botFunctions
 
 admin = configuration.admin
@@ -19,8 +18,8 @@ def replyToLocation(bot, message, types):
     if(botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id)):
         try:
             bot.send_message(chat_id=message.reply_to_message.from_user.id,
-                             text= common.getName(message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as a Location',
+                             text= botFunctions.getName(message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as a Location',
                              parse_mode='HTML')
             bot.send_location(chat_id=message.reply_to_message.from_user.id, longitude=message.location.longitude, latitude=message.location.latitude)
         except:
-            common.exceptionHandling(message, bot, types, message.from_user)
+            botFunctions.exceptionHandling(message, bot, types, message.from_user)

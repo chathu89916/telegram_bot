@@ -106,10 +106,10 @@ def handle_text(message):
         if (botFunctions.getHHHPermission(message.chat.id)):
             botFunctions.hhhFunc(bot, message)
     if (botFunctions.allCheck(message.text)):
-        botFunctions.mentionAll(bot, message)
+        botFunctions.mentionAllText(bot, message)
         return
 
-    botFunctions.mentionOne(bot, message)
+    botFunctions.mentionOneText(bot, message)
 
 @bot.message_handler(content_types=['photo'])
 def handle_photo(message):
@@ -122,10 +122,10 @@ def handle_photo(message):
     if (message.reply_to_message == None):
         if(message.caption != None):
             if (botFunctions.allCheck(message.caption)):
-                botFunctions.mentionAll(bot, message)
+                botFunctions.mentionAllPhoto(bot, message)
                 return
 
-    botFunctions.mentionOne(bot, message)
+    botFunctions.mentionOnePhoto(bot, message)
 
 @bot.message_handler(content_types=['audio'])
 def handle_audio(message):
@@ -138,10 +138,10 @@ def handle_audio(message):
     if (message.reply_to_message == None):
         if(message.caption != None):
             if (botFunctions.allCheck(message.caption)):
-                botFunctions.mentionAll(bot, message)
+                botFunctions.mentionAllAudio(bot, message)
                 return
 
-    botFunctions.mentionOne(bot, message)
+    botFunctions.mentionOneAudio(bot, message)
 
 @bot.message_handler(content_types=['video'])
 def handle_video(message):
@@ -154,10 +154,10 @@ def handle_video(message):
     if (message.reply_to_message == None):
         if(message.caption != None):
             if (botFunctions.allCheck(message.caption)):
-                botFunctions.mentionAll(bot, message)
+                botFunctions.mentionAllVideo(bot, message)
                 return
 
-    botFunctions.mentionOne(bot, message)
+    botFunctions.mentionOneVideo(bot, message)
 
 @bot.message_handler(content_types=['document'])
 def handle_document(message):
@@ -170,10 +170,10 @@ def handle_document(message):
     if (message.reply_to_message == None):
         if(message.caption != None):
             if (botFunctions.allCheck(message.caption)):
-                botFunctions.mentionAll(bot, message)
+                botFunctions.mentionAllDocument(bot, message)
                 return
 
-    botFunctions.mentionOne(bot, message)
+    botFunctions.mentionOneDocument(bot, message)
 
 @bot.message_handler(content_types=['voice'])
 def handle_voice(message):
@@ -186,10 +186,10 @@ def handle_voice(message):
     if (message.reply_to_message == None):
         if(message.caption != None):
             if (botFunctions.allCheck(message.caption)):
-                botFunctions.mentionAll(bot, message)
+                botFunctions.mentionAllVoice(bot, message)
                 return
 
-    botFunctions.mentionOne(bot, message)
+    botFunctions.mentionOneVoice(bot, message)
 
 @bot.message_handler(content_types=['location'])
 def handle_location(message):

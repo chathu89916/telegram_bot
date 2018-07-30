@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import re
-import common
 import configuration
 import botFunctions
 
@@ -12,7 +11,7 @@ def subscribe(bot, message):
     if(len(subList)==3):
         if(subList[2]!=''):
             subname = subList[2].lower()
-            if(botFunctions.subscribe(userID, subname)=='success'):
+            if(botFunctions.subscribeDB(userID, subname)=='success'):
                 try:
                     bot.send_message(chat_id=userID, text='Subscribe name Successfully added')
                 except:
@@ -44,10 +43,10 @@ def unsubscribe(bot, message):
     if(len(subList)==3):
         if(subList[2]!=''):
             subname = subList[2].lower()
-            subNameList = botFunctions.subscribelist(userID)
+            subNameList = botFunctions.subscribelistDB(userID)
             for snm in subNameList:
                 if(snm==subname):
-                    if(botFunctions.unsubscribe(subname)=='success'):
+                    if(botFunctions.unsubscribeDB(subname)=='success'):
                         try:
                             bot.send_message(chat_id=userID, text='Subscribe name Successfully Removed')
                         except:
@@ -80,7 +79,7 @@ def unsubscribe(bot, message):
 
 def subscribelist(bot, message):
     userID = message.from_user.id
-    subList = botFunctions.subscribelist(userID)
+    subList = botFunctions.subscribelistDB(userID)
     if(len(subList)!=0):
         txt = 'Here is your Subscribed Name List\n\n'
         for subname in subList:
@@ -102,7 +101,7 @@ def hhhpermission(bot, message):
         except:
             print('hhhpermission private send failed')
     else:
-        if (common.checkAdmin(bot, message.chat.id, message.from_user.id)):
+        if (botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id)):
             userID = message.from_user.id
             subList = re.split('\W+', message.text, re.U)
             if (len(subList) == 3):
@@ -151,7 +150,7 @@ def stickerpermission(bot, message):
         except:
             print('hhhpermission private send failed')
     else:
-        if (common.checkAdmin(bot, message.chat.id, message.from_user.id)):
+        if (botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id)):
             userID = message.from_user.id
             subList = re.split('\W+', message.text, re.U)
             if (len(subList) == 3):
@@ -200,7 +199,7 @@ def welcomemessage(bot, message):
         except:
             print('welcome message private send failed')
     else:
-        if (common.checkAdmin(bot, message.chat.id, message.from_user.id)):
+        if (botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id)):
             userID = message.from_user.id
             subList = re.split(r'/welcomemessage\W', message.text, 1)
             if (len(subList) == 2):
@@ -228,7 +227,7 @@ def welcomemessage(bot, message):
                     print('valid welcome message failed')
 
 def test(bot, message):
-    if (common.isUserSuperAdmin(message.from_user.id)):
+    if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text="Please use /test command in here")
@@ -239,7 +238,7 @@ def test(bot, message):
             subList = re.split(r'/test\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = subList[1] + '\n\n/test by ' + common.getName(message.from_user)
+                    allMessage = subList[1] + '\n\n/test by ' + botFunctions.getName(message.from_user)
                     try:
                         bot.send_message(chat_id=userID, text=allMessage, parse_mode='HTML')
                     except:
@@ -256,7 +255,7 @@ def test(bot, message):
                     print('valid All message failed')
 
 def all(bot, message):
-    if (common.isUserSuperAdmin(message.from_user.id)):
+    if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text="Please use /all command in here")
@@ -267,8 +266,8 @@ def all(bot, message):
             subList = re.split(r'/all\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = subList[1] + '\n\n/all by ' + common.getName(message.from_user)
-                    for allID in botFunctions.all():
+                    allMessage = subList[1] + '\n\n/all by ' + botFunctions.getName(message.from_user)
+                    for allID in botFunctions.allDB():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
                         except:
@@ -285,7 +284,7 @@ def all(bot, message):
                     print('valid All message failed')
 
 def allusers(bot, message):
-    if (common.isUserSuperAdmin(message.from_user.id)):
+    if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text="Please use /allusers command in here")
@@ -296,8 +295,8 @@ def allusers(bot, message):
             subList = re.split(r'/allusers\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = subList[1] + '\n\n/allusers by ' + common.getName(message.from_user)
-                    for allID in botFunctions.allusers():
+                    allMessage = subList[1] + '\n\n/allusers by ' + botFunctions.getName(message.from_user)
+                    for allID in botFunctions.allusersDB():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
                         except:
@@ -314,7 +313,7 @@ def allusers(bot, message):
                     print('valid All Users message failed')
 
 def allgroups(bot, message):
-    if (common.isUserSuperAdmin(message.from_user.id)):
+    if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text="Please use /allgroups command in here")
@@ -325,8 +324,8 @@ def allgroups(bot, message):
             subList = re.split(r'/allgroups\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = subList[1] + '\n\n/allgroups by ' + common.getName(message.from_user)
-                    for allID in botFunctions.allgroups():
+                    allMessage = subList[1] + '\n\n/allgroups by ' + botFunctions.getName(message.from_user)
+                    for allID in botFunctions.allgroupsDB():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
                         except:
@@ -343,7 +342,7 @@ def allgroups(bot, message):
                     print('valid All Groups message failed')
 
 def allgroupsadmins(bot, message):
-    if (common.isUserSuperAdmin(message.from_user.id)):
+    if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text="Please use /allgroupsadmins command in here")
@@ -355,8 +354,8 @@ def allgroupsadmins(bot, message):
             subList = re.split(r'/allgroupsadmins\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = subList[1] + '\n\n/allgroupsadmins by ' + common.getName(message.from_user)
-                    for allID in botFunctions.allgroups():
+                    allMessage = subList[1] + '\n\n/allgroupsadmins by ' + botFunctions.getName(message.from_user)
+                    for allID in botFunctions.allgroupsDB():
                         try:
                             for admin in bot.get_chat_administrators(allID):
                                 if (admin.user.is_bot == False):
@@ -381,7 +380,7 @@ def allgroupsadmins(bot, message):
                     print('valid All Groups Admin message failed')
 
 def allsuperadmins(bot, message):
-    if (common.isUserSuperAdmin(message.from_user.id)):
+    if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text="Please use /allsuperadmins command in here")
@@ -392,7 +391,7 @@ def allsuperadmins(bot, message):
             subList = re.split(r'/allsuperadmins\W', message.text, 1)
             if (len(subList) == 2):
                 if (subList[1] != ''):
-                    allMessage = subList[1] + '\n\n/allsuperadmins by ' + common.getName(message.from_user)
+                    allMessage = subList[1] + '\n\n/allsuperadmins by ' + botFunctions.getName(message.from_user)
                     for allID in botFunctions.getAdmin():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
@@ -413,44 +412,44 @@ def start(bot, message):
     if (botFunctions.addToAllUser(message.from_user) == 'failed'):
         if (botFunctions.updateToAllUser(message.from_user) == 'failed'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text='Cannot update your details ' + common.getName(message.from_user))
+                bot.send_message(chat_id=message.from_user.id, text='Cannot update your details ' + botFunctions.getName(message.from_user))
             except:
                 print('User update failed')
-                bot.send_message(chat_id=admin, text='Cannot update details for ' + common.getName(message.from_user))
+                bot.send_message(chat_id=admin, text='Cannot update details for ' + botFunctions.getName(message.from_user))
         else:
             try:
-                bot.send_message(chat_id=message.from_user.id, text='You Already STARTed me ' + common.getName(message.from_user) + ' and updated your personal details')
+                bot.send_message(chat_id=message.from_user.id, text='You Already STARTed me ' + botFunctions.getName(message.from_user) + ' and updated your personal details')
             except:
                 print('User update failed')
     else:
         try:
-            bot.send_message(chat_id=admin, text='Bot started for ' + common.getName(message.from_user))
-            bot.send_message(chat_id=message.from_user.id, text='Thank you for STARTing me ' + common.getName(message.from_user))
+            bot.send_message(chat_id=admin, text='Bot started for ' + botFunctions.getName(message.from_user))
+            bot.send_message(chat_id=message.from_user.id, text='Thank you for STARTing me ' + botFunctions.getName(message.from_user))
         except:
             print('User start failed')
 
 def addSuperAdmin(bot, message):
     if(message.reply_to_message.from_user.is_bot==False):
         if(botFunctions.addToSuperAdmin(message.reply_to_message.from_user.id)):
-            bot.send_message(chat_id=admin, text='Successfully added ' + common.getName(message.reply_to_message.from_user) +' as a Super Admin')
+            bot.send_message(chat_id=admin, text='Successfully added ' + botFunctions.getName(message.reply_to_message.from_user) +' as a Super Admin')
         else:
-            bot.send_message(chat_id=admin, text='Failed to add ' + common.getName(message.reply_to_message.from_user) +' as a Super Admin')
+            bot.send_message(chat_id=admin, text='Failed to add ' + botFunctions.getName(message.reply_to_message.from_user) +' as a Super Admin')
 
 def removeSuperAdmin(bot, message):
     if(message.reply_to_message.from_user.is_bot==False):
         if(botFunctions.removeFromSuperAdmin(message.reply_to_message.from_user.id)):
-            bot.send_message(chat_id=admin, text='Successfully removed ' + common.getName(message.reply_to_message.from_user) +' from Super Admin')
+            bot.send_message(chat_id=admin, text='Successfully removed ' + botFunctions.getName(message.reply_to_message.from_user) +' from Super Admin')
         else:
-            bot.send_message(chat_id=admin, text='Failed to remove ' + common.getName(message.reply_to_message.from_user) +' from Super Admin')
+            bot.send_message(chat_id=admin, text='Failed to remove ' + botFunctions.getName(message.reply_to_message.from_user) +' from Super Admin')
 
 def botVersion(bot, message):
     try:
-        bot.send_message(chat_id=message.chat.id, text=botFunctions.botVersionLog.botVesion(), parse_mode='HTML')
+        bot.send_message(chat_id=message.chat.id, text=botFunctions.botVesion(), parse_mode='HTML')
     except:
         print('botVersion seding failed')
 
 def botLog(bot, message):
     try:
-        bot.send_message(chat_id=message.chat.id, text=botFunctions.botVersionLog.changeLOG(), parse_mode='HTML')
+        bot.send_message(chat_id=message.chat.id, text=botFunctions.changeLOG(), parse_mode='HTML')
     except:
         print('botLog seding failed')
