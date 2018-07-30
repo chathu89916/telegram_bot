@@ -3,7 +3,7 @@ import re
 import dbFunction
 import common
 import configuration
-import botVersionLog
+import botFunctions
 
 admin = configuration.admin
 
@@ -446,12 +446,12 @@ def removeSuperAdmin(bot, message):
 
 def botVersion(bot, message):
     try:
-        bot.send_message(chat_id=message.chat.id, text=botVersionLog.botVesion(), parse_mode='HTML')
+        bot.send_message(chat_id=message.chat.id, text=botFunctions.botVersionLog.botVesion(), parse_mode='HTML')
     except:
         print('botVersion seding failed')
 
 def botLog(bot, message):
     try:
-        bot.send_message(chat_id=message.chat.id, text=botVersionLog.changeLOG(), parse_mode='HTML')
+        bot.send_message(chat_id=message.chat.id, text=botFunctions.botVersionLog.changeLOG(), parse_mode='HTML')
     except:
         print('botLog seding failed')
