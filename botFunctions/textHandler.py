@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import configuration
 import common
-import dbFunction
+import botFunctions
 import re
 
 admin = configuration.admin
@@ -42,7 +42,7 @@ def mentionAll(bot, message):
         if(message.chat.type != 'private'):
             mentionedUser = common.getName(message.from_user)
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.text
-            for userid in dbFunction.getAllUsers(message.chat.id):
+            for userid in botFunctions.getAllUsers(message.chat.id):
                 try:
                     bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
                 except:
@@ -53,7 +53,7 @@ def mentionOne(bot, message):
         listUsers = common.mentionedList(message.chat.id, message.text)
         if (message.reply_to_message != None):
             if (message.reply_to_message.from_user.is_bot == False):
-                if (dbFunction.isAvailable(message.chat.id, message.reply_to_message.from_user.id)):
+                if (botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id)):
                     listUsers.append(str(message.reply_to_message.from_user.id))
                     listUsers = list(set(listUsers))
         listSUB = re.split('\W+', message.text)
@@ -62,7 +62,7 @@ def mentionOne(bot, message):
             mentionedUser = common.getName(message.from_user)
             for uname in listUsers:
                 content = message.text
-                for subName in dbFunction.getSubscribeName(uname):
+                for subName in botFunctions.getSubscribeName(uname):
                     for sname in listSUB:
                         if(sname.lower()==subName.lower()):
                             p = re.compile('(' + str(sname) + ')')

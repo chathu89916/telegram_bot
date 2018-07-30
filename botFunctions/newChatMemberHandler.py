@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import configuration
 import common
-import dbFunction
+import botFunctions
 import re
 
 admin = configuration.admin
 
 def addingBot(bot, message):
-    if(dbFunction.addToGroup(message.chat.id, message.chat.title)=='success'):
+    if(botFunctions.addToGroup(message.chat.id, message.chat.title)=='success'):
         bot.send_message(chat_id=admin, text='Successfully Added me for ' + str(message.chat.title) + ' ' + str(
             message.chat.type) + ' and added me by ' + common.getName(message.from_user))
         bot.send_message(chat_id=message.chat.id,
@@ -19,7 +19,7 @@ def addingBot(bot, message):
 
     for chat in bot.get_chat_administrators(message.chat.id):
         if(chat.user.is_bot==False):
-            dbFunction.addToUser(message.chat.id, chat.user.id)
+            botFunctions.addToUser(message.chat.id, chat.user.id)
 
 def getOtherAdmins(bot, message):
     adminMessage = "Group Title : " + message.chat.title + " (" + str(
@@ -37,9 +37,9 @@ def getOtherAdmins(bot, message):
     bot.send_message(chat_id=configuration.admin, text=adminMessage)
 
 def addingUser(bot, message, types):
-    dbFunction.addToUser(message.chat.id, message.new_chat_member.id)
-    if(dbFunction.addToAllUser(message.new_chat_member)=='failed'):
-        dbFunction.updateToAllUser(message.new_chat_member)
+    botFunctions.addToUser(message.chat.id, message.new_chat_member.id)
+    if(botFunctions.addToAllUser(message.new_chat_member)=='failed'):
+        botFunctions.updateToAllUser(message.new_chat_member)
     else:
         try:
             bot.send_message(chat_id=message.from_user.id, text='<b>Tell</b> ' + common.getName(message.new_chat_member) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ common.getName(message.new_chat_member),  parse_mode='HTML')
@@ -48,7 +48,7 @@ def addingUser(bot, message, types):
             print('Cannot send message to admin')
 
 def welcomeToUser(bot, meessage):
-    welcomeMessage = dbFunction.getWelcomeMessage(meessage.chat.id)
+    welcomeMessage = botFunctions.getWelcomeMessage(meessage.chat.id)
 
     p = re.compile('(#uname)')
     welcomeMessage = p.sub("@"+str(meessage.new_chat_member.username), welcomeMessage)

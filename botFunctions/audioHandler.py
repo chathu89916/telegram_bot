@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import configuration
 import common
-import dbFunction
+import botFunctions
 
 admin = configuration.admin
 
@@ -20,7 +20,7 @@ def mentionAllAudio(bot, message):
         if(message.chat.type != 'private'):
             mentionedUser = common.getName(message.from_user)
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
-            for userid in dbFunction.getAllUsers(message.chat.id):
+            for userid in botFunctions.getAllUsers(message.chat.id):
                 try:
                     bot.send_audio(chat_id=userid, data=message.audio.file_id, caption=text, parse_mode='HTML')
                 except:
@@ -31,7 +31,7 @@ def mentionOneAudio(bot, message):
         listUser = common.mentionedList(message.chat.id, message.caption)
         if (message.reply_to_message != None):
             if (message.reply_to_message.from_user.is_bot == False):
-                if (dbFunction.isAvailable(message.chat.id, message.reply_to_message.from_user.id)):
+                if (botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id)):
                     try:
                         bot.send_message(chat_id=message.reply_to_message.from_user.id,
                                          text=common.getName(

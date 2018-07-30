@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import configuration
 import common
-import dbFunction
+import botFunctions
 
 admin = configuration.admin
 
@@ -17,7 +17,7 @@ def privateSticker(bot, message):
         bot.forward_message(chat_id=admin, from_chat_id=message.chat.id, message_id=message.message_id)
 
 def deleteSticker(bot, message):
-    if(not(dbFunction.getStickerPermission(message.chat.id))):
+    if(not(botFunctions.getStickerPermission(message.chat.id))):
         if(common.isBotAdmin(bot, message)):
             try:
                 bot.delete_message(message.chat.id, message.message_id)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import configuration
 import common
-import dbFunction
+import botFunctions
 
 admin = configuration.admin
 
@@ -16,7 +16,7 @@ def privateLocation(bot, message):
         bot.forward_message(chat_id=admin, from_chat_id=message.chat.id, message_id=message.message_id)
 
 def replyToLocation(bot, message, types):
-    if(dbFunction.isAvailable(message.chat.id, message.reply_to_message.from_user.id)):
+    if(botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id)):
         try:
             bot.send_message(chat_id=message.reply_to_message.from_user.id,
                              text= common.getName(message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as a Location',

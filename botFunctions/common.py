@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
-import dbFunction
+import botFunctions
 import configuration
 
 def getName(name):
@@ -31,7 +31,7 @@ def checkAdmin(bot, chatID, userID):
     return False
 
 def isUserSuperAdmin(userID):
-    for admin in dbFunction.getAdmin():
+    for admin in botFunctions.getAdmin():
         if(admin==str(userID)):
             return True
     return False
@@ -43,20 +43,20 @@ def mentionedList(groupID, text):
     if(len(listAT)>0):
         for uname in listAT:
             username = re.split(r'[@]', uname)[1]
-            userID = dbFunction.getMentionedUser(groupID, username.lower())
+            userID = botFunctions.getMentionedUser(groupID, username.lower())
             if userID != '':
                 mentionedList.append(userID)
     listSUB = re.split('\W+', text)
     listSUB = list(set(listSUB))
     if (len(listSUB) > 0):
         for subname in listSUB:
-            userID = dbFunction.getSubscribeUser(subname.lower())
+            userID = botFunctions.getSubscribeUser(subname.lower())
             if(len(userID)>0):
                 for uID in userID:
                     mentionedList.append(uID)
     mentionedList = list(set(mentionedList))
     finalMentionedUsers = []
-    for getAllUsers in dbFunction.getAllUsers(groupID):
+    for getAllUsers in botFunctions.getAllUsers(groupID):
         for mentionUsers in mentionedList:
             if(str(getAllUsers)==str(mentionUsers)):
                 finalMentionedUsers.append(mentionUsers)
@@ -76,16 +76,16 @@ def stringToBoolean(text):
         return False
 
 def updateGroupID(message):
-    for IDTitle in dbFunction.getGroupIDTitle():
+    for IDTitle in botFunctions.getGroupIDTitle():
         if(str(message.chat.id) == IDTitle[0]):
-            dbFunction.updateGroupTitle(message.chat.id, message.chat.title)
+            botFunctions.updateGroupTitle(message.chat.id, message.chat.title)
             return
         if(message.chat.title==IDTitle[1]):
-            dbFunction.updateGroupID(message.chat.id, message.chat.title)
+            botFunctions.updateGroupID(message.chat.id, message.chat.title)
 
 def autoAddDetails(message, bot, types):
-    dbFunction.addToUser(message.chat.id, message.from_user.id)
-    if (dbFunction.addToAllUser(message.from_user) == 'success'):
+    botFunctions.addToUser(message.chat.id, message.from_user.id)
+    if (botFunctions.addToAllUser(message.from_user) == 'success'):
         for admin in bot.get_chat_administrators(chat_id=message.chat.id):
             try:
                 bot.send_message(chat_id=admin.user.id, text='<b>Tell</b> ' + getName(message.from_user) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ getName(message.from_user),  parse_mode='HTML')
@@ -93,4 +93,4 @@ def autoAddDetails(message, bot, types):
                 print('Cannot send message to admin')
         exceptionHandling(message, bot, types, message.from_user)
         return
-    dbFunction.updateToAllUser(message.from_user)
+    botFunctions.updateToAllUser(message.from_user)

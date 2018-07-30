@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import re
-import dbFunction
 import common
 import configuration
 import botFunctions
@@ -13,7 +12,7 @@ def subscribe(bot, message):
     if(len(subList)==3):
         if(subList[2]!=''):
             subname = subList[2].lower()
-            if(dbFunction.subscribe(userID, subname)=='success'):
+            if(botFunctions.subscribe(userID, subname)=='success'):
                 try:
                     bot.send_message(chat_id=userID, text='Subscribe name Successfully added')
                 except:
@@ -45,10 +44,10 @@ def unsubscribe(bot, message):
     if(len(subList)==3):
         if(subList[2]!=''):
             subname = subList[2].lower()
-            subNameList = dbFunction.subscribelist(userID)
+            subNameList = botFunctions.subscribelist(userID)
             for snm in subNameList:
                 if(snm==subname):
-                    if(dbFunction.unsubscribe(subname)=='success'):
+                    if(botFunctions.unsubscribe(subname)=='success'):
                         try:
                             bot.send_message(chat_id=userID, text='Subscribe name Successfully Removed')
                         except:
@@ -81,7 +80,7 @@ def unsubscribe(bot, message):
 
 def subscribelist(bot, message):
     userID = message.from_user.id
-    subList = dbFunction.subscribelist(userID)
+    subList = botFunctions.subscribelist(userID)
     if(len(subList)!=0):
         txt = 'Here is your Subscribed Name List\n\n'
         for subname in subList:
@@ -119,7 +118,7 @@ def hhhpermission(bot, message):
                         except:
                             print('hhhpermission must be True or False')
                         return
-                    if (dbFunction.updateHHHPermission(hhhpermission, message.chat.id) == 'success'):
+                    if (botFunctions.updateHHHPermission(hhhpermission, message.chat.id) == 'success'):
                         try:
                             bot.send_message(chat_id=userID, text='hhh permission successfully changed')
                         except:
@@ -168,7 +167,7 @@ def stickerpermission(bot, message):
                         except:
                             print('Sticker Permission must be True or False')
                         return
-                    if (dbFunction.updateStickerPermission(hhhpermission, message.chat.id) == 'success'):
+                    if (botFunctions.updateStickerPermission(hhhpermission, message.chat.id) == 'success'):
                         try:
                             bot.send_message(chat_id=userID, text='Sticker Permission successfully changed')
                         except:
@@ -207,7 +206,7 @@ def welcomemessage(bot, message):
             if (len(subList) == 2):
                 if (subList[1] != ''):
                     welcomeMessage = subList[1]
-                    if (dbFunction.updateWelcomeMessage(welcomeMessage, message.chat.id) == 'success'):
+                    if (botFunctions.updateWelcomeMessage(welcomeMessage, message.chat.id) == 'success'):
                         try:
                             bot.send_message(chat_id=userID, text='Welcome Message successfully changed')
                         except:
@@ -269,7 +268,7 @@ def all(bot, message):
             if (len(subList) == 2):
                 if (subList[1] != ''):
                     allMessage = subList[1] + '\n\n/all by ' + common.getName(message.from_user)
-                    for allID in dbFunction.all():
+                    for allID in botFunctions.all():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
                         except:
@@ -298,7 +297,7 @@ def allusers(bot, message):
             if (len(subList) == 2):
                 if (subList[1] != ''):
                     allMessage = subList[1] + '\n\n/allusers by ' + common.getName(message.from_user)
-                    for allID in dbFunction.allusers():
+                    for allID in botFunctions.allusers():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
                         except:
@@ -327,7 +326,7 @@ def allgroups(bot, message):
             if (len(subList) == 2):
                 if (subList[1] != ''):
                     allMessage = subList[1] + '\n\n/allgroups by ' + common.getName(message.from_user)
-                    for allID in dbFunction.allgroups():
+                    for allID in botFunctions.allgroups():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
                         except:
@@ -357,7 +356,7 @@ def allgroupsadmins(bot, message):
             if (len(subList) == 2):
                 if (subList[1] != ''):
                     allMessage = subList[1] + '\n\n/allgroupsadmins by ' + common.getName(message.from_user)
-                    for allID in dbFunction.allgroups():
+                    for allID in botFunctions.allgroups():
                         try:
                             for admin in bot.get_chat_administrators(allID):
                                 if (admin.user.is_bot == False):
@@ -394,7 +393,7 @@ def allsuperadmins(bot, message):
             if (len(subList) == 2):
                 if (subList[1] != ''):
                     allMessage = subList[1] + '\n\n/allsuperadmins by ' + common.getName(message.from_user)
-                    for allID in dbFunction.getAdmin():
+                    for allID in botFunctions.getAdmin():
                         try:
                             bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
                         except:
@@ -411,8 +410,8 @@ def allsuperadmins(bot, message):
                     print('valid All Groups Super Admin message failed')
 
 def start(bot, message):
-    if (dbFunction.addToAllUser(message.from_user) == 'failed'):
-        if (dbFunction.updateToAllUser(message.from_user) == 'failed'):
+    if (botFunctions.addToAllUser(message.from_user) == 'failed'):
+        if (botFunctions.updateToAllUser(message.from_user) == 'failed'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text='Cannot update your details ' + common.getName(message.from_user))
             except:
@@ -432,14 +431,14 @@ def start(bot, message):
 
 def addSuperAdmin(bot, message):
     if(message.reply_to_message.from_user.is_bot==False):
-        if(dbFunction.addToSuperAdmin(message.reply_to_message.from_user.id)):
+        if(botFunctions.addToSuperAdmin(message.reply_to_message.from_user.id)):
             bot.send_message(chat_id=admin, text='Successfully added ' + common.getName(message.reply_to_message.from_user) +' as a Super Admin')
         else:
             bot.send_message(chat_id=admin, text='Failed to add ' + common.getName(message.reply_to_message.from_user) +' as a Super Admin')
 
 def removeSuperAdmin(bot, message):
     if(message.reply_to_message.from_user.is_bot==False):
-        if(dbFunction.removeFromSuperAdmin(message.reply_to_message.from_user.id)):
+        if(botFunctions.removeFromSuperAdmin(message.reply_to_message.from_user.id)):
             bot.send_message(chat_id=admin, text='Successfully removed ' + common.getName(message.reply_to_message.from_user) +' from Super Admin')
         else:
             bot.send_message(chat_id=admin, text='Failed to remove ' + common.getName(message.reply_to_message.from_user) +' from Super Admin')

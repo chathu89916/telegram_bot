@@ -1,4 +1,4 @@
-import dbFunction
+import botFunctions
 
 def updateChatTitle(message):
-    dbFunction.updateGroupTitle(message.chat.id, message.chat.title)
+    botFunctions.updateGroupTitle(message.chat.id, message.chat.title)
