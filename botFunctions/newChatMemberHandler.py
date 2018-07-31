@@ -35,7 +35,7 @@ def addingBot(bot, message):
                         print("Failed to send message to the admin")
 
 def getOtherAdmins(bot, message):
-    adminMessage = "Group Title : " + message.chat.title + " (" + str(
+    adminMessage = "Group Title : <b>" + message.chat.title + "</b> (" + str(
         message.chat.id) + ")\nGroup Members Count : " + str((bot.get_chat_members_count(
         chat_id=message.chat.id)) - 1) + "\nGroup Type : " + message.chat.type + "\nCreator & Admins : \n\n"
 
@@ -47,7 +47,7 @@ def getOtherAdmins(bot, message):
     bot.leave_chat(chat_id=message.chat.id)
 
     adminMessage = adminMessage + "\nAdded me by " + botFunctions.getName(message.from_user)
-    bot.send_message(chat_id=configuration.admin, text=adminMessage)
+    bot.send_message(chat_id=configuration.admin, text=adminMessage, parse_mode='HTML')
 
 def addingUser(bot, message, types):
     botFunctions.addToUser(message.chat.id, message.new_chat_member.id)
