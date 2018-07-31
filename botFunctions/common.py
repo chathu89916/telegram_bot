@@ -110,3 +110,10 @@ def formatUserData(user):
         userName = user.username.lower()
 
     return firstName, lastName, userName
+
+def superAdminsInGroup(groupID):
+    adminID = botFunctions.getAdmin()
+    adminID.append(str(configuration.admin))
+    allUsersID = botFunctions.getAllUsers(groupID)
+    finalList = [i for i in adminID if i in allUsersID]
+    return finalList
