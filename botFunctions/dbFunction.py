@@ -14,7 +14,7 @@ def getAllUsers(groupID):
     usersArray = []
     try:
         conn, c = connectDB()
-        c.execute('SELECT userid FROM users WHERE groupid='+str(groupID))
+        c.execute("SELECT userid FROM users WHERE groupid='"+groupID+"'")
         for row in c.fetchall():
             usersArray.append(row[0])
     except Exception as e:
@@ -44,7 +44,7 @@ def getMentionedUser(groupID, username):
     userID = ''
     try:
         conn, c = connectDB()
-        c.execute("SELECT u.userid FROM users u, allusers a WHERE a.userid=u.userid AND u.groupid='"+str(groupID)+"' AND a.uname='"+str(username)+"'")
+        c.execute("SELECT u.userid FROM users u, allusers a WHERE a.userid=u.userid AND u.groupid='"+groupID+"' AND a.uname='"+username+"'")
         for uID in c.fetchall():
             userID = uID[0]
     except Exception as e:
@@ -76,7 +76,7 @@ def getSubscribeName(userID):
     subscribersArray = []
     try:
         conn, c = connectDB()
-        c.execute("SELECT subsname FROM subscribe WHERE userid='"+str(userID)+"'")
+        c.execute("SELECT subsname FROM subscribe WHERE userid='"+userID+"'")
         for row in c.fetchall():
             subscribersArray.append(row[0])
     except Exception as e:
@@ -91,7 +91,7 @@ def isAvailable(groupID, useID):
     userID = ''
     try:
         conn, c = connectDB()
-        c.execute("SELECT userid FROM users WHERE groupid='" + str(groupID) + "' AND userid='" + str(useID) + "'")
+        c.execute("SELECT userid FROM users WHERE groupid='" + groupID + "' AND userid='" + useID + "'")
         for uID in c.fetchall():
             userID = uID[0]
     except Exception as e:
@@ -110,7 +110,7 @@ def subscribeDB(userID, subname):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO subscribe (subsname, userid) VALUES ('"+ subname +"', '"+ str(userID)+"')")
+        c.execute("INSERT INTO subscribe (subsname, userid) VALUES ('"+ subname +"', '"+ userID+"')")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -126,7 +126,7 @@ def unsubscribeDB(subname):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("DELETE FROM subscribe WHERE subsname='"+ str(subname)+"'")
+        c.execute("DELETE FROM subscribe WHERE subsname='"+ subname+"'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -142,7 +142,7 @@ def subscribelistDB(userID):
     subscribersList = []
     try:
         conn, c = connectDB()
-        c.execute('SELECT subsname FROM subscribe WHERE userid='+str(userID))
+        c.execute("SELECT subsname FROM subscribe WHERE userid='"+userID+"'")
         for row in c.fetchall():
             subscribersList.append(row[0])
     except Exception as e:
@@ -157,7 +157,7 @@ def getStickerPermission(groupID):
     stickerPermission = True
     try:
         conn, c = connectDB()
-        c.execute("SELECT stickerPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
+        c.execute("SELECT stickerPermission FROM groups WHERE groupid='"+ groupID +"'")
         for permission in c.fetchall():
             stickerPermission = botFunctions.stringToBoolean(permission[0])
     except Exception as e:
@@ -173,7 +173,7 @@ def getHHHPermission(groupID):
     hhhPermission = True
     try:
         conn, c = connectDB()
-        c.execute("SELECT hhhPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
+        c.execute("SELECT hhhPermission FROM groups WHERE groupid='"+ groupID +"'")
         for permission in c.fetchall():
             hhhPermission = botFunctions.stringToBoolean(permission[0])
     except Exception as e:
@@ -189,7 +189,7 @@ def addToGroup(groupID, title):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO groups (groupid, title, welcomeMessage, stickerPermission, hhhPermission) VALUES ('"+ str(groupID) +"', '"+ str(title)+"', 'Welcome #uname for #title', 'True', 'True')")
+        c.execute("INSERT INTO groups (groupid, title, welcomeMessage, stickerPermission, hhhPermission) VALUES ('"+ groupID +"', '"+ title+"', 'Welcome #uname for #title', 'True', 'True')")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -205,7 +205,7 @@ def addToUser(groupID, userID):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO users (groupid, userid) VALUES ('"+ str(groupID) +"', '"+ str(userID)+"')")
+        c.execute("INSERT INTO users (groupid, userid) VALUES ('"+ groupID +"', '"+ userID+"')")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -221,7 +221,7 @@ def addToAllUser(user):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO allusers (userid, fname, lname, uname) VALUES ('"+ str(user.id) +"', '"+ str(user.first_name)+"', '"+ str(user.last_name) +"', '"+ str(user.username.lower()) +"')")
+        c.execute("INSERT INTO allusers (userid, fname, lname, uname) VALUES ('"+ user.id +"', '"+ user.first_name +"', '"+ user.last_name +"', '"+ user.username.lower() +"')")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -237,7 +237,7 @@ def updateToAllUser(user):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("UPDATE allusers SET fname='"+ str(user.first_name) +"', lname='"+ str(user.last_name) +"', uname='"+ str(user.username.lower()) +"' WHERE userid='"+ str(user.id) +"'")
+        c.execute("UPDATE allusers SET fname='"+ user.first_name +"', lname='"+ user.last_name +"', uname='"+ user.username.lower() +"' WHERE userid='"+ user.id +"'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -253,7 +253,7 @@ def getWelcomeMessage(groupID):
     welcomeMessage = ''
     try:
         conn, c = connectDB()
-        c.execute("SELECT welcomeMessage FROM groups WHERE groupid='"+str(groupID)+"'")
+        c.execute("SELECT welcomeMessage FROM groups WHERE groupid='"+groupID+"'")
         for welMsg in c.fetchall():
             welcomeMessage = welMsg[0]
     except Exception as e:
@@ -269,7 +269,7 @@ def updateHHHPermission(permission, groupID):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("UPDATE groups SET hhhPermission='"+ str(permission) +"' WHERE groupid='"+ str(groupID) +"'")
+        c.execute("UPDATE groups SET hhhPermission='"+ permission +"' WHERE groupid='"+ groupID +"'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -285,7 +285,7 @@ def updateStickerPermission(permission, groupID):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("UPDATE groups SET stickerPermission='"+ str(permission) +"' WHERE groupid='"+ str(groupID) +"'")
+        c.execute("UPDATE groups SET stickerPermission='"+ permission +"' WHERE groupid='"+ groupID +"'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -300,7 +300,7 @@ def updateStickerPermission(permission, groupID):
 def updateWelcomeMessage(msg, groupID):
     try:
         conn, c = connectDB()
-        c.execute("UPDATE groups SET welcomeMessage='"+ str(msg) +"' WHERE groupid='"+ str(groupID) +"'")
+        c.execute("UPDATE groups SET welcomeMessage='"+ msg +"' WHERE groupid='"+ groupID +"'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -371,8 +371,8 @@ def updateGroupIDDB(oldID, newID):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("UPDATE groups SET groupid='"+ str(newID) +"' WHERE groupid='"+ str(oldID) +"'")
-        c.execute("UPDATE users SET groupid='" + str(newID) + "' WHERE groupid='" + str(oldID) + "'")
+        c.execute("UPDATE groups SET groupid='"+ newID +"' WHERE groupid='"+ oldID +"'")
+        c.execute("UPDATE users SET groupid='" + newID + "' WHERE groupid='" + oldID + "'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -388,7 +388,7 @@ def updateGroupTitle(groupID, title):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("UPDATE groups SET title='" + str(title) + "' WHERE groupid='" + str(groupID) + "'")
+        c.execute("UPDATE groups SET title='" + title + "' WHERE groupid='" + groupID + "'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -404,7 +404,7 @@ def leftOfKikMember(groupID, userID):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("DELETE FROM users WHERE groupid='"+ str(groupID) +"' AND userid='"+ str(userID) +"'")
+        c.execute("DELETE FROM users WHERE groupid='"+ groupID +"' AND userid='"+ userID +"'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -420,8 +420,8 @@ def kikBotDB(groupID):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("DELETE FROM groups WHERE groupid='" + str(groupID) + "'")
-        c.execute("DELETE FROM users WHERE groupid='"+ str(groupID) +"'")
+        c.execute("DELETE FROM groups WHERE groupid='" + groupID + "'")
+        c.execute("DELETE FROM users WHERE groupid='"+ groupID +"'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -437,7 +437,7 @@ def addToSuperAdmin(userID):
     status = False
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO superadmin (userid) VALUES ('"+ str(userID) +"')")
+        c.execute("INSERT INTO superadmin (userid) VALUES ('"+ userID +"')")
         conn.commit()
         status = True
     except Exception as e:
@@ -453,7 +453,7 @@ def removeFromSuperAdmin(userID):
     status = False
     try:
         conn, c = connectDB()
-        c.execute("DELETE FROM superadmin WHERE userid='"+ str(userID) +"'")
+        c.execute("DELETE FROM superadmin WHERE userid='"+ userID +"'")
         conn.commit()
         status = True
     except Exception as e:
