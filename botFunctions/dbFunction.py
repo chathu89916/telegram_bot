@@ -189,7 +189,7 @@ def addToGroup(groupID, title):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO groups (groupid, title, welcomeMessage, stickerPermission, hhhPermission) VALUES ('"+ str(groupID) +"', '"+ title+"', 'Welcome #uname for #title', 'True', 'True')")
+        c.execute("INSERT INTO groups (groupid, title, welcomeMessage, stickerPermission, hhhPermission) VALUES ('"+ str(groupID) +"', '"+ title+"', 'Welcome #uname for <b>#title</b>', 'True', 'True')")
         conn.commit()
         status = 'success'
     except Exception as e:
