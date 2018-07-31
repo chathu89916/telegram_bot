@@ -7,18 +7,32 @@ admin = configuration.admin
 
 def addingBot(bot, message):
     if(botFunctions.addToGroup(message.chat.id, message.chat.title)=='success'):
-        bot.send_message(chat_id=admin, text='Successfully Added me for <b>' + str(message.chat.title) + '</b> ' + str(
-            message.chat.type) + ' and added me by ' + botFunctions.getName(message.from_user), parse_mode='HTML')
-        bot.send_message(chat_id=message.chat.id,
-                         text='Thank you '+ botFunctions.getName(message.from_user) + ' for adding me to <b>' + str(message.chat.title) + '</b> ' + str(message.chat.type) + '. All the group details and user details are successfully added to the database.',
-                         parse_mode='HTML')
+        bot.send_message(chat_id=admin, text='Successfully Added me for <b>' + message.chat.title + '</b> ' + message.chat.type + ' and added me by ' + botFunctions.getName(message.from_user), parse_mode='HTML')
+        try:
+            bot.send_message(chat_id=message.chat.id, text='Thank you '+ botFunctions.getName(message.from_user) + ' for adding me to <b>' + message.chat.title + '</b> ' + message.chat.type + '. All the group details and user details are successfully added to the database.', parse_mode='HTML')
+        except:
+            bot.send_message(chat_id=admin, text='Failed to send welcome message for <b>' + message.chat.title + '</b> ' +message.chat.type + ' and added me by ' + botFunctions.getName(message.from_user),parse_mode='HTML')
     else:
-        bot.send_message(chat_id=admin, text='Failed to Add bot for ' + str(message.chat.title) + ' ' + str(
-            message.chat.type) + '. Try to added me by ' + botFunctions.getName(message.from_user))
+        bot.send_message(chat_id=admin, text='Failed to Add bot for ' + message.chat.title + ' ' + message.chat.type + '. Try to added me by ' + botFunctions.getName(message.from_user))
+        bot.leave_chat(chat_id=message.chat.id)
 
+    adminList = []
+    failedDic = {}
     for chat in bot.get_chat_administrators(message.chat.id):
         if(chat.user.is_bot==False):
+            adminList.append(chat.user.id)
+            if(botFunctions.addToAllUser(chat.user)=="success"):
+                failedDic[str(chat.user.id)] = botFunctions.getName(chat.user)
             botFunctions.addToUser(message.chat.id, chat.user.id)
+
+    if(failedDic!={}):
+        for admn in adminList:
+            if(str(admn) not in list(failedDic.keys())):
+                for nm in list(failedDic.values()):
+                    try:
+                        bot.send_message(chat_id=admn, text='<b>Tell</b> ' + nm + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> ' + nm, parse_mode='HTML')
+                    except:
+                        print("Failed to send message to the admin")
 
 def getOtherAdmins(bot, message):
     adminMessage = "Group Title : " + message.chat.title + " (" + str(
