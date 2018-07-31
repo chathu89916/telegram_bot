@@ -218,10 +218,11 @@ def addToUser(groupID, userID):
         return status
 
 def addToAllUser(user):
+    firstName, lastName, userName = botFunctions.formatUserData(user)
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO allusers (userid, fname, lname, uname) VALUES ('"+ str(user.id) +"', '"+ user.first_name +"', '"+ user.last_name +"', '"+ user.username.lower() +"')")
+        c.execute("INSERT INTO allusers (userid, fname, lname, uname) VALUES ('"+ str(user.id) +"', '"+ firstName +"', '"+ lastName +"', '"+ userName +"')")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -234,10 +235,11 @@ def addToAllUser(user):
         return status
 
 def updateToAllUser(user):
+    firstName, lastName, userName = botFunctions.formatUserData(user)
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("UPDATE allusers SET fname='"+ user.first_name +"', lname='"+ user.last_name +"', uname='"+ user.username.lower() +"' WHERE userid='"+ str(user.id) +"'")
+        c.execute("UPDATE allusers SET fname='"+ firstName +"', lname='"+ lastName +"', uname='"+ userName +"' WHERE userid='"+ str(user.id) +"'")
         conn.commit()
         status = 'success'
     except Exception as e:

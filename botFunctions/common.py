@@ -96,3 +96,17 @@ def autoAddDetails(message, bot, types):
         exceptionHandling(message, bot, types, message.from_user)
         return
     botFunctions.updateToAllUser(message.from_user)
+
+def formatUserData(user):
+    firstName = ''
+    lastName = ''
+    userName = ''
+
+    if(user.first_name != '' and user.first_name != None):
+        firstName = user.first_name
+    if (user.last_name != '' and user.last_name != None):
+        lastName = user.last_name
+    if (user.username != '' and user.username != None):
+        userName = user.username.lower()
+
+    return firstName, lastName, userName

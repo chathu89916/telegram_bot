@@ -64,6 +64,7 @@ from .common import isUserSuperAdmin
 from .common import exceptionHandling
 from .common import stringToBoolean
 from .common import isBotAdmin
+from .common import formatUserData
 from .photoHandler import privatePhoto
 from .photoHandler import mentionOnePhoto
 from .photoHandler import mentionAllPhoto
