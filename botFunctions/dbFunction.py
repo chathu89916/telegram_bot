@@ -306,7 +306,6 @@ def updateWelcomeMessage(msg, groupID):
     except Exception as e:
         status = 'failed'
         conn.rollback()
-        print(e)
         raise e
     finally:
         c.close()
@@ -357,7 +356,6 @@ def getGroupIDTitle():
         conn, c = connectDB()
         c.execute("SELECT groupid,title FROM groups")
         for row in c.fetchall():
-            print(row)
             groupsArray.append(row)
     except Exception as e:
         groupsArray = []

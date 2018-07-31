@@ -380,7 +380,7 @@ def allgroupsadmins(bot, message):
                     print('valid All Groups Admin message failed')
 
 def allsuperadmins(bot, message):
-    if (botFunctions.isUserSuperAdmin(message.from_user.id)):
+    if (message.from_user.id==configuration.admin):
         if (message.chat.type != 'private'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text="Please use /allsuperadmins command in here")

@@ -31,6 +31,8 @@ def checkAdmin(bot, chatID, userID):
     return False
 
 def isUserSuperAdmin(userID):
+    if(userID==configuration.admin):
+        return True
     for admin in botFunctions.getAdmin():
         if(admin==str(userID)):
             return True
@@ -75,13 +77,13 @@ def stringToBoolean(text):
     else:
         return False
 
-def updateGroupID(message):
-    for IDTitle in botFunctions.getGroupIDTitle():
-        if(str(message.chat.id) == IDTitle[0]):
-            botFunctions.updateGroupTitle(message.chat.id, message.chat.title)
-            return
-        if(message.chat.title==IDTitle[1]):
-            botFunctions.updateGroupID(message.chat.id, message.chat.title)
+# def updateGroupID(message):
+#     for IDTitle in botFunctions.getGroupIDTitle():
+#         if(str(message.chat.id) == IDTitle[0]):
+#             botFunctions.updateGroupTitle(message.chat.id, message.chat.title)
+#             return
+#         if(message.chat.title==IDTitle[1]):
+#             botFunctions.updateGroupID(message)
 
 def autoAddDetails(message, bot, types):
     botFunctions.addToUser(message.chat.id, message.from_user.id)
