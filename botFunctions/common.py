@@ -111,9 +111,8 @@ def formatUserData(user):
 
     return firstName, lastName, userName
 
-def superAdminsInGroup(groupID):
+def groupAndSuperAdmin(bot, message):
     adminID = botFunctions.getAdmin()
     adminID.append(str(configuration.admin))
-    allUsersID = botFunctions.getAllUsers(groupID)
-    finalList = [i for i in adminID if i in allUsersID]
-    return finalList
+    allUsersID = botFunctions.getAllUsers(message.chat.id)
+    return list(set([i for i in adminID if i in allUsersID] + [str(k.user.id) for k in bot.get_chat_administrators(message.chat.id) if k.user.is_bot == False]))
