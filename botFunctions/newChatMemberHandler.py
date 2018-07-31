@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import configuration
 import botFunctions
-import botFunctions
 import re
 
 admin = configuration.admin
