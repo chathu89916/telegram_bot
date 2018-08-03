@@ -454,6 +454,13 @@ def botLog(bot, message):
     except:
         print('botLog seding failed')
 
+def adminWindowHandler(bot, types, message):
+    if (message.from_user.id == admin):
+        if (message.chat.type == 'private'):
+            adminWindow(bot, types, message, True)
+        else:
+            bot.send_message(chat_id=message.from_user.id, text="Try /adminwindow command here", parse_mode='HTML')
+
 def adminWindow(bot, types, message, status):
     usersIcon = u"\U0001F465"
     houseIcon = u"\U0001F3E1"

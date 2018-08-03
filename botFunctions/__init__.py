@@ -54,6 +54,7 @@ from .commandHandler import subscribe
 from .commandHandler import unsubscribe
 from .commandHandler import subscribelist
 from .commandHandler import adminWindow
+from .commandHandler import adminWindowHandler
 from .newChatTitleHandler import updateChatTitle
 from .migrateToChatIdHandler import updateGroupID
 from .pinnedMessageHandler import pinnedPost
