@@ -14,7 +14,7 @@ admin = configuration.admin
 
 @bot.message_handler(commands=['adminwindow'])
 def handle_command_botversion(message):
-    botFunctions.adminWindow(bot, types, message)
+    botFunctions.adminWindow(bot, types, message, True)
 
 @bot.message_handler(commands=['start'])
 def handle_command_botversion(message):
@@ -244,8 +244,14 @@ def handle_text(message):
     botFunctions.leftMember(message)
 
 @bot.callback_query_handler(func=lambda call: True)
-def  test_callback(call):
+def  handle_query(call):
     if (call.data == 'START'):
         bot.answer_callback_query(callback_query_id=call.id, url='https://telegram.me/'+str(botUsername)+'?start=XXXX')
+    if(call.data == "superadmins"):
+        botFunctions.superAdminHandler(bot, types, call)
+    if (call.data == 'noUserName'):
+        bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="No Username Found")
+    if (call.data == "backToHome"):
+        botFunctions.adminWindow(bot, types, call.message, False)
 
 bot.polling(none_stop=True, interval=0, timeout=0)
