@@ -472,3 +472,18 @@ def getSubscribeUserCount():
         c.close()
         conn.close()
         return SubscribeUserCount
+
+def detailsOfSuperAdmins():
+    bossArray = []
+    try:
+        conn, c = connectDB()
+        c.execute('SELECT userid, fname, lname, uname FROM allusers WHERE userid IN (SELECT userid FROM superadmin)')
+        for row in c.fetchall():
+            bossArray.append(list(row))
+    except Exception as e:
+        bossArray = []
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return bossArray
