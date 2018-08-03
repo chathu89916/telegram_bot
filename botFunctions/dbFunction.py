@@ -503,15 +503,14 @@ def detailsOfUser(userID):
         return bossArray
 
 def detailsOfGroup(groupID):
-    groupArray = []
     try:
         conn, c = connectDB()
         c.execute("SELECT title FROM groups WHERE groupid='"+str(groupID)+"'")
-        groupArray =list(c.fetchone())
+        groupTitle =c.fetchone()[0]
     except Exception as e:
-        groupArray = []
+        groupTitle = ''
         raise e
     finally:
         c.close()
         conn.close()
-        return groupArray
+        return groupTitle
