@@ -103,3 +103,4 @@ from .leftChatMemberHandler import leftMember
 from .queryHandler import superAdminHandler
 from .queryHandler import groupHandler
 from .queryHandler import removeSuperAdmin
+from .queryHandler import removeGroup
