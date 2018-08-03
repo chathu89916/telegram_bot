@@ -34,6 +34,7 @@ from .dbFunction import removeFromSuperAdmin
 from .dbFunction import getSubscribeUserCount
 from .dbFunction import detailsOfSuperAdmins
 from .dbFunction import detailsOfUser
+from .dbFunction import detailsOfGroup
 from .commandHandler import start
 from .commandHandler import botVersion
 from .commandHandler import botLog
