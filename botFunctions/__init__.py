@@ -74,6 +74,7 @@ from .common import formatUserData
 from .common import groupAndSuperAdmin
 from .common import sureOrNot
 from .common import userDetailFormatter
+from .common import jsonUserDetailFormatter
 from .photoHandler import privatePhoto
 from .photoHandler import mentionOnePhoto
 from .photoHandler import mentionAllPhoto
@@ -104,3 +105,4 @@ from .queryHandler import superAdminHandler
 from .queryHandler import groupHandler
 from .queryHandler import removeSuperAdmin
 from .queryHandler import removeGroup
+from .queryHandler import viewGroupInfo
