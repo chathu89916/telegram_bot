@@ -12,6 +12,10 @@ botUsername = configuration.botUsername
 
 admin = configuration.admin
 
+@bot.message_handler(commands=['adminwindow'])
+def handle_command_botversion(message):
+    botFunctions.adminWindow(bot, types, message)
+
 @bot.message_handler(commands=['start'])
 def handle_command_botversion(message):
     botFunctions.start(bot, message)
