@@ -49,7 +49,6 @@ def getMentionedUser(groupID, username):
             userID = uID[0]
     except Exception as e:
         userID = ''
-        conn.rollback()
         raise e
     finally:
         c.close()
@@ -65,7 +64,6 @@ def getSubscribeUser(subName):
             userID.append(uID[0])
     except Exception as e:
         userID = []
-        conn.rollback()
         raise e
     finally:
         c.close()
@@ -96,7 +94,6 @@ def isAvailable(groupID, useID):
             userID = uID[0]
     except Exception as e:
         userID = ''
-        conn.rollback()
         raise e
     finally:
         c.close()
@@ -162,7 +159,6 @@ def getStickerPermission(groupID):
             stickerPermission = botFunctions.stringToBoolean(permission[0])
     except Exception as e:
         stickerPermission = True
-        conn.rollback()
         raise e
     finally:
         c.close()
@@ -178,7 +174,6 @@ def getHHHPermission(groupID):
             hhhPermission = botFunctions.stringToBoolean(permission[0])
     except Exception as e:
         hhhPermission = True
-        conn.rollback()
         raise e
     finally:
         c.close()
@@ -260,7 +255,6 @@ def getWelcomeMessage(groupID):
             welcomeMessage = welMsg[0]
     except Exception as e:
         welcomeMessage = ''
-        conn.rollback()
         raise e
     finally:
         c.close()
