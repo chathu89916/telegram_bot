@@ -2,8 +2,10 @@
 import botFunctions
 import ast
 
+crossIcon = u"\u274C"
+
 def superAdminHandler(bot, types, call, status):
-    crossIcon = u"\u274C"
+    title = "<b>Super Admin List</b>"
     markup = types.InlineKeyboardMarkup()
     superAdminList = botFunctions.detailsOfSuperAdmins()
     for adminID in superAdminList:
@@ -14,9 +16,9 @@ def superAdminHandler(bot, types, call, status):
             markup.add(types.InlineKeyboardButton(text=adminDetails,  callback_data='noUserName'), types.InlineKeyboardButton(text=crossIcon, callback_data="['superadmin',"+str(adminID[0])+"]"))
     markup.add(types.InlineKeyboardButton("< back", callback_data="backToHome"))
     if(status):
-        bot.edit_message_text(chat_id=call.message.chat.id, text="<b>Super Admin List</b>", message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
+        bot.edit_message_text(chat_id=call.message.chat.id, text=title, message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
     else:
-        bot.send_message(chat_id=call.message.chat.id, text="<b>Super Admin List</b>", reply_markup=markup, parse_mode='HTML')
+        bot.send_message(chat_id=call.message.chat.id, text=title, reply_markup=markup, parse_mode='HTML')
 
 def removeSuperAdmin(bot, types, call):
     removeID = ast.literal_eval(call.data)[1]
@@ -29,5 +31,17 @@ def removeSuperAdmin(bot, types, call):
     bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id-1)
     superAdminHandler(bot, types, call, False)
 
-def groupHandler():
-    pass
+def groupHandler(bot, types, call, status):
+    title = "<b>Group List</b>"
+    markup = types.InlineKeyboardMarkup()
+    groupList = botFunctions.getGroupIDTitle()
+    for groupID in groupList:
+        markup.add(types.InlineKeyboardButton(text=groupID[1], callback_data='noUserName'),
+                   types.InlineKeyboardButton(text=crossIcon, callback_data="['group'," + str(groupID[0]) + "]"))
+    markup.add(types.InlineKeyboardButton("< back", callback_data="backToHome"))
+    if (status):
+        bot.edit_message_text(chat_id=call.message.chat.id, text=title,
+                              message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
+    else:
+        bot.send_message(chat_id=call.message.chat.id, text=title, reply_markup=markup,
+                         parse_mode='HTML')
