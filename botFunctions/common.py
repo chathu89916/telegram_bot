@@ -134,7 +134,7 @@ def sureOrNot(bot, types, call):
         callBackDetails = "['removesuperadmin',"+str(searchID)+"]"
     else:
         groupOrUser = "Group"
-        userGroupDetails = userDetailFormatter(botFunctions.detailsOfUser(searchID))
+        userGroupDetails = botFunctions.detailsOfGroup(searchID)
         callBackDetails = "['removegroup',"+str(searchID)+"]"
     message = """<b>Are you sure want to remove this """+groupOrUser+"""?</b>
 """ + userGroupDetails + """
