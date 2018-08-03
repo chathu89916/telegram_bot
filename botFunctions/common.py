@@ -126,6 +126,14 @@ def userDetailFormatter(detail):
         userDetails = userDetails + ' ---> @' + detail[3]
     return userDetails
 
+def jsonUserDetailFormatter(detail):
+    userDetails = detail[1]
+    if (detail[2] != None):
+        userDetails = userDetails + detail[2]
+    if (detail[3] != None):
+        userDetails = userDetails + ' (@' + detail[3] + ')'
+    return userDetails
+
 def sureOrNot(bot, types, call):
     searchID = ast.literal_eval(call.data)[1]
     if(call.data.startswith("['superadmin'")):
