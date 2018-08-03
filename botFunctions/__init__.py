@@ -32,6 +32,7 @@ from .dbFunction import getStickerPermission
 from .dbFunction import addToSuperAdmin
 from .dbFunction import removeFromSuperAdmin
 from .dbFunction import getSubscribeUserCount
+from .dbFunction import detailsOfSuperAdmins
 from .commandHandler import start
 from .commandHandler import botVersion
 from .commandHandler import botLog
