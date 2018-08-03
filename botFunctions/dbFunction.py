@@ -514,3 +514,19 @@ def detailsOfGroup(groupID):
         c.close()
         conn.close()
         return groupTitle
+
+def removeFromGroup(groupID):
+    status = False
+    try:
+        conn, c = connectDB()
+        c.execute("DELETE FROM groups WHERE groupid='"+ str(groupID) +"'")
+        conn.commit()
+        status = True
+    except Exception as e:
+        status = False
+        conn.rollback()
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return status
