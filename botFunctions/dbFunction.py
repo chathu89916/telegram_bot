@@ -464,3 +464,17 @@ def removeFromSuperAdmin(userID):
         c.close()
         conn.close()
         return status
+
+def getSubscribeUserCount():
+    SubscribeUserCount = 0
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT count(userid) FROM subscribe ")
+        SubscribeUserCount = list(c.fetchone())[0]
+    except Exception as e:
+        SubscribeUserCount = 0
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return SubscribeUserCount
