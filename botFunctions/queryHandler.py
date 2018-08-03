@@ -5,20 +5,25 @@ import ast
 crossIcon = u"\u274C"
 
 def superAdminHandler(bot, types, call, status):
-    title = "<b>Super Admin List</b>"
-    markup = types.InlineKeyboardMarkup()
     superAdminList = botFunctions.detailsOfSuperAdmins()
-    for adminID in superAdminList:
-        adminDetails = botFunctions.userDetailFormatter(adminID)
-        if(adminID[3]!=''):
-            markup.add(types.InlineKeyboardButton(text=adminDetails, url='https://telegram.me/'+adminID[3]+'?start=XXXX'), types.InlineKeyboardButton(text=crossIcon, callback_data="['superadmin',"+str(adminID[0])+"]"))
-        else:
-            markup.add(types.InlineKeyboardButton(text=adminDetails,  callback_data='noUserName'), types.InlineKeyboardButton(text=crossIcon, callback_data="['superadmin',"+str(adminID[0])+"]"))
-    markup.add(types.InlineKeyboardButton("< back", callback_data="backToHome"))
-    if(status):
-        bot.edit_message_text(chat_id=call.message.chat.id, text=title, message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
+    if(superAdminList==[]):
+        bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="No Super Admins")
+        botFunctions.adminWindow(bot, types, call.message, True)
+        bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     else:
-        bot.send_message(chat_id=call.message.chat.id, text=title, reply_markup=markup, parse_mode='HTML')
+        title = "<b>Super Admin List</b>"
+        markup = types.InlineKeyboardMarkup()
+        for adminID in superAdminList:
+            adminDetails = botFunctions.userDetailFormatter(adminID)
+            if(adminID[3]!=''):
+                markup.add(types.InlineKeyboardButton(text=adminDetails, url='https://telegram.me/'+adminID[3]+'?start=XXXX'), types.InlineKeyboardButton(text=crossIcon, callback_data="['superadmin',"+str(adminID[0])+"]"))
+            else:
+                markup.add(types.InlineKeyboardButton(text=adminDetails,  callback_data='noUserName'), types.InlineKeyboardButton(text=crossIcon, callback_data="['superadmin',"+str(adminID[0])+"]"))
+        markup.add(types.InlineKeyboardButton("< back", callback_data="backToHome"))
+        if(status):
+            bot.edit_message_text(chat_id=call.message.chat.id, text=title, message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
+        else:
+            bot.send_message(chat_id=call.message.chat.id, text=title, reply_markup=markup, parse_mode='HTML')
 
 def removeSuperAdmin(bot, types, call):
     removeID = ast.literal_eval(call.data)[1]
@@ -58,7 +63,6 @@ def removeGroup(bot, types, call):
     groupHandler(bot, types, call, False)
 
 def viewGroupInfo(bot, types, call):
-    print(call)
     groupTypeIcon = u"\U0001F4E2"
     descriptionIcon = u"\U0001F4CB"
     memberCountIcon = u"\U0001F468\u200D\U0001F469\u200D\U0001F467\u200D\U0001F466"
