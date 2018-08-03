@@ -253,5 +253,7 @@ def  handle_query(call):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="No Username Found")
     if (call.data == "backToHome"):
         botFunctions.adminWindow(bot, types, call.message, False)
+    if (call.data.startswith("['superadmin'")):
+        botFunctions.sureOrNot(bot, types, call)
 
 bot.polling(none_stop=True, interval=0, timeout=0)
