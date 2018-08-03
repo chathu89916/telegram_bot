@@ -454,7 +454,7 @@ def botLog(bot, message):
     except:
         print('botLog seding failed')
 
-def adminWindow(bot, types, message):
+def adminWindow(bot, types, message, status):
     usersIcon = u"\U0001F465"
     houseIcon = u"\U0001F3E1"
     subscribeUserIcon = u"\U0001F5E3"
@@ -469,4 +469,8 @@ def adminWindow(bot, types, message):
 """
     markup = types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton("Super Admins", callback_data="superadmins"), types.InlineKeyboardButton("Groups", callback_data="groups"))
-    bot.send_message(chat_id=message.chat.id, text=firstMessage, reply_markup=markup, parse_mode='HTML')
+    if(status):
+        bot.send_message(chat_id=message.chat.id, text=firstMessage, reply_markup=markup, parse_mode='HTML')
+    else:
+        bot.edit_message_text(chat_id=message.chat.id, text=firstMessage,
+                              message_id=message.message_id, reply_markup=markup, parse_mode='HTML')
