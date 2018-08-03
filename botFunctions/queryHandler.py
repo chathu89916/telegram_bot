@@ -45,3 +45,15 @@ def groupHandler(bot, types, call, status):
     else:
         bot.send_message(chat_id=call.message.chat.id, text=title, reply_markup=markup,
                          parse_mode='HTML')
+
+def removeGroup(bot, types, call):
+    removeID = ast.literal_eval(call.data)[1]
+    if (botFunctions.removeFromGroup(removeID)):
+        successMessage = "Group Successfully Deleted"
+    else:
+        successMessage = "Group Deletion Failed"
+    bot.leave_chat(chat_id=removeID)
+    bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=successMessage)
+    bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
+    bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id - 1)
+    groupHandler(bot, types, call, False)

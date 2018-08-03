@@ -249,6 +249,8 @@ def  handle_query(call):
         bot.answer_callback_query(callback_query_id=call.id, url='https://telegram.me/'+str(botUsername)+'?start=XXXX')
     if(call.data == "superadmins"):
         botFunctions.superAdminHandler(bot, types, call, True)
+    if (call.data == "groups"):
+        botFunctions.groupHandler(bot, types, call, True)
     if (call.data == 'noUserName'):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="No Username Found")
     if (call.data == "backToHome"):
@@ -257,8 +259,10 @@ def  handle_query(call):
         botFunctions.sureOrNot(bot, types, call)
     if (call.data.startswith("['removesuperadmin'")):
         botFunctions.removeSuperAdmin(bot, types, call)
+    if (call.data.startswith("['group'")):
+        botFunctions.sureOrNot(bot, types, call)
     if (call.data.startswith("['removegroup'")):
-        print(call.data)
+        botFunctions.removeGroup(bot, types, call)
     if (call.data == "no"):
         bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
 
