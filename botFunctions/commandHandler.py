@@ -461,11 +461,11 @@ def adminWindow(bot, types, message):
     allUserCount = botFunctions.allusersDB().__len__()
     allGroupCount = botFunctions.allgroupsDB().__len__()
     subscribeUserCount = botFunctions.getSubscribeUserCount()
-    firstMessage = f"""<b>Admin Window</b>
+    firstMessage = """<b>Admin Window</b>
     
-{usersIcon} All Users : {allUserCount}
-{houseIcon} All Groups : {allGroupCount}
-{subscribeUserIcon} Subscribe Names : {subscribeUserCount}
+"""+usersIcon+""" All Users : """+str(allUserCount)+"""
+"""+houseIcon+""" All Groups : """+str(allGroupCount)+"""
+"""+subscribeUserIcon+""" Subscribe Names : """+str(subscribeUserCount)+"""
 """
     markup = types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton("Super Admins", callback_data="superadmins"), types.InlineKeyboardButton("Groups", callback_data="groups"))
