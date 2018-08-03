@@ -36,8 +36,7 @@ def groupHandler(bot, types, call, status):
     markup = types.InlineKeyboardMarkup()
     groupList = botFunctions.getGroupIDTitle()
     for groupID in groupList:
-        markup.add(types.InlineKeyboardButton(text=groupID[1], callback_data='noUserName'),
-                   types.InlineKeyboardButton(text=crossIcon, callback_data="['group'," + str(groupID[0]) + "]"))
+        markup.add(types.InlineKeyboardButton(text=groupID[1], callback_data="['viewgroup'," + str(groupID[0]) + "]"))
     markup.add(types.InlineKeyboardButton("< back", callback_data="backToHome"))
     if (status):
         bot.edit_message_text(chat_id=call.message.chat.id, text=title,
@@ -57,3 +56,40 @@ def removeGroup(bot, types, call):
     bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id - 1)
     groupHandler(bot, types, call, False)
+
+def viewGroupInfo(bot, types, call):
+    print(call)
+    groupTypeIcon = u"\U0001F4E2"
+    descriptionIcon = u"\U0001F4CB"
+    memberCountIcon = u"\U0001F468\u200D\U0001F469\u200D\U0001F467\u200D\U0001F466"
+    creatorIcon = u"\U0001F920"
+    adminIcon = u"\U0001F60E"
+    botIcon = u"\U0001F916"
+    adminDetails = """"""
+    groupID = ast.literal_eval(call.data)[1]
+    allDetails = bot.get_chat(groupID)
+    if(allDetails.description==None):
+        description = "No Description"
+    else:
+        description = allDetails.description
+    for admin in bot.get_chat_administrators(groupID):
+        adminList = [admin.user.id, admin.user.first_name, admin.user.last_name, admin.user.username]
+        if(admin.status=='creator'):
+            creatorDetails = """\t\t\t"""+creatorIcon+""" Creator : """+botFunctions.jsonUserDetailFormatter(adminList)+""""""
+        else:
+            if(admin.user.is_bot==False):
+                adminDetails = adminDetails + """\n\t\t\t"""+adminIcon+""" Administrator : """+botFunctions.jsonUserDetailFormatter(adminList)+""""""
+            else:
+                adminDetails = adminDetails + """\n\t\t\t""" + botIcon + """ Administrator : """ + botFunctions.jsonUserDetailFormatter(adminList) + """"""
+    groupDetails = """<b>"""+ allDetails.title +"""</b>
+    
+"""+groupTypeIcon+""" Type : """+allDetails.type+"""
+"""+descriptionIcon+""" DescriptionIcon : """ + description + """
+"""+memberCountIcon+""" Member Count : """ + str(bot.get_chat_members_count(groupID)) + """
+Chat Administrators : 
+"""+creatorDetails+"""
+"""+adminDetails+"""
+"""
+    markup = types.InlineKeyboardMarkup()
+    markup.add(types.InlineKeyboardButton("< back", callback_data="groups"), types.InlineKeyboardButton(text=crossIcon, callback_data="['group'," + str(groupID) + "]"))
+    bot.edit_message_text(chat_id=call.message.chat.id, text=groupDetails, message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
