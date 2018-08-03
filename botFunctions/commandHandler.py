@@ -458,14 +458,17 @@ def adminWindow(bot, types, message, status):
     usersIcon = u"\U0001F465"
     houseIcon = u"\U0001F3E1"
     subscribeUserIcon = u"\U0001F5E3"
+    adminIcon = u"\U0001F479"
     allUserCount = botFunctions.allusersDB().__len__()
     allGroupCount = botFunctions.allgroupsDB().__len__()
+    allSuperAdminCount = botFunctions.getAdmin().__len__()
     subscribeUserCount = botFunctions.getSubscribeUserCount()
     firstMessage = """<b>Admin Window</b>
     
 """+usersIcon+""" All Users : """+str(allUserCount)+"""
 """+houseIcon+""" All Groups : """+str(allGroupCount)+"""
 """+subscribeUserIcon+""" Subscribe Names : """+str(subscribeUserCount)+"""
+"""+adminIcon+""" Super Admins : """+str(allSuperAdminCount)+"""
 """
     markup = types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton("Super Admins", callback_data="superadmins"), types.InlineKeyboardButton("Groups", callback_data="groups"))
