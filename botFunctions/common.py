@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import re
+import ast
 import botFunctions
 import configuration
 
@@ -116,3 +117,28 @@ def groupAndSuperAdmin(bot, message):
     adminID.append(str(configuration.admin))
     allUsersID = botFunctions.getAllUsers(message.chat.id)
     return list(set([i for i in adminID if i in allUsersID] + [str(k.user.id) for k in bot.get_chat_administrators(message.chat.id) if k.user.is_bot == False]))
+
+def userDetailFormatter(detail):
+    userDetails = detail[1]
+    if (detail[2] != ''):
+        userDetails = userDetails + detail[2]
+    if (detail[3] != ''):
+        userDetails = userDetails + ' ---> @' + detail[3]
+    return userDetails
+
+def sureOrNot(bot, types, call):
+    searchID = ast.literal_eval(call.data)[1]
+    if(call.data.startswith("['superadmin'")):
+        groupOrUser = "Super Admin"
+        userGroupDetails = userDetailFormatter(botFunctions.detailsOfUser(searchID))
+        callBackDetails = "['removesuperadmin',"+str(searchID)+"]"
+    else:
+        groupOrUser = "Group"
+        userGroupDetails = userDetailFormatter(botFunctions.detailsOfUser(searchID))
+        callBackDetails = "['removegroup',"+str(searchID)+"]"
+    message = """<b>Are you sure want to remove this """+groupOrUser+"""?</b>
+""" + userGroupDetails + """
+"""
+    markup = types.InlineKeyboardMarkup()
+    markup.add(types.InlineKeyboardButton("Yes", callback_data=callBackDetails), types.InlineKeyboardButton("No", callback_data="no"))
+    bot.send_message(chat_id=call.message.chat.id, text=message, reply_markup=markup, parse_mode='HTML')
