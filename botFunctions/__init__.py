@@ -31,6 +31,7 @@ from .dbFunction import getWelcomeMessage
 from .dbFunction import getStickerPermission
 from .dbFunction import addToSuperAdmin
 from .dbFunction import removeFromSuperAdmin
+from .dbFunction import getSubscribeUserCount
 from .commandHandler import start
 from .commandHandler import botVersion
 from .commandHandler import botLog
@@ -48,6 +49,7 @@ from .commandHandler import hhhpermission
 from .commandHandler import subscribe
 from .commandHandler import unsubscribe
 from .commandHandler import subscribelist
+from .commandHandler import adminWindow
 from .newChatTitleHandler import updateChatTitle
 from .migrateToChatIdHandler import updateGroupID
 from .pinnedMessageHandler import pinnedPost
