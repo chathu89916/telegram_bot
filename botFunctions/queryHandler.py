@@ -40,15 +40,19 @@ def groupHandler(bot, types, call, status):
     title = "<b>Group List</b>"
     markup = types.InlineKeyboardMarkup()
     groupList = botFunctions.getGroupIDTitle()
-    for groupID in groupList:
-        markup.add(types.InlineKeyboardButton(text=groupID[1], callback_data="['viewgroup'," + str(groupID[0]) + "]"))
-    markup.add(types.InlineKeyboardButton("< back", callback_data="backToHome"))
-    if (status):
-        bot.edit_message_text(chat_id=call.message.chat.id, text=title,
-                              message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
+    if (groupList == []):
+        bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="No Groups")
+        botFunctions.adminWindow(bot, types, call.message, True)
     else:
-        bot.send_message(chat_id=call.message.chat.id, text=title, reply_markup=markup,
-                         parse_mode='HTML')
+        for groupID in groupList:
+            markup.add(types.InlineKeyboardButton(text=groupID[1], callback_data="['viewgroup'," + str(groupID[0]) + "]"))
+        markup.add(types.InlineKeyboardButton("< back", callback_data="backToHome"))
+        if (status):
+            bot.edit_message_text(chat_id=call.message.chat.id, text=title,
+                                  message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
+        else:
+            bot.send_message(chat_id=call.message.chat.id, text=title, reply_markup=markup,
+                             parse_mode='HTML')
 
 def removeGroup(bot, types, call):
     removeID = ast.literal_eval(call.data)[1]
