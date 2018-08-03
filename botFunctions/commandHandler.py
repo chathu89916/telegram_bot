@@ -453,3 +453,20 @@ def botLog(bot, message):
         bot.send_message(chat_id=message.chat.id, text=botFunctions.changeLOG(), parse_mode='HTML')
     except:
         print('botLog seding failed')
+
+def adminWindow(bot, types, message):
+    usersIcon = u"\U0001F465"
+    houseIcon = u"\U0001F3E1"
+    subscribeUserIcon = u"\U0001F5E3"
+    allUserCount = botFunctions.allusersDB().__len__()
+    allGroupCount = botFunctions.allgroupsDB().__len__()
+    subscribeUserCount = botFunctions.getSubscribeUserCount()
+    firstMessage = f"""<b>Admin Window</b>
+    
+{usersIcon} All Users : {allUserCount}
+{houseIcon} All Groups : {allGroupCount}
+{subscribeUserIcon} Subscribe Names : {subscribeUserCount}
+"""
+    markup = types.InlineKeyboardMarkup()
+    markup.add(types.InlineKeyboardButton("Super Admins", callback_data="superadmins"), types.InlineKeyboardButton("Groups", callback_data="groups"))
+    bot.send_message(chat_id=message.chat.id, text=firstMessage, reply_markup=markup, parse_mode='HTML')
