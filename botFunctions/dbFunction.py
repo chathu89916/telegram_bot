@@ -487,3 +487,17 @@ def detailsOfSuperAdmins():
         c.close()
         conn.close()
         return bossArray
+
+def detailsOfUser(userID):
+    bossArray = []
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT userid, fname, lname, uname FROM allusers WHERE userid='"+str(userID)+"'")
+        bossArray =list(c.fetchone())
+    except Exception as e:
+        bossArray = []
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return bossArray
