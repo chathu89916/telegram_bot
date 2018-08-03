@@ -94,3 +94,5 @@ from .newChatMemberHandler import welcomeToUser
 from .newChatMemberHandler import addingUser
 from .leftChatMemberHandler import kikBot
 from .leftChatMemberHandler import leftMember
+from .queryHandler import superAdminHandler
+from .queryHandler import groupHandler
