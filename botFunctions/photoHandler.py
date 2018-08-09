@@ -20,10 +20,11 @@ def mentionAllPhoto(bot, message):
             mentionedUser = botFunctions.getName(message.from_user)
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
             for userid in botFunctions.getAllUsers(message.chat.id):
-                try:
-                    bot.send_photo(chat_id=userid, photo=message.photo[-1].file_id, caption=text, parse_mode='HTML')
-                except:
-                    print('@all mention failed')
+                if (botFunctions.memberInTheGroup(bot, message.chat.id, userid)):
+                    try:
+                        bot.send_photo(chat_id=userid, photo=message.photo[-1].file_id, caption=text, parse_mode='HTML')
+                    except:
+                        print('@all mention failed')
 
 def mentionOnePhoto(bot, message):
     if (message.chat.type != 'private'):

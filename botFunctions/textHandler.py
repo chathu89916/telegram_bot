@@ -43,10 +43,11 @@ def mentionAllText(bot, message):
             mentionedUser = botFunctions.getName(message.from_user)
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.text
             for userid in botFunctions.getAllUsers(message.chat.id):
-                try:
-                    bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
-                except:
-                    print('@all mention failed')
+                if (botFunctions.memberInTheGroup(bot, message.chat.id, userid)):
+                    try:
+                        bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
+                    except:
+                        print('@all mention failed')
 
 def mentionOneText(bot, message):
     if (message.chat.type != 'private'):

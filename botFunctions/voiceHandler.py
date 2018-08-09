@@ -20,10 +20,11 @@ def mentionAllVoice(bot, message):
             mentionedUser = botFunctions.getName(message.from_user)
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
             for userid in botFunctions.getAllUsers(message.chat.id):
-                try:
-                    bot.send_voice(chat_id=userid, data=message.voice.file_id, caption=text, parse_mode='HTML')
-                except:
-                    print('@all mention failed')
+                if (botFunctions.memberInTheGroup(bot, message.chat.id, userid)):
+                    try:
+                        bot.send_voice(chat_id=userid, data=message.voice.file_id, caption=text, parse_mode='HTML')
+                    except:
+                        print('@all mention failed')
 
 def mentionOneVoice(bot, message):
     if (message.chat.type != 'private'):
