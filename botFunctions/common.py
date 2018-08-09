@@ -157,6 +157,7 @@ def memberInTheGroup(bot, groupID, userID):
         return True
     except Exception as inst:
         if(re.split(r"USER_ID_INVALID", str(inst))):
+            botFunctions.leftOfKikMember(groupID, userID)
             return False
         else:
             return True
