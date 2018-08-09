@@ -150,3 +150,13 @@ def sureOrNot(bot, types, call):
     markup = types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton("Yes", callback_data=callBackDetails), types.InlineKeyboardButton("No", callback_data="no"))
     bot.send_message(chat_id=call.message.chat.id, text=message, reply_markup=markup, parse_mode='HTML')
+
+def memberInTheGroup(bot, groupID, userID):
+    try:
+        bot.get_chat_member(chat_id=groupID, user_id=userID)
+        return True
+    except Exception as inst:
+        if(re.split(r"USER_ID_INVALID", str(inst))):
+            return False
+        else:
+            return True

@@ -76,6 +76,7 @@ from .common import groupAndSuperAdmin
 from .common import sureOrNot
 from .common import userDetailFormatter
 from .common import jsonUserDetailFormatter
+from .common import memberInTheGroup
 from .photoHandler import privatePhoto
 from .photoHandler import mentionOnePhoto
 from .photoHandler import mentionAllPhoto
