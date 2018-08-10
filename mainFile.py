@@ -13,11 +13,11 @@ botUsername = configuration.botUsername
 admin = configuration.admin
 
 @bot.message_handler(commands=['adminwindow'])
-def handle_command_botversion(message):
+def handle_command_adminwindow(message):
     botFunctions.adminWindowHandler(bot, types, message)
 
 @bot.message_handler(commands=['start'])
-def handle_command_botversion(message):
+def handle_command_start(message):
     botFunctions.start(bot, message)
 
 @bot.message_handler(commands=['botversion'])
@@ -25,77 +25,77 @@ def handle_command_botversion(message):
     botFunctions.botVersion(bot, message)
 
 @bot.message_handler(commands=['botlog'])
-def handle_command_botversion(message):
+def handle_command_botlog(message):
     botFunctions.botLog(bot, message)
 
 @bot.message_handler(commands=['addsuperadmin'])
-def handle_command_botversion(message):
+def handle_command_addsuperadmin(message):
     if(message.from_user.id==admin and message.reply_to_message !=None):
         botFunctions.addSuperAdmin(bot, message)
 
 @bot.message_handler(commands=['removesuperadmin'])
-def handle_command_botversion(message):
+def handle_command_removesuperadmin(message):
     if(message.from_user.id==admin and message.reply_to_message !=None):
         botFunctions.removeSuperAdmin(bot, message)
 
 @bot.message_handler(commands=['test'])
-def handle_command_botversion(message):
+def handle_command_test(message):
     botFunctions.test(bot, message)
 
 @bot.message_handler(commands=['all'])
-def handle_command_botversion(message):
+def handle_command_all(message):
     botFunctions.all(bot, message)
 
 @bot.message_handler(commands=['allusers'])
-def handle_command_botversion(message):
+def handle_command_allusers(message):
     botFunctions.allusers(bot, message)
 
 @bot.message_handler(commands=['allgroups'])
-def handle_command_botversion(message):
+def handle_command_allgroups(message):
     botFunctions.allgroups(bot, message)
 
 @bot.message_handler(commands=['allgroupsadmins'])
-def handle_command_botversion(message):
+def handle_command_allgroupsadmins(message):
     botFunctions.allgroupsadmins(bot, message)
 
 @bot.message_handler(commands=['allsuperadmins'])
-def handle_command_botversion(message):
+def handle_command_allsuperadmins(message):
     botFunctions.allsuperadmins(bot, message)
 
 @bot.message_handler(commands=['welcomemessage'])
-def handle_command_botversion(message):
+def handle_command_welcomemessage(message):
     botFunctions.welcomemessage(bot, message)
 
 @bot.message_handler(commands=['stickerpermission'])
-def handle_command_botversion(message):
+def handle_command_stickerpermission(message):
     botFunctions.stickerpermission(bot, message)
 
 @bot.message_handler(commands=['hhhpermission'])
-def handle_command_botversion(message):
+def handle_command_hhhpermission(message):
     botFunctions.hhhpermission(bot, message)
 
 @bot.message_handler(commands=['subscribe'])
-def handle_command_botversion(message):
+def handle_command_subscribe(message):
     botFunctions.subscribe(bot, message)
 
 @bot.message_handler(commands=['unsubscribe'])
-def handle_command_botversion(message):
+def handle_command_unsubscribe(message):
     botFunctions.unsubscribe(bot, message)
 
 @bot.message_handler(commands=['subscribelist'])
-def handle_command_botversion(message):
+def handle_command_subscribelist(message):
     botFunctions.subscribelist(bot, message)
 
 @bot.message_handler(content_types=['new_chat_title'])
-def handle_text(message):
+def handle_new_chat_title(message):
     botFunctions.updateChatTitle(message)
 
 @bot.message_handler(content_types=['migrate_to_chat_id'])
-def handle_text(message):
+def handle_migrate_to_chat_id(message):
     botFunctions.updateGroupID(message)
 
 @bot.message_handler(content_types=['pinned_message'])
-def handle_text(message):
+def handle_pinned_message(message):
     botFunctions.pinnedPost(bot, message)
 
 @bot.message_handler(content_types=['text'])
@@ -228,7 +228,7 @@ def handle_stickers(message):
     botFunctions.deleteSticker(bot, message)
 
 @bot.message_handler(content_types=["new_chat_members", "group_chat_created"])
-def handle_new_chat_member(message):
+def handle_new_chat_members_and_group_chat_created(message):
     if(message.content_type=='group_chat_created' or botID==message.new_chat_member.id):
         botFunctions.checkAndAdd(bot, message)
     else:
@@ -237,7 +237,7 @@ def handle_new_chat_member(message):
             botFunctions.addingUser(bot, message, types)
 
 @bot.message_handler(content_types=['left_chat_member'])
-def handle_text(message):
+def handle_left_chat_member(message):
     if(message.left_chat_member.id==botID):
         botFunctions.kikBot(bot, message)
         return
