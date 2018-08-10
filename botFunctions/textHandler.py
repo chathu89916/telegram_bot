@@ -62,14 +62,15 @@ def mentionOneText(bot, message):
         if(len(listUsers)>0):
             mentionedUser = botFunctions.getName(message.from_user)
             for uname in listUsers:
-                content = message.text
-                for subName in botFunctions.getSubscribeName(uname):
-                    for sname in listSUB:
-                        if(sname.lower()==subName.lower()):
-                            p = re.compile('(' + str(sname) + ')')
-                            content = p.sub("<b>" + str(sname) + "</b>", content)
-                text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + content
-                try:
-                    bot.send_message(chat_id=uname, text=text, parse_mode='HTML')
-                except:
-                    print('single mention/subscribe failed')
+                if (botFunctions.memberInTheGroup(bot, message.chat.id, uname)):
+                    content = message.text
+                    for subName in botFunctions.getSubscribeName(uname):
+                        for sname in listSUB:
+                            if(sname.lower()==subName.lower()):
+                                p = re.compile(r"\b{0}\b".format(sname))
+                                content = p.sub("<b>" + sname + "</b>", content)
+                    text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + content
+                    try:
+                        bot.send_message(chat_id=uname, text=text, parse_mode='HTML')
+                    except:
+                        print('single mention/subscribe failed')
