@@ -3,11 +3,9 @@ import re
 import ast
 import configuration
 import botFunctions
+import emojiList
 
 admin = configuration.admin
-subscribeUserIcon = u"\U0001F5E3"
-successFaceIcon = u"\U0001F60A"
-failFaceIcon = u"\U0001F615"
 
 def subscribe(bot, message):
     userID = message.from_user.id
@@ -88,18 +86,16 @@ def subscribewindow(bot, types, message, status):
     if(subList==[]):
         pass
     else:
-        handIcon = u"\U0001F449"
         markup = types.InlineKeyboardMarkup()
-        title = title + "\n\n"+subscribeUserIcon + " Subscribe Name Count : " + str(len(subList))
-        crossIcon = u"\u274C"
+        title = title + "\n\n"+emojiList.subscribeUserIcon + " Subscribe Name Count : " + str(len(subList))
         for subName in subList:
             wordCount = botFunctions.getSubscribeNameCount(subName, message.from_user.id)
             markup.add(
-                types.InlineKeyboardButton(text=subName + " " + handIcon + " " + str(wordCount), callback_data="subscribenameNotification"),
-                types.InlineKeyboardButton(text=crossIcon, callback_data="['subscribename', "+str(message.from_user.id)+", '"+subName+"']"))
+                types.InlineKeyboardButton(text=subName + " " + emojiList.handIcon + " " + str(wordCount), callback_data="subscribenameNotification"),
+                types.InlineKeyboardButton(text=emojiList.crossIcon, callback_data="['subscribename', "+str(message.from_user.id)+", '"+subName+"']"))
     if(status):
         bot.answer_callback_query(callback_query_id=message.id, show_alert=False,
-                                  text="Subscribe name Successfully removed " + successFaceIcon)
+                                  text="Subscribe name Successfully removed " + emojiList.successFaceIcon)
         bot.edit_message_text(chat_id=message.message.chat.id, text=title, message_id=message.message.message_id,
                               reply_markup=markup, parse_mode='HTML')
     else:
@@ -112,7 +108,7 @@ def unsubscribeFromWindow(bot, types, call):
         subscribewindow(bot, types, call, True)
     else:
         bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
-                                  text="Cannot remove subscribe name this time, please try again later " + failFaceIcon)
+                                  text="Cannot remove subscribe name this time, please try again later " + emojiList.failFaceIcon)
 
 
 # def subscribelist(bot, message):
@@ -500,19 +496,16 @@ def adminWindowHandler(bot, types, message):
             bot.send_message(chat_id=message.from_user.id, text="Try /adminwindow command here", parse_mode='HTML')
 
 def adminWindow(bot, types, message, status):
-    usersIcon = u"\U0001F465"
-    houseIcon = u"\U0001F3E1"
-    adminIcon = u"\U0001F479"
     allUserCount = botFunctions.allusersDB().__len__()
     allGroupCount = botFunctions.allgroupsDB().__len__()
     allSuperAdminCount = botFunctions.getAdmin().__len__()
     subscribeUserCount = botFunctions.getSubscribeUserCount()
     firstMessage = """<b>Admin Window</b>
     
-"""+usersIcon+""" All Users : """+str(allUserCount)+"""
-"""+houseIcon+""" All Groups : """+str(allGroupCount)+"""
-"""+subscribeUserIcon+""" Subscribe Names : """+str(subscribeUserCount)+"""
-"""+adminIcon+""" Super Admins : """+str(allSuperAdminCount)+"""
+"""+emojiList.usersIcon+""" All Users : """+str(allUserCount)+"""
+"""+emojiList.houseIcon+""" All Groups : """+str(allGroupCount)+"""
+"""+emojiList.subscribeUserIcon+""" Subscribe Names : """+str(subscribeUserCount)+"""
+"""+emojiList.superAdminIcon+""" Super Admins : """+str(allSuperAdminCount)+"""
 """
 
     markup = types.InlineKeyboardMarkup()
