@@ -82,9 +82,9 @@ def handle_command_subscribe(message):
 def handle_command_unsubscribe(message):
     botFunctions.unsubscribe(bot, message)
 
-@bot.message_handler(commands=['subscribelist'])
-def handle_command_subscribelist(message):
-    botFunctions.subscribelist(bot, message)
+@bot.message_handler(commands=['subscribewindow'])
+def handle_command_subscribewindow(message):
+    botFunctions.subscribewindow(bot, types, message, False)
 
 @bot.message_handler(content_types=['new_chat_title'])
 def handle_new_chat_title(message):
@@ -253,6 +253,11 @@ def  handle_query(call):
         botFunctions.groupHandler(bot, types, call, True)
     if (call.data == 'noUserName'):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="No Username Found")
+    if (call.data == 'subscribenameNotification'):
+        crossIcon = u"\u274C"
+        bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Click " + crossIcon + " to remove the Subscribe Name")
+    if (call.data.startswith("['subscribename'")):
+        botFunctions.unsubscribeFromWindow(bot, types, call)
     if (call.data == "backToHome"):
         botFunctions.adminWindow(bot, types, call.message, False)
     if (call.data.startswith("['superadmin'")):

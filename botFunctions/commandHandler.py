@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 import re
+import ast
 import configuration
 import botFunctions
 
 admin = configuration.admin
+subscribeUserIcon = u"\U0001F5E3"
+successFaceIcon = u"\U0001F60A"
+failFaceIcon = u"\U0001F615"
 
 def subscribe(bot, message):
     userID = message.from_user.id
@@ -18,7 +22,7 @@ def subscribe(bot, message):
                     print('Subscribe name successfully added failed')
             else:
                 try:
-                    bot.send_message(chat_id=userID, text='Subscribe name already there')
+                    bot.send_message(chat_id=userID, text='Subscribe name already in the DataBase')
                 except:
                     print('Subscribe name adding failed')
         else:
@@ -46,7 +50,7 @@ def unsubscribe(bot, message):
             subNameList = botFunctions.subscribelistDB(userID)
             for snm in subNameList:
                 if(snm==subname):
-                    if(botFunctions.unsubscribeDB(subname)=='success'):
+                    if(botFunctions.unsubscribeDB(subname, userID)=='success'):
                         try:
                             bot.send_message(chat_id=userID, text='Subscribe name Successfully Removed')
                         except:
@@ -77,22 +81,56 @@ def unsubscribe(bot, message):
         except:
             print('Cannot remove more than one subscribe name same time')
 
-def subscribelist(bot, message):
-    userID = message.from_user.id
-    subList = botFunctions.subscribelistDB(userID)
-    if(len(subList)!=0):
-        txt = 'Here is your Subscribed Name List\n\n'
-        for subname in subList:
-            txt = txt + subname + "\n"
-        try:
-            bot.send_message(chat_id=userID, text=txt)
-        except:
-            print('Subscribe Name List sending failed')
+def subscribewindow(bot, types, message, status):
+    subList = botFunctions.subscribelistDB(message.from_user.id)
+    title = "<b>Subscribe Name List</b>"
+    markup = None
+    if(subList==[]):
+        pass
     else:
-        try:
-            bot.send_message(chat_id=userID, text="Subscribed Name List is empty")
-        except:
-            print('Subscribe Name List sending failed')
+        handIcon = u"\U0001F449"
+        markup = types.InlineKeyboardMarkup()
+        title = title + "\n\n"+subscribeUserIcon + " Subscribe Name Count : " + str(len(subList))
+        crossIcon = u"\u274C"
+        for subName in subList:
+            wordCount = botFunctions.getSubscribeNameCount(subName, message.from_user.id)
+            markup.add(
+                types.InlineKeyboardButton(text=subName + " " + handIcon + " " + str(wordCount), callback_data="subscribenameNotification"),
+                types.InlineKeyboardButton(text=crossIcon, callback_data="['subscribename', "+str(message.from_user.id)+", '"+subName+"']"))
+    if(status):
+        bot.answer_callback_query(callback_query_id=message.id, show_alert=False,
+                                  text="Subscribe name Successfully removed " + successFaceIcon)
+        bot.edit_message_text(chat_id=message.message.chat.id, text=title, message_id=message.message.message_id,
+                              reply_markup=markup, parse_mode='HTML')
+    else:
+        bot.send_message(chat_id=message.from_user.id, text=title, reply_markup=markup, parse_mode='HTML')
+
+def unsubscribeFromWindow(bot, types, call):
+    removeID = ast.literal_eval(call.data)[1]
+    removeSubscribeName = ast.literal_eval(call.data)[2]
+    if(botFunctions.unsubscribeDB(removeSubscribeName, removeID)=='success'):
+        subscribewindow(bot, types, call, True)
+    else:
+        bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
+                                  text="Cannot remove subscribe name this time, please try again later " + failFaceIcon)
+
+
+# def subscribelist(bot, message):
+#     userID = message.from_user.id
+#     subList = botFunctions.subscribelistDB(userID)
+#     if(len(subList)!=0):
+#         txt = 'Here is your Subscribed Name List\n\n'
+#         for subname in subList:
+#             txt = txt + subname + "\n"
+#         try:
+#             bot.send_message(chat_id=userID, text=txt)
+#         except:
+#             print('Subscribe Name List sending failed')
+#     else:
+#         try:
+#             bot.send_message(chat_id=userID, text="Subscribed Name List is empty")
+#         except:
+#             print('Subscribe Name List sending failed')
 
 def hhhpermission(bot, message):
     if (message.chat.type == 'private'):
@@ -464,7 +502,6 @@ def adminWindowHandler(bot, types, message):
 def adminWindow(bot, types, message, status):
     usersIcon = u"\U0001F465"
     houseIcon = u"\U0001F3E1"
-    subscribeUserIcon = u"\U0001F5E3"
     adminIcon = u"\U0001F479"
     allUserCount = botFunctions.allusersDB().__len__()
     allGroupCount = botFunctions.allgroupsDB().__len__()
