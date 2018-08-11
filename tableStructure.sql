@@ -11,15 +11,16 @@ CREATE TABLE IF NOT EXISTS groups(
 	title VARCHAR(50),
 	welcomeMessage VARCHAR(255),
 	stickerPermission VARCHAR(5),
-  hhhPermission VARCHAR(5),
+	hhhPermission VARCHAR(5),
 	PRIMARY KEY (groupid)
 );
 
 CREATE TABLE IF NOT EXISTS subscribe(
 	subsname VARCHAR(20),
 	userid VARCHAR(15),
+	count INT,
 	PRIMARY KEY (subsname),
-  FOREIGN KEY (userid) REFERENCES allusers(userid)
+	FOREIGN KEY (userid) REFERENCES allusers(userid)
 );
 
 CREATE TABLE IF NOT EXISTS superadmin(
@@ -29,9 +30,9 @@ CREATE TABLE IF NOT EXISTS superadmin(
 );
 
 CREATE TABLE IF NOT EXISTS users(
-  groupid VARCHAR(15),
+	groupid VARCHAR(15),
 	userid VARCHAR(15),
 	PRIMARY KEY (groupid, userid),
-  FOREIGN KEY (groupid) REFERENCES groups(groupid),
+	FOREIGN KEY (groupid) REFERENCES groups(groupid),
 	FOREIGN KEY (userid) REFERENCES allusers(userid)
 );
