@@ -67,6 +67,7 @@ def mentionOneText(bot, message):
                     for subName in botFunctions.getSubscribeName(uname):
                         for sname in listSUB:
                             if(sname.lower()==subName.lower()):
+                                botFunctions.updateSubscribeNameCount(sname, uname)
                                 p = re.compile(r"\b{0}\b".format(sname))
                                 content = p.sub("<b>" + sname + "</b>", content)
                     text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + content
