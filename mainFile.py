@@ -5,6 +5,7 @@ import telebot
 from telebot import types
 import configuration
 import botFunctions
+import emojiList
 
 bot = telebot.TeleBot(configuration.botToken)
 botID = configuration.botID
@@ -252,10 +253,9 @@ def  handle_query(call):
     if (call.data == "groups"):
         botFunctions.groupHandler(bot, types, call, True)
     if (call.data == 'noUserName'):
-        bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="No Username Found")
+        bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="No Username Found " + emojiList.failFaceIcon)
     if (call.data == 'subscribenameNotification'):
-        crossIcon = u"\u274C"
-        bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Click " + crossIcon + " to remove the Subscribe Name")
+        bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Click " + emojiList.crossIcon + " to remove the Subscribe Name")
     if (call.data.startswith("['subscribename'")):
         botFunctions.unsubscribeFromWindow(bot, types, call)
     if (call.data == "backToHome"):
