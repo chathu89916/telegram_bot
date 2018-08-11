@@ -26,6 +26,6 @@ def deleteSticker(bot, message):
             adminList = botFunctions.groupAndSuperAdmin(bot, message)
             for chat in adminList:
                 try:
-                    bot.send_message(chat_id=chat, text='Cannot delete Stickers in <b>' + message.chat.title + '</b>\n* Please make me as an admin or Enable my Delete Message Permission', parse_mode='HTML')
+                    bot.send_message(chat_id=chat, text='Cannot delete Stickers in <b>' + message.chat.title + '</b>\n* Please <b>Make</b> me as an <b>Admin</b> or <b>Enable</b> my Delete Message <b>Permission</b>', parse_mode='HTML')
                 except:
                     print('failed to send message to group admin')

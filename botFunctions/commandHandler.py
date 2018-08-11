@@ -191,23 +191,31 @@ def stickerpermission(bot, message):
                 if (subList[2] != ''):
                     subname = subList[2].lower()
                     if(subname == "false"):
-                        hhhpermission = False
+                        stickerPermission = False
                     elif(subname == "true"):
-                        hhhpermission = True
+                        stickerPermission = True
                     else:
                         try:
                             bot.send_message(chat_id=userID, text='Sticker Permission must be True or False')
                         except:
                             print('Sticker Permission must be True or False')
                         return
-                    if (botFunctions.updateStickerPermission(hhhpermission, message.chat.id) == 'success'):
-                        try:
-                            bot.send_message(chat_id=userID, text='Sticker Permission successfully changed')
-                        except:
-                            print('Sticker Permission successfully changed failed')
+                    if(botFunctions.isBotAdmin(bot, message)):
+                        if (botFunctions.updateStickerPermission(stickerPermission, message.chat.id) == 'success'):
+                            try:
+                                bot.send_message(chat_id=userID, text='Sticker Permission successfully changed')
+                            except:
+                                print('Sticker Permission successfully changed failed')
+                        else:
+                            try:
+                                bot.send_message(chat_id=userID, text='Sticker Permission successfully changing failed')
+                            except:
+                                print('Sticker Permission successfully changing failed')
                     else:
                         try:
-                            bot.send_message(chat_id=userID, text='Sticker Permission successfully changing failed')
+                            bot.send_message(chat_id=userID,
+                                             text='Cannot delete Stickers in <b>' + message.chat.title + '</b>\n* Please <b>Make</b> me as an <b>Admin</b> or <b>Enable</b> my Delete Message <b>Permission</b>',
+                                             parse_mode='HTML')
                         except:
                             print('Sticker Permission successfully changing failed')
                 else:
