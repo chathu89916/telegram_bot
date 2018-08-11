@@ -36,6 +36,7 @@ from .dbFunction import detailsOfSuperAdmins
 from .dbFunction import detailsOfUser
 from .dbFunction import detailsOfGroup
 from .dbFunction import removeFromGroup
+from .dbFunction import updateSubscribeNameCount
 from .commandHandler import start
 from .commandHandler import botVersion
 from .commandHandler import botLog
@@ -52,7 +53,7 @@ from .commandHandler import stickerpermission
 from .commandHandler import hhhpermission
 from .commandHandler import subscribe
 from .commandHandler import unsubscribe
-from .commandHandler import subscribelist
+from .commandHandler import subscribewindow
 from .commandHandler import adminWindow
 from .commandHandler import adminWindowHandler
 from .newChatTitleHandler import updateChatTitle

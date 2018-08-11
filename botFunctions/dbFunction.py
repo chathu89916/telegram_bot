@@ -107,7 +107,7 @@ def subscribeDB(userID, subname):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO subscribe (subsname, userid) VALUES ('"+ subname +"', '"+ str(userID) +"')")
+        c.execute("INSERT INTO subscribe (subsname, userid, count) VALUES ('"+ subname +"', '"+ str(userID) +"', 0)")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -119,11 +119,11 @@ def subscribeDB(userID, subname):
         conn.close()
         return status
 
-def unsubscribeDB(subname):
+def unsubscribeDB(subname, userID):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("DELETE FROM subscribe WHERE subsname='"+ subname+"'")
+        c.execute("DELETE FROM subscribe WHERE userid='"+str(userID)+"' AND subsname='"+ subname+"'")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -149,6 +149,22 @@ def subscribelistDB(userID):
         c.close()
         conn.close()
         return subscribersList
+
+def updateSubscribeNameCount(subname, userID):
+    try:
+        conn, c = connectDB()
+        c.execute("UPDATE subscribe SET count=count+1 WHERE userid='"+ str(userID) +"' AND subsname='"+ subname +"'")
+        conn.commit()
+        status = 'success'
+    except Exception as e:
+        status = 'failed'
+        conn.rollback()
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        print(status)
+        return status
 
 def getStickerPermission(groupID):
     stickerPermission = True
@@ -463,7 +479,7 @@ def getSubscribeUserCount():
     SubscribeUserCount = 0
     try:
         conn, c = connectDB()
-        c.execute("SELECT count(userid) FROM subscribe ")
+        c.execute("SELECT COUNT(userid) FROM subscribe ")
         SubscribeUserCount = list(c.fetchone())[0]
     except Exception as e:
         SubscribeUserCount = 0
