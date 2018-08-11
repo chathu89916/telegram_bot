@@ -10,19 +10,21 @@ admin = configuration.admin
 def subscribe(bot, message):
     userID = message.from_user.id
     subList = re.split('\W+', message.text, re.U)
-    if(len(subList)==3):
+    if(len(subList)>2):
         if(subList[2]!=''):
-            subname = subList[2].lower()
-            if(botFunctions.subscribeDB(userID, subname)=='success'):
-                try:
-                    bot.send_message(chat_id=userID, text='Subscribe name Successfully added')
-                except:
-                    print('Subscribe name successfully added failed')
-            else:
-                try:
-                    bot.send_message(chat_id=userID, text='Subscribe name already in the DataBase')
-                except:
-                    print('Subscribe name adding failed')
+            for names in subList[2:]:
+                if(names!=''):
+                    subname = names.lower()
+                    if(botFunctions.subscribeDB(userID, subname)=='success'):
+                        try:
+                            bot.send_message(chat_id=userID, text="Subscribe name <b>"+ names +"</b> Successfully added " + emojiList.successFaceIcon, parse_mode='HTML')
+                        except:
+                            print('Subscribe name successfully added failed')
+                    else:
+                        try:
+                            bot.send_message(chat_id=userID, text="Subscribe name <b>"+ names +"</b> already in the DataBase " + emojiList.failFaceIcon, parse_mode='HTML')
+                        except:
+                            print('Subscribe name adding failed')
         else:
             try:
                 bot.send_message(chat_id=userID, text='Subscribe name cannot be empty')
