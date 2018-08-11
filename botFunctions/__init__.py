@@ -37,6 +37,7 @@ from .dbFunction import detailsOfUser
 from .dbFunction import detailsOfGroup
 from .dbFunction import removeFromGroup
 from .dbFunction import updateSubscribeNameCount
+from .dbFunction import getSubscribeNameCount
 from .commandHandler import start
 from .commandHandler import botVersion
 from .commandHandler import botLog
@@ -56,6 +57,7 @@ from .commandHandler import unsubscribe
 from .commandHandler import subscribewindow
 from .commandHandler import adminWindow
 from .commandHandler import adminWindowHandler
+from .commandHandler import unsubscribeFromWindow
 from .newChatTitleHandler import updateChatTitle
 from .migrateToChatIdHandler import updateGroupID
 from .pinnedMessageHandler import pinnedPost

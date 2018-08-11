@@ -166,6 +166,21 @@ def updateSubscribeNameCount(subname, userID):
         print(status)
         return status
 
+def getSubscribeNameCount(subname, userID):
+    wordCount = ''
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT count FROM subscribe WHERE userid='"+ str(userID) +"' AND subsname='"+ subname +"'")
+        for welMsg in c.fetchall():
+            wordCount = welMsg[0]
+    except Exception as e:
+        wordCount = ''
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return wordCount
+
 def getStickerPermission(groupID):
     stickerPermission = True
     try:
