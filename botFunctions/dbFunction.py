@@ -163,7 +163,6 @@ def updateSubscribeNameCount(subname, userID):
     finally:
         c.close()
         conn.close()
-        print(status)
         return status
 
 def getSubscribeNameCount(subname, userID):
