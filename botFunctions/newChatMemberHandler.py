@@ -2,6 +2,7 @@
 import configuration
 import botFunctions
 import re
+import emojiList
 
 admin = configuration.admin
 
@@ -35,15 +36,15 @@ def addingBot(bot, message):
                         print("Failed to send message to the admin")
 
 def getOtherAdmins(bot, message):
-    adminMessage = "Group Title : <b>" + message.chat.title + "</b> (" + str(
+    adminMessage = "<b>BOT Added to the Group by an Unauthorized Person</b>" + emojiList.exclamationMarkIcon + "\n\nGroup Title : <b>" + message.chat.title + "</b> (" + str(
         message.chat.id) + ")\nGroup Members Count : " + str((bot.get_chat_members_count(
         chat_id=message.chat.id)) - 1) + "\nGroup Type : " + message.chat.type + "\nCreator & Admins : \n\n"
 
     for admin in bot.get_chat_administrators(chat_id=message.chat.id):
-        adminMessage = adminMessage + str(admin.user.first_name) + ' ' + str(admin.user.last_name) + ' @' + str(admin.user.username) + ' - ' + str(admin.status) + '\n'
+        adminMessage = adminMessage + botFunctions.setupFullName(admin.user) + ' - ' + admin.status + '\n'
 
     bot.send_message(chat_id=message.chat.id,
-                     text= botFunctions.getName(message.from_user) + ' you have no permission to add me to ' + str(message.chat.title) + ' ' + message.chat.type + '. It will be reported to creator of this Bot\n\nThank You')
+                     text= botFunctions.getName(message.from_user) + ' you have <b>no permission</b> to add me to ' + message.chat.title + ' ' + message.chat.type + '. It will be <b>reported</b> to creator of this Bot\n\nThank You', parse_mode='HTML')
     bot.leave_chat(chat_id=message.chat.id)
 
     adminMessage = adminMessage + "\nAdded me by " + botFunctions.getName(message.from_user)
