@@ -105,6 +105,7 @@ def handle_text(message):
         botFunctions.privateText(bot, message)
         return
 
+    botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
 
     if (message.reply_to_message == None):
@@ -122,6 +123,7 @@ def handle_photo(message):
         botFunctions.privatePhoto(bot, message)
         return
 
+    botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
 
     if (message.reply_to_message == None):
@@ -138,6 +140,7 @@ def handle_audio(message):
         botFunctions.privateAudio(bot, message)
         return
 
+    botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
 
     if (message.reply_to_message == None):
@@ -154,6 +157,7 @@ def handle_video(message):
         botFunctions.privateVideo(bot, message)
         return
 
+    botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
 
     if (message.reply_to_message == None):
@@ -170,6 +174,7 @@ def handle_document(message):
         botFunctions.privateDocument(bot, message)
         return
 
+    botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
 
     if (message.reply_to_message == None):
@@ -186,6 +191,7 @@ def handle_voice(message):
         botFunctions.privateVoice(bot, message)
         return
 
+    botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
 
     if (message.reply_to_message == None):
@@ -202,6 +208,7 @@ def handle_location(message):
         botFunctions.privateLocation(bot, message)
         return
 
+    botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
 
     if (message.reply_to_message != None):
@@ -214,6 +221,7 @@ def handle_contact(message):
         botFunctions.privateContact(bot, message)
         return
 
+    botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
 
     if (message.reply_to_message != None):
@@ -225,6 +233,8 @@ def handle_stickers(message):
     if (message.chat.type == 'private'):
         botFunctions.privateSticker(bot, message)
         return
+
+    botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteSticker(bot, message)
 
