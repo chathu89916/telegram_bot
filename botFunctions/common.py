@@ -3,12 +3,22 @@ import re
 import ast
 import botFunctions
 import configuration
+import emojiList
+
+def setupFullName(name):
+    firstName = name.first_name if name.first_name!=None else ''
+    lastName = " " + name.last_name if name.last_name!=None else ''
+    userName = " " + name.username if name.username!=None else ''
+    fullName = firstName + lastName + userName
+    return fullName
 
 def getName(name):
     if(name.username == None):
+        if(name.last_name!=None):
+            return name.first_name + " " + name.last_name
         return name.first_name
     else:
-        return '@'+name.username
+        return '@' + name.username
 
 def exceptionHandling(message, bot, types, name):
     inline = types.InlineKeyboardMarkup()
@@ -161,3 +171,22 @@ def memberInTheGroup(bot, groupID, userID):
             return False
         else:
             return True
+
+def checkGroupStatus(bot, message):
+     groupIDList = botFunctions.allgroupsDB()
+     if(not str(message.chat.id) in groupIDList):
+         adminMessage = "<b>Found a group which is not in the DataBase</b>" + emojiList.exclamationMarkIcon + "\n\nGroup Title : <b>" + message.chat.title + "</b> (" + str(
+             message.chat.id) + ")\nGroup Members Count : " + str((bot.get_chat_members_count(
+             chat_id=message.chat.id)) - 1) + "\nGroup Type : " + message.chat.type + "\nCreator & Admins : \n\n"
+
+         for admin in bot.get_chat_administrators(chat_id=message.chat.id):
+             adminMessage = adminMessage + setupFullName(admin.user) + ' - ' + admin.status + '\n'
+
+         bot.send_message(chat_id=message.chat.id,
+                          text='We <b>cannot find</b> any <b>data</b> related to this Bot <b>in</b> the <b>DataBase</b>. It will be <b>reported</b> to creator of this Bot\n\nThank You',
+                          parse_mode='HTML')
+         bot.leave_chat(chat_id=message.chat.id)
+
+         bot.send_message(chat_id=configuration.admin, text=adminMessage, parse_mode='HTML')
+         botFunctions.kikBotDB(message.chat.id)
+         return
