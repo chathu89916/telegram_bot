@@ -80,6 +80,8 @@ from .common import sureOrNot
 from .common import userDetailFormatter
 from .common import jsonUserDetailFormatter
 from .common import memberInTheGroup
+from .common import checkGroupStatus
+from .common import setupFullName
 from .photoHandler import privatePhoto
 from .photoHandler import mentionOnePhoto
 from .photoHandler import mentionAllPhoto
