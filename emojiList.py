@@ -11,11 +11,11 @@ groupTypeIcon = u"\U0001F4E2"
 descriptionIcon = u"\U0001F4CB"
 memberCountIcon = u"\U0001F468\u200D\U0001F469\u200D\U0001F467\u200D\U0001F466"
 creatorIcon = u"\U0001F920"
-superAdminIcon = u"\U0001F60E"
+superAdminIcon = u"\U0001F479"
 botIcon = u"\U0001F916"
 
 usersIcon = u"\U0001F465"
 houseIcon = u"\U0001F3E1"
-groupAdmindminIcon = u"\U0001F479"
+groupAdmindminIcon = u"\U0001F60E"
 
 exclamationMarkIcon = u"\u2757\uFE0F"
