@@ -27,7 +27,7 @@ def exceptionHandling(message, bot, types, name):
     bot.send_message(message.chat.id, text='Agent ' + getName(name) +' Click the START button to Activate the @'+str(configuration.botUsername) + " " + emojiList.successFaceIcon, reply_markup=inline)
 
 def allCheck(text):
-    search = re.findall(r'[@][a][l][l]', text, re.I)
+    search = re.findall(r"\B@all\b", text, re.I)
     if(len(search)>0):
         return True
     else:
