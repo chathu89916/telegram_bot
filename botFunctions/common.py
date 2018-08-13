@@ -185,3 +185,30 @@ def checkGroupStatus(bot, message):
          bot.send_message(chat_id=configuration.admin, text=adminMessage, parse_mode='HTML')
          botFunctions.kikBotDB(message.chat.id)
          return
+
+def structureGroupDetails(bot, groupID):
+    allDetails = bot.get_chat(groupID)
+    adminDetails = ''
+    creatorDetails = ''
+    if (allDetails.description == None):
+        description = ""
+    else:
+        description = "\n" + emojiList.descriptionIcon + " " + allDetails.description
+    for admin in bot.get_chat_administrators(groupID):
+        if (admin.status == 'creator'):
+            creatorDetails = "\t\t\t" + emojiList.creatorIcon + " Creator : " + setupFullName(admin.user)
+        else:
+            if (admin.user.is_bot == False):
+                adminDetails = adminDetails + "\n\t\t\t" + emojiList.groupAdmindminIcon + " Administrator : " + setupFullName(admin.user)
+            else:
+                adminDetails = adminDetails + "\n\t\t\t" + emojiList.botIcon + " Administrator : " + setupFullName(admin.user)
+
+    groupDetails = "<b>" + allDetails.title + "</b>\n\n" + \
+                   emojiList.groupTypeIcon+" Group Type : " + allDetails.type + \
+                   description + \
+                   "\n" + emojiList.memberCountIcon + " Member Count : " + str(bot.get_chat_members_count(groupID)) + \
+                   "\nChat Administrators : \n\n" + \
+                   creatorDetails + \
+                   adminDetails
+
+    return groupDetails
