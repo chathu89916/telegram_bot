@@ -17,3 +17,5 @@ botIcon = u"\U0001F916"
 usersIcon = u"\U0001F465"
 houseIcon = u"\U0001F3E1"
 groupAdmindminIcon = u"\U0001F479"
+
+exclamationMarkIcon = u"\u2757\uFE0F"
