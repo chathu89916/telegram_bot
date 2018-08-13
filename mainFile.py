@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import random
 import sys
 sys.path.append('/mnt/c/Users/hp/AppData/Local/Programs/Python/Python37-32/Lib/site-packages')
 import telebot
@@ -7,8 +6,6 @@ from telebot import types
 import configuration
 import botFunctions
 import emojiList
-import datetime
-import random
 
 bot = telebot.TeleBot(configuration.botToken)
 botID = configuration.botID
