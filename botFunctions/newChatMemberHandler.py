@@ -8,13 +8,13 @@ admin = configuration.admin
 
 def addingBot(bot, message):
     if(botFunctions.addToGroup(message.chat.id, message.chat.title)=='success'):
-        bot.send_message(chat_id=admin, text='Successfully Added me for <b>' + message.chat.title + '</b> ' + message.chat.type + ' and added me by ' + botFunctions.getName(message.from_user), parse_mode='HTML')
+        bot.send_message(chat_id=admin, text='Successfully Added me for <b>' + message.chat.title + '</b> ' + message.chat.type + ' and added me by ' + botFunctions.getName(message.from_user) + " " + emojiList.successFaceIcon, parse_mode='HTML')
         try:
-            bot.send_message(chat_id=message.chat.id, text='Thank you '+ botFunctions.getName(message.from_user) + ' for adding me to <b>' + message.chat.title + '</b> ' + message.chat.type + '. All the group details and user details are successfully added to the database.', parse_mode='HTML')
+            bot.send_message(chat_id=message.chat.id, text='Thank you '+ botFunctions.getName(message.from_user) + ' for adding me to <b>' + message.chat.title + '</b> ' + message.chat.type + '. All the group details and user details are successfully added to the database. ' + emojiList.successFaceIcon, parse_mode='HTML')
         except:
-            bot.send_message(chat_id=admin, text='Failed to send welcome message for <b>' + message.chat.title + '</b> ' +message.chat.type + ' and added me by ' + botFunctions.getName(message.from_user),parse_mode='HTML')
+            bot.send_message(chat_id=admin, text='Failed to send welcome message for <b>' + message.chat.title + '</b> ' +message.chat.type + ' and added me by ' + botFunctions.getName(message.from_user) + " " + emojiList.failFaceIcon,parse_mode='HTML')
     else:
-        bot.send_message(chat_id=admin, text='Failed to Add bot for ' + message.chat.title + ' ' + message.chat.type + '. Try to added me by ' + botFunctions.getName(message.from_user))
+        bot.send_message(chat_id=admin, text='Failed to Add bot for ' + message.chat.title + ' ' + message.chat.type + '. Try to added me by ' + botFunctions.getName(message.from_user) + " " + emojiList.failFaceIcon)
         bot.leave_chat(chat_id=message.chat.id)
 
     adminList = []
@@ -31,7 +31,7 @@ def addingBot(bot, message):
             if(str(admn) not in list(failedDic.keys())):
                 for nm in list(failedDic.values()):
                     try:
-                        bot.send_message(chat_id=admn, text='<b>Tell</b> ' + nm + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> ' + nm, parse_mode='HTML')
+                        bot.send_message(chat_id=admn, text='<b>Tell</b> ' + nm + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> ' + nm + " " + emojiList.failFaceIcon, parse_mode='HTML')
                     except:
                         print("Failed to send message to the admin")
 
@@ -56,7 +56,7 @@ def addingUser(bot, message, types):
         botFunctions.updateToAllUser(message.new_chat_member)
     else:
         try:
-            bot.send_message(chat_id=message.from_user.id, text='<b>Tell</b> ' + botFunctions.getName(message.new_chat_member) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ botFunctions.getName(message.new_chat_member),  parse_mode='HTML')
+            bot.send_message(chat_id=message.from_user.id, text='<b>Tell</b> ' + botFunctions.getName(message.new_chat_member) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ botFunctions.getName(message.new_chat_member) + " " + emojiList.failFaceIcon,  parse_mode='HTML')
             botFunctions.exceptionHandling(message, bot, types, message.new_chat_member)
         except:
             print('Cannot send message to admin')

@@ -27,17 +27,17 @@ def subscribe(bot, message):
                             print('Subscribe name adding failed')
         else:
             try:
-                bot.send_message(chat_id=userID, text='Subscribe name cannot be empty')
+                bot.send_message(chat_id=userID, text='Subscribe name cannot be empty ' + emojiList.failFaceIcon)
             except:
                 print('Subscribe name cannot be empty')
     elif(len(subList)==2):
         try:
-            bot.send_message(chat_id=userID, text='Please add a subscribe name')
+            bot.send_message(chat_id=userID, text='Please add a subscribe name ' + emojiList.successFaceIcon)
         except:
             print('Subscriber name not found')
     else:
         try:
-            bot.send_message(chat_id=userID, text='Cannot add more than one subscribe name same time')
+            bot.send_message(chat_id=userID, text='Cannot add more than one subscribe name same time ' + emojiList.failFaceIcon)
         except:
             print('Cannot add more than one subscribe name same time')
 
@@ -52,32 +52,32 @@ def unsubscribe(bot, message):
                 if(snm==subname):
                     if(botFunctions.unsubscribeDB(subname, userID)=='success'):
                         try:
-                            bot.send_message(chat_id=userID, text='Subscribe name Successfully Removed')
+                            bot.send_message(chat_id=userID, text='Subscribe name Successfully Removed ' + emojiList.successFaceIcon)
                         except:
                             print('Subscribe name successfully remove failed')
                     else:
                         try:
-                            bot.send_message(chat_id=userID, text='Subscribe name Removing failed')
+                            bot.send_message(chat_id=userID, text='Subscribe name Removing failed ' + emojiList.failFaceIcon)
                         except:
                             print('Subscribe name removing failed')
                     return
             try:
-                bot.send_message(chat_id=userID, text='Subscribe name cannot found')
+                bot.send_message(chat_id=userID, text='Subscribe name cannot found ' + emojiList.failFaceIcon)
             except:
                 print('Subscribe name cannot found failed')
         else:
             try:
-                bot.send_message(chat_id=userID, text='Unsubscribe name cannot be empty')
+                bot.send_message(chat_id=userID, text='Unsubscribe name cannot be empty ' + emojiList.failFaceIcon)
             except:
                 print('Unsubscribe name cannot be empty')
     elif(len(subList)==2):
         try:
-            bot.send_message(chat_id=userID, text='Please add a Unsubscribe name')
+            bot.send_message(chat_id=userID, text='Please add a Unsubscribe name ' + emojiList.successFaceIcon)
         except:
             print('Unsubscriber name not found')
     else:
         try:
-            bot.send_message(chat_id=userID, text='Cannot remove more than one subscribe name same time')
+            bot.send_message(chat_id=userID, text='Cannot remove more than one subscribe name same time ' + emojiList.failFaceIcon)
         except:
             print('Cannot remove more than one subscribe name same time')
 
@@ -112,7 +112,6 @@ def unsubscribeFromWindow(bot, types, call):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
                                   text="Cannot remove subscribe name this time, please try again later " + emojiList.failFaceIcon)
 
-
 # def subscribelist(bot, message):
 #     userID = message.from_user.id
 #     subList = botFunctions.subscribelistDB(userID)
@@ -133,7 +132,7 @@ def unsubscribeFromWindow(bot, types, call):
 def hhhpermission(bot, message):
     if (message.chat.type == 'private'):
         try:
-            bot.send_message(chat_id=message.from_user.id, text="Please use this command inside the groups")
+            bot.send_message(chat_id=message.from_user.id, text="Please use this command inside the groups " + emojiList.successFaceIcon)
         except:
             print('hhhpermission private send failed')
     else:
@@ -149,40 +148,40 @@ def hhhpermission(bot, message):
                         hhhpermission = True
                     else:
                         try:
-                            bot.send_message(chat_id=userID, text='hhhpermission must be True or False')
+                            bot.send_message(chat_id=userID, text='hhhpermission must be True or False ' + emojiList.failFaceIcon)
                         except:
                             print('hhhpermission must be True or False')
                         return
                     if (botFunctions.updateHHHPermission(hhhpermission, message.chat.id) == 'success'):
                         try:
-                            bot.send_message(chat_id=userID, text='hhh permission successfully changed')
+                            bot.send_message(chat_id=userID, text='hhh permission successfully changed ' + emojiList.successFaceIcon)
                         except:
                             print('hhh permission successfully changed failed')
                     else:
                         try:
-                            bot.send_message(chat_id=userID, text='hhh permission successfully changing failed')
+                            bot.send_message(chat_id=userID, text='hhh permission successfully changing failed ' + emojiList.failFaceIcon)
                         except:
                             print('hhh permission successfully changing failed')
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='hhh permission cannot be empty')
+                        bot.send_message(chat_id=userID, text='hhh permission cannot be empty ' + emojiList.failFaceIcon)
                     except:
                         print('hhh permission cannot be empty')
             elif (len(subList) == 2):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a hhh permission')
+                    bot.send_message(chat_id=userID, text='Please add a hhh permission ' + emojiList.successFaceIcon)
                 except:
                     print('hhh permission not found')
             else:
                 try:
-                    bot.send_message(chat_id=userID, text='Can add only one permission')
+                    bot.send_message(chat_id=userID, text='Can add only one permission ' + emojiList.failFaceIcon)
                 except:
                     print('Cann add only one permission same time')
 
 def stickerpermission(bot, message):
     if (message.chat.type == 'private'):
         try:
-            bot.send_message(chat_id=message.from_user.id, text="Please use this command inside the groups")
+            bot.send_message(chat_id=message.from_user.id, text="Please use this command inside the groups " + emojiList.successFaceIcon)
         except:
             print('hhhpermission private send failed')
     else:
@@ -198,48 +197,48 @@ def stickerpermission(bot, message):
                         stickerPermission = True
                     else:
                         try:
-                            bot.send_message(chat_id=userID, text='Sticker Permission must be True or False')
+                            bot.send_message(chat_id=userID, text='Sticker Permission must be True or False ' + emojiList.failFaceIcon)
                         except:
                             print('Sticker Permission must be True or False')
                         return
                     if(botFunctions.isBotAdmin(bot, message)):
                         if (botFunctions.updateStickerPermission(stickerPermission, message.chat.id) == 'success'):
                             try:
-                                bot.send_message(chat_id=userID, text='Sticker Permission successfully changed')
+                                bot.send_message(chat_id=userID, text='Sticker Permission successfully changed ' + emojiList.successFaceIcon)
                             except:
                                 print('Sticker Permission successfully changed failed')
                         else:
                             try:
-                                bot.send_message(chat_id=userID, text='Sticker Permission successfully changing failed')
+                                bot.send_message(chat_id=userID, text='Sticker Permission successfully changing failed ' + emojiList.failFaceIcon)
                             except:
                                 print('Sticker Permission successfully changing failed')
                     else:
                         try:
                             bot.send_message(chat_id=userID,
-                                             text='Cannot delete Stickers in <b>' + message.chat.title + '</b>\n* Please <b>Make</b> me as an <b>Admin</b> or <b>Enable</b> my Delete Message <b>Permission</b>',
+                                             text='Cannot delete Stickers in <b>' + message.chat.title + '</b>\n* Please <b>Make</b> me as an <b>Admin</b> or <b>Enable</b> my Delete Message <b>Permission</b> ' + emojiList.failFaceIcon,
                                              parse_mode='HTML')
                         except:
                             print('Sticker Permission successfully changing failed')
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='Sticker Permission cannot be empty')
+                        bot.send_message(chat_id=userID, text='Sticker Permission cannot be empty ' + emojiList.failFaceIcon)
                     except:
                         print('Sticker Permission cannot be empty')
             elif (len(subList) == 2):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a Sticker Permission')
+                    bot.send_message(chat_id=userID, text='Please add a Sticker Permission ' + emojiList.successFaceIcon)
                 except:
                     print('Sticker Permission not found')
             else:
                 try:
-                    bot.send_message(chat_id=userID, text='Can add only one permission')
+                    bot.send_message(chat_id=userID, text='Can add only one permission ' + emojiList.failFaceIcon)
                 except:
                     print('Can add only one permission same time')
 
 def welcomemessage(bot, message):
     if (message.chat.type == 'private'):
         try:
-            bot.send_message(chat_id=message.from_user.id, text="Please use this command inside the groups")
+            bot.send_message(chat_id=message.from_user.id, text="Please use this command inside the groups " + emojiList.successFaceIcon)
         except:
             print('welcome message private send failed')
     else:
@@ -251,22 +250,22 @@ def welcomemessage(bot, message):
                     welcomeMessage = subList[1]
                     if (botFunctions.updateWelcomeMessage(welcomeMessage, message.chat.id) == 'success'):
                         try:
-                            bot.send_message(chat_id=userID, text='Welcome Message successfully changed')
+                            bot.send_message(chat_id=userID, text='Welcome Message successfully changed ' + emojiList.successFaceIcon)
                         except:
                             print('Welcome Message successfully changed failed')
                     else:
                         try:
-                            bot.send_message(chat_id=userID, text='Welcome Message successfully changing failed')
+                            bot.send_message(chat_id=userID, text='Welcome Message successfully changing failed ' + emojiList.failFaceIcon)
                         except:
                             print('Welcome Message successfully changing failed')
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='Welcome Message cannot be empty')
+                        bot.send_message(chat_id=userID, text='Welcome Message cannot be empty ' + emojiList.failFaceIcon)
                     except:
                         print('Welcome Message cannot be empty')
             elif (len(subList) == 1):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a Valid Welcome Message')
+                    bot.send_message(chat_id=userID, text='Please add a Valid Welcome Message '  + emojiList.successFaceIcon)
                 except:
                     print('valid welcome message failed')
 
@@ -286,23 +285,23 @@ def test(bot, message):
                     try:
                         bot.send_message(chat_id=userID, text=allMessage, parse_mode='HTML')
                     except:
-                        print("all message failed in sending")
+                        print("Test message failed in sending")
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='All Message cannot be empty')
+                        bot.send_message(chat_id=userID, text='Test Message cannot be empty ' + emojiList.failFaceIcon)
                     except:
-                        print('All Message cannot be empty')
+                        print('Test Message cannot be empty')
             elif (len(subList) == 1):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a Valid All Message')
+                    bot.send_message(chat_id=userID, text='Please add a Valid Test Message ' + emojiList.successFaceIcon)
                 except:
-                    print('valid All message failed')
+                    print('valid Test message failed')
 
 def all(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text="Please use /all command in here")
+                bot.send_message(chat_id=message.from_user.id, text="Please use /all command in here " + emojiList.successFaceIcon)
             except:
                 print('/all trying failed')
         else:
@@ -318,12 +317,12 @@ def all(bot, message):
                             print("all message failed in sending")
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='All Message cannot be empty')
+                        bot.send_message(chat_id=userID, text='All Message cannot be empty ' + emojiList.failFaceIcon)
                     except:
                         print('All Message cannot be empty')
             elif (len(subList) == 1):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a Valid All Message')
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Message ' + emojiList.successFaceIcon)
                 except:
                     print('valid All message failed')
 
@@ -331,7 +330,7 @@ def allusers(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text="Please use /allusers command in here")
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allusers command in here " + emojiList.successFaceIcon)
             except:
                 print('/allusers trying failed')
         else:
@@ -347,12 +346,12 @@ def allusers(bot, message):
                             print("All Users message failed in sending")
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='All Users Message cannot be empty')
+                        bot.send_message(chat_id=userID, text='All Users Message cannot be empty ' + emojiList.failFaceIcon)
                     except:
                         print('All Users Message cannot be empty')
             elif (len(subList) == 1):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a Valid All Users Message')
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Users Message ' + emojiList.successFaceIcon)
                 except:
                     print('valid All Users message failed')
 
@@ -360,7 +359,7 @@ def allgroups(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroups command in here")
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroups command in here " + emojiList.successFaceIcon)
             except:
                 print('/allgroups trying failed')
         else:
@@ -376,12 +375,12 @@ def allgroups(bot, message):
                             print("All Groups message failed in sending")
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='All Groups Message cannot be empty')
+                        bot.send_message(chat_id=userID, text='All Groups Message cannot be empty ' + emojiList.failFaceIcon)
                     except:
                         print('All Groups Message cannot be empty')
             elif (len(subList) == 1):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a Valid All Groups Message')
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Groups Message ' + emojiList.successFaceIcon)
                 except:
                     print('valid All Groups message failed')
 
@@ -389,7 +388,7 @@ def allgroupsadmins(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
         if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroupsadmins command in here")
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroupsadmins command in here " + emojiList.successFaceIcon)
             except:
                 print('/allgroupsadmins trying failed')
         else:
@@ -414,12 +413,12 @@ def allgroupsadmins(bot, message):
                             print("All Groups Admin message failed in sending")
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='All Groups Admin Message cannot be empty')
+                        bot.send_message(chat_id=userID, text='All Groups Admin Message cannot be empty ' + emojiList.failFaceIcon)
                     except:
                         print('All Groups Admin Message cannot be empty')
             elif (len(subList) == 1):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a Valid All Groups Admin Message')
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Groups Admin Message ' + emojiList.successFaceIcon)
                 except:
                     print('valid All Groups Admin message failed')
 
@@ -443,12 +442,12 @@ def allsuperadmins(bot, message):
                             print("All Groups Super Admin message failed in sending")
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='All Groups Super Admin Message cannot be empty')
+                        bot.send_message(chat_id=userID, text='All Groups Super Admin Message cannot be empty ' + emojiList.failFaceIcon)
                     except:
                         print('All Groups Super Admin Message cannot be empty')
             elif (len(subList) == 1):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a Valid All Groups Super Admin Message')
+                    bot.send_message(chat_id=userID, text='Please add a Valid All Groups Super Admin Message ' + emojiList.successFaceIcon)
                 except:
                     print('valid All Groups Super Admin message failed')
 
@@ -456,35 +455,35 @@ def start(bot, message):
     if (botFunctions.addToAllUser(message.from_user) == 'failed'):
         if (botFunctions.updateToAllUser(message.from_user) == 'failed'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text='Cannot update your details ' + botFunctions.getName(message.from_user))
+                bot.send_message(chat_id=message.from_user.id, text='Cannot update your details ' + botFunctions.getName(message.from_user) + " " +  + emojiList.failFaceIcon)
             except:
                 print('User update failed')
                 bot.send_message(chat_id=admin, text='Cannot update details for ' + botFunctions.getName(message.from_user))
         else:
             try:
-                bot.send_message(chat_id=message.from_user.id, text='You Already STARTed me ' + botFunctions.getName(message.from_user) + ' and updated your personal details')
+                bot.send_message(chat_id=message.from_user.id, text='You Already STARTed me ' + botFunctions.getName(message.from_user) + ' and updated your personal details ' + emojiList.successFaceIcon)
             except:
                 print('User update failed')
     else:
         try:
             bot.send_message(chat_id=admin, text='Bot started for ' + botFunctions.getName(message.from_user))
-            bot.send_message(chat_id=message.from_user.id, text='Thank you for STARTing me ' + botFunctions.getName(message.from_user))
+            bot.send_message(chat_id=message.from_user.id, text='Thank you for STARTing me ' + botFunctions.getName(message.from_user) + " " + emojiList.successFaceIcon)
         except:
             print('User start failed')
 
 def addSuperAdmin(bot, message):
     if(message.reply_to_message.from_user.is_bot==False):
         if(botFunctions.addToSuperAdmin(message.reply_to_message.from_user.id)):
-            bot.send_message(chat_id=admin, text='Successfully added ' + botFunctions.getName(message.reply_to_message.from_user) +' as a Super Admin')
+            bot.send_message(chat_id=admin, text='Successfully added ' + botFunctions.getName(message.reply_to_message.from_user) +' as a Super Admin ' + emojiList.successFaceIcon)
         else:
-            bot.send_message(chat_id=admin, text='Failed to add ' + botFunctions.getName(message.reply_to_message.from_user) +' as a Super Admin')
+            bot.send_message(chat_id=admin, text='Failed to add ' + botFunctions.getName(message.reply_to_message.from_user) +' as a Super Admin ' + emojiList.failFaceIcon)
 
 def removeSuperAdmin(bot, message):
     if(message.reply_to_message.from_user.is_bot==False):
         if(botFunctions.removeFromSuperAdmin(message.reply_to_message.from_user.id)):
-            bot.send_message(chat_id=admin, text='Successfully removed ' + botFunctions.getName(message.reply_to_message.from_user) +' from Super Admin')
+            bot.send_message(chat_id=admin, text='Successfully removed ' + botFunctions.getName(message.reply_to_message.from_user) +' from Super Admin ' + emojiList.successFaceIcon)
         else:
-            bot.send_message(chat_id=admin, text='Failed to remove ' + botFunctions.getName(message.reply_to_message.from_user) +' from Super Admin')
+            bot.send_message(chat_id=admin, text='Failed to remove ' + botFunctions.getName(message.reply_to_message.from_user) +' from Super Admin ' + emojiList.failFaceIcon)
 
 def botVersion(bot, message):
     try:
@@ -503,7 +502,7 @@ def adminWindowHandler(bot, types, message):
         if (message.chat.type == 'private'):
             adminWindow(bot, types, message, True)
         else:
-            bot.send_message(chat_id=message.from_user.id, text="Try /adminwindow command here", parse_mode='HTML')
+            bot.send_message(chat_id=message.from_user.id, text="Try /adminwindow command here " + emojiList.successFaceIcon, parse_mode='HTML')
 
 def adminWindow(bot, types, message, status):
     allUserCount = botFunctions.allusersDB().__len__()

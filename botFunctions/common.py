@@ -24,7 +24,7 @@ def exceptionHandling(message, bot, types, name):
     inline = types.InlineKeyboardMarkup()
     START = types.InlineKeyboardButton(text='START', callback_data='START')
     inline.row(START)
-    bot.send_message(message.chat.id, text='Agent ' + getName(name) +' Click the START button to Activate the @'+str(configuration.botUsername), reply_markup=inline)
+    bot.send_message(message.chat.id, text='Agent ' + getName(name) +' Click the START button to Activate the @'+str(configuration.botUsername) + " " + emojiList.successFaceIcon, reply_markup=inline)
 
 def allCheck(text):
     search = re.findall(r'[@][a][l][l]', text, re.I)
@@ -101,7 +101,7 @@ def autoAddDetails(message, bot, types):
     if (botFunctions.addToAllUser(message.from_user) == 'success'):
         for admin in bot.get_chat_administrators(chat_id=message.chat.id):
             try:
-                bot.send_message(chat_id=admin.user.id, text='<b>Tell</b> ' + getName(message.from_user) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ getName(message.from_user),  parse_mode='HTML')
+                bot.send_message(chat_id=admin.user.id, text='<b>Tell</b> ' + getName(message.from_user) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ getName(message.from_user) + " " + emojiList.failFaceIcon,  parse_mode='HTML')
             except:
                 print('Cannot send message to admin')
         exceptionHandling(message, bot, types, message.from_user)
@@ -183,7 +183,7 @@ def checkGroupStatus(bot, message):
              adminMessage = adminMessage + setupFullName(admin.user) + ' - ' + admin.status + '\n'
 
          bot.send_message(chat_id=message.chat.id,
-                          text='We <b>cannot find</b> any <b>data</b> related to this Bot <b>in</b> the <b>DataBase</b>. It will be <b>reported</b> to creator of this Bot\n\nThank You',
+                          text="We <b>cannot find</b> any <b>data</b> related to this Bot <b>in</b> the <b>DataBase</b>. " + emojiList.failFaceIcon + " It will be <b>reported</b> to creator of this Bot\n\nThank You " + emojiList.successFaceIcon,
                           parse_mode='HTML')
          bot.leave_chat(chat_id=message.chat.id)
 
