@@ -82,6 +82,7 @@ from .common import jsonUserDetailFormatter
 from .common import memberInTheGroup
 from .common import checkGroupStatus
 from .common import setupFullName
+from .common import structureGroupDetails
 from .photoHandler import privatePhoto
 from .photoHandler import mentionOnePhoto
 from .photoHandler import mentionAllPhoto
