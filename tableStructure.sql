@@ -6,6 +6,12 @@ CREATE TABLE IF NOT EXISTS allusers(
 	PRIMARY KEY (userid)
 );
 
+CREATE TABLE IF NOT EXISTS bangroups(
+	groupid VARCHAR(15),
+	title VARCHAR(50),
+	PRIMARY KEY (groupid)
+);
+
 CREATE TABLE IF NOT EXISTS groups(
 	groupid VARCHAR(15),
 	title VARCHAR(50),
