@@ -8,7 +8,7 @@ import emojiList
 def setupFullName(name):
     firstName = name.first_name if name.first_name!=None else ''
     lastName = " " + name.last_name if name.last_name!=None else ''
-    userName = " " + name.username if name.username!=None else ''
+    userName = " (@" + name.username + ")" if name.username!=None else ''
     fullName = firstName + lastName + userName
     return fullName
 
@@ -27,7 +27,7 @@ def exceptionHandling(message, bot, types, name):
     bot.send_message(message.chat.id, text='Agent ' + getName(name) +' Click the START button to Activate the @'+str(configuration.botUsername) + " " + emojiList.successFaceIcon, reply_markup=inline)
 
 def allCheck(text):
-    search = re.findall(r"\B@all\b", text, re.I)
+    search = re.findall(r"\B@all\b", text)
     if(len(search)>0):
         return True
     else:
@@ -175,15 +175,10 @@ def memberInTheGroup(bot, groupID, userID):
 def checkGroupStatus(bot, message):
      groupIDList = botFunctions.allgroupsDB()
      if(not str(message.chat.id) in groupIDList):
-         adminMessage = "<b>Found a group which is not in the DataBase</b>" + emojiList.exclamationMarkIcon + "\n\nGroup Title : <b>" + message.chat.title + "</b> (" + str(
-             message.chat.id) + ")\nGroup Members Count : " + str((bot.get_chat_members_count(
-             chat_id=message.chat.id)) - 1) + "\nGroup Type : " + message.chat.type + "\nCreator & Admins : \n\n"
-
-         for admin in bot.get_chat_administrators(chat_id=message.chat.id):
-             adminMessage = adminMessage + setupFullName(admin.user) + ' - ' + admin.status + '\n'
+         adminMessage = "<b>Found a group which is not in the DataBase</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(bot, message.chat.id)
 
          bot.send_message(chat_id=message.chat.id,
-                          text="We <b>cannot find</b> any <b>data</b> related to this Bot <b>in</b> the <b>DataBase</b>. " + emojiList.failFaceIcon + " It will be <b>reported</b> to creator of this Bot\n\nThank You " + emojiList.successFaceIcon,
+                          text="We <b>cannot find</b> any <b>data</b> related to this group <b>in</b> the <b>DataBase</b>. " + emojiList.failFaceIcon + " It will be <b>reported to creator</b> of this Bot\n\nThank You " + emojiList.successFaceIcon,
                           parse_mode='HTML')
          bot.leave_chat(chat_id=message.chat.id)
 

@@ -8,7 +8,7 @@ admin = configuration.admin
 
 def addingBot(bot, message):
     if(botFunctions.addToGroup(message.chat.id, message.chat.title)=='success'):
-        bot.send_message(chat_id=admin, text='Successfully Added me for <b>' + message.chat.title + '</b> ' + message.chat.type + ' and added me by ' + botFunctions.getName(message.from_user) + " " + emojiList.successFaceIcon, parse_mode='HTML')
+        bot.send_message(chat_id=admin, text="<b>Successfully Added me for a Group</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(bot, message.chat.id) + "\n\nAdded me by " + botFunctions.getName(message.from_user), parse_mode='HTML')
         try:
             bot.send_message(chat_id=message.chat.id, text='Thank you '+ botFunctions.getName(message.from_user) + ' for adding me to <b>' + message.chat.title + '</b> ' + message.chat.type + '. All the group details and user details are successfully added to the database. ' + emojiList.successFaceIcon, parse_mode='HTML')
         except:
@@ -36,18 +36,13 @@ def addingBot(bot, message):
                         print("Failed to send message to the admin")
 
 def getOtherAdmins(bot, message):
-    adminMessage = "<b>BOT Added to the Group by an Unauthorized Person</b>" + emojiList.exclamationMarkIcon + "\n\nGroup Title : <b>" + message.chat.title + "</b> (" + str(
-        message.chat.id) + ")\nGroup Members Count : " + str((bot.get_chat_members_count(
-        chat_id=message.chat.id)) - 1) + "\nGroup Type : " + message.chat.type + "\nCreator & Admins : \n\n"
-
-    for admin in bot.get_chat_administrators(chat_id=message.chat.id):
-        adminMessage = adminMessage + botFunctions.setupFullName(admin.user) + ' - ' + admin.status + '\n'
+    adminMessage = "<b>BOT Added to the Group by an Unauthorized Person</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(bot, message.chat.id)
 
     bot.send_message(chat_id=message.chat.id,
-                     text= botFunctions.getName(message.from_user) + ' you have <b>no permission</b> to add me to ' + message.chat.title + ' ' + message.chat.type + '. It will be <b>reported</b> to creator of this Bot\n\nThank You', parse_mode='HTML')
+                     text= botFunctions.getName(message.from_user) + ' you have <b>no permission</b> to add me to <b>' + message.chat.title + '</b> ' + message.chat.type + " " + emojiList.failFaceIcon +'. It will be <b>reported to creator</b> of this Bot\n\nThank You ' + emojiList.successFaceIcon, parse_mode='HTML')
     bot.leave_chat(chat_id=message.chat.id)
 
-    adminMessage = adminMessage + "\nAdded me by " + botFunctions.getName(message.from_user)
+    adminMessage = adminMessage + "\n\nAdded me by " + botFunctions.getName(message.from_user)
     bot.send_message(chat_id=configuration.admin, text=adminMessage, parse_mode='HTML')
 
 def addingUser(bot, message, types):

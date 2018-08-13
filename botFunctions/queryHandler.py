@@ -66,31 +66,7 @@ def removeGroup(bot, types, call):
     groupHandler(bot, types, call, False)
 
 def viewGroupInfo(bot, types, call):
-    adminDetails = """"""
     groupID = ast.literal_eval(call.data)[1]
-    allDetails = bot.get_chat(groupID)
-    if(allDetails.description==None):
-        description = "No Description"
-    else:
-        description = allDetails.description
-    for admin in bot.get_chat_administrators(groupID):
-        adminList = [admin.user.id, admin.user.first_name, admin.user.last_name, admin.user.username]
-        if(admin.status=='creator'):
-            creatorDetails = """\t\t\t"""+emojiList.creatorIcon+""" Creator : """+botFunctions.jsonUserDetailFormatter(adminList)+""""""
-        else:
-            if(admin.user.is_bot==False):
-                adminDetails = adminDetails + """\n\t\t\t"""+emojiList.groupAdmindminIcon+""" Administrator : """+botFunctions.jsonUserDetailFormatter(adminList)+""""""
-            else:
-                adminDetails = adminDetails + """\n\t\t\t""" + emojiList.botIcon + """ Administrator : """ + botFunctions.jsonUserDetailFormatter(adminList) + """"""
-    groupDetails = """<b>"""+ allDetails.title +"""</b>
-    
-"""+emojiList.groupTypeIcon+""" Type : """+allDetails.type+"""
-"""+emojiList.descriptionIcon+""" Description : """ + description + """
-"""+emojiList.memberCountIcon+""" Member Count : """ + str(bot.get_chat_members_count(groupID)) + """
-Chat Administrators : 
-"""+creatorDetails+"""
-"""+adminDetails+"""
-"""
     markup = types.InlineKeyboardMarkup()
     markup.add(types.InlineKeyboardButton("< back", callback_data="groups"), types.InlineKeyboardButton(text=emojiList.crossIcon, callback_data="['group'," + str(groupID) + "]"))
-    bot.edit_message_text(chat_id=call.message.chat.id, text=groupDetails, message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
+    bot.edit_message_text(chat_id=call.message.chat.id, text=botFunctions.structureGroupDetails(bot, groupID), message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
