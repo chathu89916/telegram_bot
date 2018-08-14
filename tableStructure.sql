@@ -1,43 +1,43 @@
 CREATE TABLE IF NOT EXISTS allusers(
-	userid VARCHAR(15),
-	fname VARCHAR(20),
-	lname VARCHAR(20),
-	uname VARCHAR(20),
+	userid TEXT,
+	fname TEXT,
+	lname TEXT,
+	uname TEXT,
 	PRIMARY KEY (userid)
 );
 
 CREATE TABLE IF NOT EXISTS bangroups(
-	groupid VARCHAR(15),
-	title VARCHAR(50),
+	groupid TEXT,
+	title TEXT,
 	PRIMARY KEY (groupid)
 );
 
 CREATE TABLE IF NOT EXISTS groups(
-	groupid VARCHAR(15),
-	title VARCHAR(50),
-	welcomeMessage VARCHAR(255),
-	stickerPermission VARCHAR(5),
-	hhhPermission VARCHAR(5),
+	groupid TEXT,
+	title TEXT,
+	welcomeMessage TEXT,
+	stickerPermission TEXT,
+	hhhPermission TEXT,
 	PRIMARY KEY (groupid)
 );
 
 CREATE TABLE IF NOT EXISTS subscribe(
-	subsname VARCHAR(20),
-	userid VARCHAR(15),
-	count INT,
-	PRIMARY KEY (subsname),
+	subsname TEXT,
+	userid TEXT,
+	count INTEGER,
+	PRIMARY KEY (subsname, userid),
 	FOREIGN KEY (userid) REFERENCES allusers(userid)
 );
 
 CREATE TABLE IF NOT EXISTS superadmin(
-	userid VARCHAR(15),
+	userid TEXT,
 	PRIMARY KEY (userid),
 	FOREIGN KEY (userid) REFERENCES allusers(userid)
 );
 
 CREATE TABLE IF NOT EXISTS users(
-	groupid VARCHAR(15),
-	userid VARCHAR(15),
+	groupid TEXT,
+	userid TEXT,
 	PRIMARY KEY (groupid, userid),
 	FOREIGN KEY (groupid) REFERENCES groups(groupid),
 	FOREIGN KEY (userid) REFERENCES allusers(userid)
