@@ -6,32 +6,62 @@ import emojiList
 
 admin = configuration.admin
 
-def addingBot(bot, message):
-    if(botFunctions.addToGroup(message.chat.id, message.chat.title)=='success'):
-        bot.send_message(chat_id=admin, text="<b>Successfully Added me for a Group</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(bot, message.chat.id) + "\n\nAdded me by " + botFunctions.getName(message.from_user), parse_mode='HTML')
-        try:
-            bot.send_message(chat_id=message.chat.id, text='Thank you '+ botFunctions.getName(message.from_user) + ' for adding me to <b>' + message.chat.title + '</b> ' + message.chat.type + '. All the group details and user details are successfully added to the database. ' + emojiList.successFaceIcon, parse_mode='HTML')
-        except:
-            bot.send_message(chat_id=admin, text='Failed to send welcome message for <b>' + message.chat.title + '</b> ' +message.chat.type + ' and added me by ' + botFunctions.getName(message.from_user) + " " + emojiList.failFaceIcon,parse_mode='HTML')
+def checkBotAddingStatus(bot, message):
+    groupIDList = botFunctions.getBanGroups()
+    if (str(message.chat.id) in groupIDList):
+        if(message.from_user.id == configuration.admin):
+            botFunctions.removeFromBanGroup(message.chat.id)
+            addingBot(bot, message, False)
+        else:
+            adminMessage = "<b>BOT Added to the Banned Group</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(
+                bot, message.chat.id)
+            adminMessage = adminMessage + "\n\nAdded me by " + botFunctions.getName(message.from_user)
+            bot.send_message(chat_id=configuration.admin, text=adminMessage, parse_mode='HTML')
+
+            bot.send_message(chat_id=message.chat.id,
+                             text="This group is <b>banned</b> by Bot <b>admin</b>. " + emojiList.failFaceIcon + " Please <b>contact</b> the <b>admin if you want</b> me to be added to this group. " + emojiList.successFaceIcon, parse_mode='HTML')
+            bot.leave_chat(chat_id=message.chat.id)
     else:
-        bot.send_message(chat_id=admin, text='Failed to Add bot for ' + message.chat.title + ' ' + message.chat.type + '. Try to added me by ' + botFunctions.getName(message.from_user) + " " + emojiList.failFaceIcon)
+        addingBot(bot, message, True)
+
+def addingBot(bot, message, status):
+    if (botFunctions.addToGroup(message.chat.id, message.chat.title) == 'success'):
+        if (status):
+            bot.send_message(chat_id=admin,
+                             text="<b>Successfully Added me for a Group</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(
+                                 bot, message.chat.id) + "\n\nAdded me by " + botFunctions.getName(message.from_user),
+                             parse_mode='HTML')
+        try:
+            bot.send_message(chat_id=message.chat.id, text='Thank you ' + botFunctions.getName(
+                message.from_user) + ' for adding me to <b>' + message.chat.title + '</b> ' + message.chat.type + '. All the group details and user details are successfully added to the database. ' + emojiList.successFaceIcon,
+                             parse_mode='HTML')
+        except:
+            bot.send_message(chat_id=admin,
+                             text='Failed to send welcome message for <b>' + message.chat.title + '</b> ' + message.chat.type + ' and added me by ' + botFunctions.getName(
+                                 message.from_user) + " " + emojiList.failFaceIcon, parse_mode='HTML')
+    else:
+        bot.send_message(chat_id=admin,
+                         text='Failed to Add bot for ' + message.chat.title + ' ' + message.chat.type + '. Try to added me by ' + botFunctions.getName(
+                             message.from_user) + " " + emojiList.failFaceIcon)
         bot.leave_chat(chat_id=message.chat.id)
 
     adminList = []
     failedDic = {}
     for chat in bot.get_chat_administrators(message.chat.id):
-        if(chat.user.is_bot==False):
+        if (chat.user.is_bot == False):
             adminList.append(chat.user.id)
-            if(botFunctions.addToAllUser(chat.user)=="success"):
+            if (botFunctions.addToAllUser(chat.user) == "success"):
                 failedDic[str(chat.user.id)] = botFunctions.getName(chat.user)
             botFunctions.addToUser(message.chat.id, chat.user.id)
 
-    if(failedDic!={}):
+    if (failedDic != {}):
         for admn in adminList:
-            if(str(admn) not in list(failedDic.keys())):
+            if (str(admn) not in list(failedDic.keys())):
                 for nm in list(failedDic.values()):
                     try:
-                        bot.send_message(chat_id=admn, text='<b>Tell</b> ' + nm + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> ' + nm + " " + emojiList.failFaceIcon, parse_mode='HTML')
+                        bot.send_message(chat_id=admn,
+                                         text='<b>Tell</b> ' + nm + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> ' + nm + " " + emojiList.failFaceIcon,
+                                         parse_mode='HTML')
                     except:
                         print("Failed to send message to the admin")
 
@@ -75,6 +105,6 @@ def welcomeToUser(bot, meessage):
 
 def checkAndAdd(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
-        addingBot(bot, message)
+        checkBotAddingStatus(bot, message)
     else:
         getOtherAdmins(bot, message)
