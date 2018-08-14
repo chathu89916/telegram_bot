@@ -55,6 +55,7 @@ def groupHandler(bot, types, call, status):
 
 def removeGroup(bot, types, call):
     removeID = ast.literal_eval(call.data)[1]
+    botFunctions.addToBanGroup(removeID)
     if (botFunctions.removeFromGroup(removeID)):
         successMessage = "Group Successfully Deleted " + emojiList.successFaceIcon
     else:
