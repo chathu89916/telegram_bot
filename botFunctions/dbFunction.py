@@ -560,3 +560,51 @@ def removeFromGroup(groupID):
         c.close()
         conn.close()
         return status
+
+def addToBanGroup(groupID):
+    status = False
+    try:
+        conn, c = connectDB()
+        c.execute("INSERT INTO bangroups (groupid, title) VALUES ('"+ str(groupID) +"', '"+ detailsOfGroup(groupID) +"')")
+        conn.commit()
+        status = True
+    except Exception as e:
+        status = False
+        conn.rollback()
+        print(e)
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return status
+
+def getBanGroups():
+    groupsArray = []
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT groupid FROM bangroups")
+        for row in c.fetchall():
+            groupsArray.append(row[0])
+    except Exception as e:
+        groupsArray = []
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return groupsArray
+
+def removeFromBanGroup(groupID):
+    status = ''
+    try:
+        conn, c = connectDB()
+        c.execute("DELETE FROM bangroups WHERE groupid='" + str(groupID) + "'")
+        conn.commit()
+        status = 'success'
+    except Exception as e:
+        status = 'failed'
+        conn.rollback()
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return status
