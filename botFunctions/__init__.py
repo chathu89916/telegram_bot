@@ -38,6 +38,9 @@ from .dbFunction import detailsOfGroup
 from .dbFunction import removeFromGroup
 from .dbFunction import updateSubscribeNameCount
 from .dbFunction import getSubscribeNameCount
+from .dbFunction import addToBanGroup
+from .dbFunction import getBanGroups
+from .dbFunction import removeFromBanGroup
 from .commandHandler import start
 from .commandHandler import botVersion
 from .commandHandler import botLog
