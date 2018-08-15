@@ -3,6 +3,7 @@ import configuration
 import botFunctions
 import re
 import emojiList
+import welcomeMessage
 
 admin = configuration.admin
 
@@ -86,20 +87,31 @@ def addingUser(bot, message, types):
         except:
             print('Cannot send message to admin')
 
-def welcomeToUser(bot, meessage):
-    welcomeMessage = botFunctions.getWelcomeMessage(meessage.chat.id)
+def welcomeToUser(bot, message, types):
+    markup = None
 
-    p = re.compile('(#uname)')
-    welcomeMessage = p.sub("@"+str(meessage.new_chat_member.username), welcomeMessage)
-    p = re.compile('(#fname)')
-    welcomeMessage = p.sub(str(meessage.new_chat_member.first_name), welcomeMessage)
-    p = re.compile('(#lname)')
-    welcomeMessage = p.sub(str(meessage.new_chat_member.last_name), welcomeMessage)
-    p = re.compile('(#title)')
-    welcomeMessage = p.sub(str(meessage.chat.title), welcomeMessage)
+    if(configuration.RsLKID==str(message.chat.id)):
+        markup = types.InlineKeyboardMarkup()
+        markup.add(types.InlineKeyboardButton(text="Google+", url=configuration.googlePlusURL),
+                   types.InlineKeyboardButton(text="Twitter", url=configuration.twitterURL))
+        markup.add(types.InlineKeyboardButton(text="Facebook", url=configuration.facebookURL),
+                   types.InlineKeyboardButton(text="Telegram Channel", url=configuration.telegramChannelURL))
+        markup.add(types.InlineKeyboardButton(text="To START @"+configuration.botUsername, url="https://telegram.me/"+configuration.botUsername+"?start=XXXX"))
+        welcomeMsg = welcomeMessage.ResistanceLKMessage(botFunctions.getName(message.new_chat_member))
+    else:
+        welcomeMsg = botFunctions.getWelcomeMessage(message.chat.id)
+
+        p = re.compile('(#uname)')
+        welcomeMsg = p.sub("@"+str(message.new_chat_member.username), welcomeMsg)
+        p = re.compile('(#fname)')
+        welcomeMsg = p.sub(str(message.new_chat_member.first_name), welcomeMsg)
+        p = re.compile('(#lname)')
+        welcomeMsg = p.sub(str(message.new_chat_member.last_name), welcomeMsg)
+        p = re.compile('(#title)')
+        welcomeMsg = p.sub(str(message.chat.title), welcomeMsg)
 
     try:
-        bot.send_message(chat_id=meessage.chat.id, text=welcomeMessage, parse_mode='HTML')
+        bot.send_message(chat_id=message.chat.id, text=welcomeMsg, reply_markup=markup, parse_mode='HTML')
     except:
         print("welcome message sending failed")
 
