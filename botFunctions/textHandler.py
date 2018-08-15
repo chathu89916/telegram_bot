@@ -2,6 +2,7 @@
 import configuration
 import botFunctions
 import re
+from telebot import util
 
 admin = configuration.admin
 
@@ -9,7 +10,9 @@ def privateText(bot, message):
     hhhFunc(bot, message)
     if(message.from_user.id == admin and message.reply_to_message != None):
         try:
-            bot.send_message(chat_id=message.reply_to_message.forward_from.id, text=message.text, parse_mode='HTML')
+            splitted_text = util.split_string(message.text, 3000)
+            for text in splitted_text:
+                bot.send_message(chat_id=message.reply_to_message.forward_from.id, text=text, parse_mode='HTML')
         except:
             print('Cannot send message to pm user')
         return
@@ -45,7 +48,9 @@ def mentionAllText(bot, message):
             for userid in botFunctions.getAllUsers(message.chat.id):
                 if (botFunctions.memberInTheGroup(bot, message.chat.id, userid)):
                     try:
-                        bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
+                        splitted_text = util.split_string(text, 3000)
+                        for text in splitted_text:
+                            bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
                     except:
                         print('@all mention failed')
 
@@ -72,6 +77,8 @@ def mentionOneText(bot, message):
                                 content = p.sub("<b>" + sname + "</b>", content)
                     text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + content
                     try:
-                        bot.send_message(chat_id=uname, text=text, parse_mode='HTML')
+                        splitted_text = util.split_string(text, 3000)
+                        for text in splitted_text:
+                            bot.send_message(chat_id=uname, text=text, parse_mode='HTML')
                     except:
                         print('single mention/subscribe failed')

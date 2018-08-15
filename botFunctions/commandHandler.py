@@ -4,6 +4,7 @@ import ast
 import configuration
 import botFunctions
 import emojiList
+from telebot import util
 
 admin = configuration.admin
 
@@ -286,7 +287,9 @@ def test(bot, message):
                 if (subList[1] != ''):
                     allMessage = subList[1] + '\n\n/test by ' + botFunctions.getName(message.from_user)
                     try:
-                        bot.send_message(chat_id=userID, text=allMessage, parse_mode='HTML')
+                        splitted_text = util.split_string(allMessage, 3000)
+                        for text in splitted_text:
+                            bot.send_message(chat_id=userID, text=text, parse_mode='HTML')
                     except:
                         print("Test message failed in sending")
                 else:
@@ -318,7 +321,9 @@ def all(bot, message):
                     allMessage = subList[1] + '\n\n/all by ' + botFunctions.getName(message.from_user)
                     for allID in botFunctions.allDB():
                         try:
-                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
+                            splitted_text = util.split_string(allMessage, 3000)
+                            for text in splitted_text:
+                                bot.send_message(chat_id=allID, text=text, parse_mode='HTML')
                         except:
                             print("all message failed in sending")
                 else:
@@ -350,7 +355,9 @@ def allusers(bot, message):
                     allMessage = subList[1] + '\n\n/allusers by ' + botFunctions.getName(message.from_user)
                     for allID in botFunctions.allusersDB():
                         try:
-                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
+                            splitted_text = util.split_string(allMessage, 3000)
+                            for text in splitted_text:
+                                bot.send_message(chat_id=allID, text=text, parse_mode='HTML')
                         except:
                             print("All Users message failed in sending")
                 else:
@@ -382,7 +389,9 @@ def allgroups(bot, message):
                     allMessage = subList[1] + '\n\n/allgroups by ' + botFunctions.getName(message.from_user)
                     for allID in botFunctions.allgroupsDB():
                         try:
-                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
+                            splitted_text = util.split_string(allMessage, 3000)
+                            for text in splitted_text:
+                                bot.send_message(chat_id=allID, text=text, parse_mode='HTML')
                         except:
                             print("All Groups message failed in sending")
                 else:
@@ -415,7 +424,9 @@ def allgroupsadmins(bot, message):
                     allMessage = subList[1] + '\n\n/allgroupsadmins by ' + botFunctions.getName(message.from_user)
                     for allID in botFunctions.getAllGroupAdmins(bot):
                         try:
-                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
+                            splitted_text = util.split_string(allMessage, 3000)
+                            for text in splitted_text:
+                                bot.send_message(chat_id=allID, text=text, parse_mode='HTML')
                         except:
                             print("All Groups Admin message failed in sending")
                 else:
@@ -447,7 +458,9 @@ def allsuperadmins(bot, message):
                     allMessage = subList[1] + '\n\n/allsuperadmins by ' + botFunctions.getName(message.from_user)
                     for allID in botFunctions.getAdmin():
                         try:
-                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
+                            splitted_text = util.split_string(allMessage, 3000)
+                            for text in splitted_text:
+                                bot.send_message(chat_id=allID, text=text, parse_mode='HTML')
                         except:
                             print("All Groups Super Admin message failed in sending")
                 else:
@@ -497,13 +510,17 @@ def removeSuperAdmin(bot, message):
 
 def botVersion(bot, message):
     try:
-        bot.send_message(chat_id=message.chat.id, text=botFunctions.botVesion(), parse_mode='HTML')
+        splitted_text = util.split_string(botFunctions.botVesion(), 3000)
+        for text in splitted_text:
+            bot.send_message(chat_id=message.chat.id, text=text, parse_mode='HTML')
     except:
         print('botVersion seding failed')
 
 def botLog(bot, message):
     try:
-        bot.send_message(chat_id=message.chat.id, text=botFunctions.changeLOG(), parse_mode='HTML')
+        splitted_text = util.split_string(botFunctions.changeLOG(), 3000)
+        for text in splitted_text:
+            bot.send_message(chat_id=message.chat.id, text=text, parse_mode='HTML')
     except:
         print('botLog seding failed')
 
