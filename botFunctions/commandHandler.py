@@ -509,16 +509,18 @@ def adminWindow(bot, types, message, status):
     allGroupCount = botFunctions.allgroupsDB().__len__()
     allSuperAdminCount = botFunctions.getAdmin().__len__()
     subscribeUserCount = botFunctions.getSubscribeUserCount()
+    allBanedGroupCount = botFunctions.getBanGroups().__len__()
     firstMessage = """<b>Admin Window</b>
     
-"""+emojiList.usersIcon+""" All Users : """+str(allUserCount)+"""
-"""+emojiList.houseIcon+""" All Groups : """+str(allGroupCount)+"""
-"""+emojiList.subscribeUserIcon+""" Subscribe Names : """+str(subscribeUserCount)+"""
-"""+emojiList.superAdminIcon+""" Super Admins : """+str(allSuperAdminCount)+"""
+""" + emojiList.usersIcon + """ All Users : """ + str(allUserCount) + """
+""" + emojiList.houseIcon + """ All Groups : """ + str(allGroupCount) + """
+""" + emojiList.bannedGroupIcon + """ All Banned Group Count : """ + str(allBanedGroupCount) + """
+""" + emojiList.subscribeUserIcon + """ Subscribe Names : """ + str(subscribeUserCount)+"""
+""" + emojiList.superAdminIcon + """ Super Admins : """ + str(allSuperAdminCount)+"""
 """
 
     markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton("Super Admins", callback_data="superadmins"), types.InlineKeyboardButton("Groups", callback_data="groups"))
+    markup.add(types.InlineKeyboardButton("Super Admins", callback_data="superadmins"), types.InlineKeyboardButton("Groups", callback_data="allgroups"))
     if(status):
         bot.send_message(chat_id=message.chat.id, text=firstMessage, reply_markup=markup, parse_mode='HTML')
     else:
