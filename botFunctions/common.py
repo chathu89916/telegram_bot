@@ -24,7 +24,7 @@ def exceptionHandling(message, bot, types, name):
     inline = types.InlineKeyboardMarkup()
     START = types.InlineKeyboardButton(text='START', callback_data='START')
     inline.row(START)
-    bot.send_message(message.chat.id, text='Agent ' + getName(name) +' Click the START button to Activate the @'+str(configuration.botUsername) + " " + emojiList.successFaceIcon, reply_markup=inline)
+    bot.send_message(message.chat.id, text='<b>Agent</b> ' + getName(name) +' <b>Click the START button to Activate the</b> @'+str(configuration.botUsername) + " " + emojiList.successFaceIcon, reply_markup=inline, parse_mode='HTML')
 
 def allCheck(text):
     search = re.findall(r"\B@all\b", text)
