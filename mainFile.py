@@ -243,7 +243,7 @@ def handle_new_chat_members_and_group_chat_created(message):
     if(message.content_type=='group_chat_created' or botID==message.new_chat_member.id):
         botFunctions.checkAndAdd(bot, message)
     else:
-        botFunctions.welcomeToUser(bot, message)
+        botFunctions.welcomeToUser(bot, message, types)
         if(message.new_chat_member.is_bot == False):
             botFunctions.addingUser(bot, message, types)
 
@@ -257,7 +257,7 @@ def handle_left_chat_member(message):
 @bot.callback_query_handler(func=lambda call: True)
 def  handle_query(call):
     if (call.data == 'START'):
-        bot.answer_callback_query(callback_query_id=call.id, url='https://telegram.me/'+str(botUsername)+'?start=XXXX')
+        bot.answer_callback_query(callback_query_id=call.id, url="https://telegram.me/" + botUsername + "?start=XXXX")
     if(call.data == "superadmins"):
         botFunctions.superAdminHandler(bot, types, call, True)
     if (call.data == "groups"):
