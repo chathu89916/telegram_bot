@@ -79,9 +79,9 @@ def handle_command_hhhpermission(message):
 def handle_command_subscribe(message):
     botFunctions.subscribe(bot, message)
 
-@bot.message_handler(commands=['unsubscribe'])
-def handle_command_unsubscribe(message):
-    botFunctions.unsubscribe(bot, message)
+# @bot.message_handler(commands=['unsubscribe'])
+# def handle_command_unsubscribe(message):
+#     botFunctions.unsubscribe(bot, message)
 
 @bot.message_handler(commands=['subscribewindow'])
 def handle_command_subscribewindow(message):

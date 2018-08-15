@@ -58,7 +58,7 @@ from .commandHandler import welcomemessage
 from .commandHandler import stickerpermission
 from .commandHandler import hhhpermission
 from .commandHandler import subscribe
-from .commandHandler import unsubscribe
+# from .commandHandler import unsubscribe
 from .commandHandler import subscribewindow
 from .commandHandler import adminWindow
 from .commandHandler import adminWindowHandler

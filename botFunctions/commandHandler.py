@@ -41,45 +41,45 @@ def subscribe(bot, message):
         except:
             print('Cannot add more than one subscribe name same time')
 
-def unsubscribe(bot, message):
-    userID = message.from_user.id
-    subList = re.split('\W+', message.text, re.U)
-    if(len(subList)==3):
-        if(subList[2]!=''):
-            subname = subList[2].lower()
-            subNameList = botFunctions.subscribelistDB(userID)
-            for snm in subNameList:
-                if(snm==subname):
-                    if(botFunctions.unsubscribeDB(subname, userID)=='success'):
-                        try:
-                            bot.send_message(chat_id=userID, text='Subscribe name Successfully Removed ' + emojiList.successFaceIcon)
-                        except:
-                            print('Subscribe name successfully remove failed')
-                    else:
-                        try:
-                            bot.send_message(chat_id=userID, text='Subscribe name Removing failed ' + emojiList.failFaceIcon)
-                        except:
-                            print('Subscribe name removing failed')
-                    return
-            try:
-                bot.send_message(chat_id=userID, text='Subscribe name cannot found ' + emojiList.failFaceIcon)
-            except:
-                print('Subscribe name cannot found failed')
-        else:
-            try:
-                bot.send_message(chat_id=userID, text='Unsubscribe name cannot be empty ' + emojiList.failFaceIcon)
-            except:
-                print('Unsubscribe name cannot be empty')
-    elif(len(subList)==2):
-        try:
-            bot.send_message(chat_id=userID, text='Please add a Unsubscribe name ' + emojiList.successFaceIcon)
-        except:
-            print('Unsubscriber name not found')
-    else:
-        try:
-            bot.send_message(chat_id=userID, text='Cannot remove more than one subscribe name same time ' + emojiList.failFaceIcon)
-        except:
-            print('Cannot remove more than one subscribe name same time')
+# def unsubscribe(bot, message):
+#     userID = message.from_user.id
+#     subList = re.split('\W+', message.text, re.U)
+#     if(len(subList)==3):
+#         if(subList[2]!=''):
+#             subname = subList[2].lower()
+#             subNameList = botFunctions.subscribelistDB(userID)
+#             for snm in subNameList:
+#                 if(snm==subname):
+#                     if(botFunctions.unsubscribeDB(subname, userID)=='success'):
+#                         try:
+#                             bot.send_message(chat_id=userID, text='Subscribe name Successfully Removed ' + emojiList.successFaceIcon)
+#                         except:
+#                             print('Subscribe name successfully remove failed')
+#                     else:
+#                         try:
+#                             bot.send_message(chat_id=userID, text='Subscribe name Removing failed ' + emojiList.failFaceIcon)
+#                         except:
+#                             print('Subscribe name removing failed')
+#                     return
+#             try:
+#                 bot.send_message(chat_id=userID, text='Subscribe name cannot found ' + emojiList.failFaceIcon)
+#             except:
+#                 print('Subscribe name cannot found failed')
+#         else:
+#             try:
+#                 bot.send_message(chat_id=userID, text='Unsubscribe name cannot be empty ' + emojiList.failFaceIcon)
+#             except:
+#                 print('Unsubscribe name cannot be empty')
+#     elif(len(subList)==2):
+#         try:
+#             bot.send_message(chat_id=userID, text='Please add a Unsubscribe name ' + emojiList.successFaceIcon)
+#         except:
+#             print('Unsubscriber name not found')
+#     else:
+#         try:
+#             bot.send_message(chat_id=userID, text='Cannot remove more than one subscribe name same time ' + emojiList.failFaceIcon)
+#         except:
+#             print('Cannot remove more than one subscribe name same time')
 
 def subscribewindow(bot, types, message, status):
     subList = botFunctions.subscribelistDB(message.from_user.id)
