@@ -87,7 +87,13 @@ def subscribewindow(bot, types, message, status, name):
     title = "<b>Subscribe Name List</b>"
     markup = None
     if(subList==[]):
-        pass
+        if (status):
+            bot.answer_callback_query(callback_query_id=message.id, show_alert=False,
+                                      text="Subscribe name " + name + " Successfully removed " + emojiList.successFaceIcon)
+            bot.delete_message(chat_id=message.message.chat.id, message_id=message.message.message_id)
+        bot.send_message(chat_id=message.from_user.id,
+                         text=title + "\n\nNo subscribe name found "+ emojiList.failFaceIcon +", please add subscribe name in following way " + emojiList.successFaceIcon + "\n\n/subscribe <i>you_subscribe_name</i>", parse_mode='HTML')
+        return
     else:
         markup = types.InlineKeyboardMarkup()
         title = title + "\n\n"+emojiList.subscribeUserIcon + " Subscribe Name Count : " + str(len(subList))
