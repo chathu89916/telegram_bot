@@ -88,6 +88,8 @@ from .common import memberInTheGroup
 from .common import checkGroupStatus
 from .common import setupFullName
 from .common import structureGroupDetails
+from .common import mentionForAllCommands
+from .common import getAllGroupAdmins
 from .photoHandler import privatePhoto
 from .photoHandler import mentionOnePhoto
 from .photoHandler import mentionAllPhoto
