@@ -271,6 +271,9 @@ def welcomemessage(bot, message):
 
 def test(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
+        if (message.reply_to_message != None):
+            botFunctions.mentionForAllCommands(bot, message, "test")
+            return
         if (message.chat.type != 'private'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text="Please use /test command in here")
@@ -299,9 +302,12 @@ def test(bot, message):
 
 def all(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
+        if (message.reply_to_message != None):
+            botFunctions.mentionForAllCommands(bot, message, "all")
+            return
         if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text="Please use /all command in here " + emojiList.successFaceIcon)
+                bot.send_message(chat_id=message.from_user.id, text="Please use /all command in here")
             except:
                 print('/all trying failed')
         else:
@@ -328,9 +334,12 @@ def all(bot, message):
 
 def allusers(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
+        if (message.reply_to_message != None):
+            botFunctions.mentionForAllCommands(bot, message, "allusers")
+            return
         if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text="Please use /allusers command in here " + emojiList.successFaceIcon)
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allusers command in here")
             except:
                 print('/allusers trying failed')
         else:
@@ -357,9 +366,12 @@ def allusers(bot, message):
 
 def allgroups(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
+        if (message.reply_to_message != None):
+            botFunctions.mentionForAllCommands(bot, message, "allgroups")
+            return
         if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroups command in here " + emojiList.successFaceIcon)
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroups command in here")
             except:
                 print('/allgroups trying failed')
         else:
@@ -386,9 +398,12 @@ def allgroups(bot, message):
 
 def allgroupsadmins(bot, message):
     if (botFunctions.isUserSuperAdmin(message.from_user.id)):
+        if (message.reply_to_message != None):
+            botFunctions.mentionForAllCommands(bot, message, "allgroupsadmins")
+            return
         if (message.chat.type != 'private'):
             try:
-                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroupsadmins command in here " + emojiList.successFaceIcon)
+                bot.send_message(chat_id=message.from_user.id, text="Please use /allgroupsadmins command in here")
             except:
                 print('/allgroupsadmins trying failed')
         else:
@@ -398,17 +413,9 @@ def allgroupsadmins(bot, message):
             if (len(subList) == 2):
                 if (subList[1] != ''):
                     allMessage = subList[1] + '\n\n/allgroupsadmins by ' + botFunctions.getName(message.from_user)
-                    for allID in botFunctions.allgroupsDB():
+                    for allID in botFunctions.getAllGroupAdmins(bot):
                         try:
-                            for admin in bot.get_chat_administrators(allID):
-                                if (admin.user.is_bot == False):
-                                    adminList.append(admin.user.id)
-                        except:
-                            print("Getdmins ID failed in  : " + str(allID))
-                    adminList = list(set(adminList))
-                    for adminID in adminList:
-                        try:
-                            bot.send_message(chat_id=adminID, text=allMessage, parse_mode='HTML')
+                            bot.send_message(chat_id=allID, text=allMessage, parse_mode='HTML')
                         except:
                             print("All Groups Admin message failed in sending")
                 else:
@@ -424,6 +431,9 @@ def allgroupsadmins(bot, message):
 
 def allsuperadmins(bot, message):
     if (message.from_user.id==configuration.admin):
+        if (message.reply_to_message != None):
+            botFunctions.mentionForAllCommands(bot, message, "allsuperadmins")
+            return
         if (message.chat.type != 'private'):
             try:
                 bot.send_message(chat_id=message.from_user.id, text="Please use /allsuperadmins command in here")

@@ -231,3 +231,28 @@ def getAllGroupAdmins(bot):
     adminList = list(set(adminList))
     return adminList
 
+def mentionForAllCommands(bot, message, commandName):
+    allID = []
+    if(commandName=="test"):
+        allID.append(message.from_user.id)
+    elif(commandName=="all"):
+        allID = botFunctions.allDB()
+    elif (commandName == "allusers"):
+        allID = botFunctions.allusersDB()
+    elif (commandName == "allgroups"):
+        allID = botFunctions.allgroupsDB()
+    elif (commandName == "allgroupsadmins"):
+        allID = getAllGroupAdmins(bot)
+    elif (commandName == "allsuperadmins"):
+        allID = botFunctions.getAdmin()
+
+    for oneByOneID in allID:
+        try:
+            bot.send_message(chat_id=oneByOneID,
+                             text="/" + commandName + " by " + botFunctions.getName(
+                                 message.from_user),
+                             parse_mode='HTML')
+            bot.forward_message(chat_id=oneByOneID, from_chat_id=message.chat.id,
+                                message_id=message.reply_to_message.message_id)
+        except:
+            print("mentionForAllCommands failed in /" + commandName)
