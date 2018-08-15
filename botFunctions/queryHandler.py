@@ -113,6 +113,7 @@ def removeGroup(bot, types, call):
         successMessage = "Group Successfully Deleted " + emojiList.successFaceIcon
     else:
         successMessage = "Group Deletion Failed " + emojiList.failFaceIcon
+    bot.send_message(chat_id=removeID, text="Sorry, <b>Bot admin</b> has decided to <b>kick</b> me from this group " + emojiList.failFaceIcon, parse_mode='HTML')
     bot.leave_chat(chat_id=removeID)
     bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=successMessage)
     bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
