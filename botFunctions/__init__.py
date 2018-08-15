@@ -41,6 +41,8 @@ from .dbFunction import getSubscribeNameCount
 from .dbFunction import addToBanGroup
 from .dbFunction import getBanGroups
 from .dbFunction import removeFromBanGroup
+from .dbFunction import getBannedGroupIDTitle
+from .dbFunction import getBannedGroupTitle
 from .commandHandler import start
 from .commandHandler import botVersion
 from .commandHandler import botLog
@@ -114,6 +116,9 @@ from .leftChatMemberHandler import kikBot
 from .leftChatMemberHandler import leftMember
 from .queryHandler import superAdminHandler
 from .queryHandler import groupHandler
-from .queryHandler import removeSuperAdmin
+from .queryHandler import removeSuperAdminQuery
 from .queryHandler import removeGroup
 from .queryHandler import viewGroupInfo
+from .queryHandler import allgroupsHandler
+from .queryHandler import bannedGroupHandler
+from .queryHandler import removeBannedGroup
