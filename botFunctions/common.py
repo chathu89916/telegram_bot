@@ -131,9 +131,9 @@ def groupAndSuperAdmin(bot, message):
 def userDetailFormatter(detail):
     userDetails = detail[1]
     if (detail[2] != ''):
-        userDetails = userDetails + detail[2]
+        userDetails = " " + userDetails + detail[2]
     if (detail[3] != ''):
-        userDetails = userDetails + ' ---> @' + detail[3]
+        userDetails = " " + userDetails + ' ---> @' + detail[3]
     return userDetails
 
 def jsonUserDetailFormatter(detail):
@@ -150,6 +150,10 @@ def sureOrNot(bot, types, call):
         groupOrUser = "Super Admin"
         userGroupDetails = userDetailFormatter(botFunctions.detailsOfUser(searchID))
         callBackDetails = "['removesuperadmin',"+str(searchID)+"]"
+    elif(call.data.startswith("['sureRemoveBannedGroup'")):
+        groupOrUser = "Banned Group"
+        userGroupDetails = botFunctions.getBannedGroupTitle(searchID)
+        callBackDetails = "['removeBannedGroup',"+str(searchID)+"]"
     else:
         groupOrUser = "Group"
         userGroupDetails = botFunctions.detailsOfGroup(searchID)
