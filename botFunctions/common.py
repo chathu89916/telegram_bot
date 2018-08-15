@@ -216,3 +216,18 @@ def structureGroupDetails(bot, groupID):
                    adminDetails
 
     return groupDetails
+
+def getAllGroupAdmins(bot):
+    adminList = []
+    for allID in botFunctions.allgroupsDB():
+        try:
+            for admin in bot.get_chat_administrators(allID):
+                if (admin.user.is_bot == False):
+                    adminList.append(admin.user.id)
+        except:
+            print("Getdmins ID failed in  : " + str(allID))
+    for allSuperAdmins in botFunctions.getAdmin():
+        adminList.append(allSuperAdmins)
+    adminList = list(set(adminList))
+    return adminList
+
