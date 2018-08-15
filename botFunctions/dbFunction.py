@@ -594,17 +594,46 @@ def getBanGroups():
         return groupsArray
 
 def removeFromBanGroup(groupID):
-    status = ''
+    status = False
     try:
         conn, c = connectDB()
         c.execute("DELETE FROM bangroups WHERE groupid='" + str(groupID) + "'")
         conn.commit()
-        status = 'success'
+        status = True
     except Exception as e:
-        status = 'failed'
+        status = False
         conn.rollback()
         raise e
     finally:
         c.close()
         conn.close()
         return status
+
+def getBannedGroupTitle(groupID):
+    bannedGroupTitle = ''
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT title FROM bangroups WHERE groupid='" + str(groupID) + "'")
+        bannedGroupTitle = c.fetchone()[0]
+    except Exception as e:
+        bannedGroupTitle = ''
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return bannedGroupTitle
+
+def getBannedGroupIDTitle():
+    groupsArray = []
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT groupid,title FROM bangroups")
+        for row in c.fetchall():
+            groupsArray.append(row)
+    except Exception as e:
+        groupsArray = []
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return groupsArray
