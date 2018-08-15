@@ -21,3 +21,6 @@ groupAdmindminIcon = u"\U0001F60E"
 exclamationMarkIcon = u"\u2757\uFE0F"
 
 bannedGroupIcon = u"\U0001F6B7"
+
+frogFaceIcon = u"\U0001F438"
+handDonwIcon = u"\U0001F447"
