@@ -262,10 +262,18 @@ def  handle_query(call):
         botFunctions.superAdminHandler(bot, types, call, True)
     if (call.data == "groups"):
         botFunctions.groupHandler(bot, types, call, True)
+    if (call.data == "allgroups"):
+        botFunctions.allgroupsHandler(bot, types, call, True)
+    if (call.data == "bannedgroups"):
+        botFunctions.bannedGroupHandler(bot, types, call, True)
+    if (call.data == "backToAllGroup"):
+        botFunctions.allgroupsHandler(bot, types, call, True)
     if (call.data == 'noUserName'):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=True, text="No Username Found " + emojiList.failFaceIcon)
     if (call.data == 'subscribenameNotification'):
         bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Click " + emojiList.crossIcon + " to remove the Subscribe Name")
+    if (call.data == 'noGroupName'):
+        bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text="Click " + emojiList.crossIcon + " to remove the Banned Group")
     if (call.data.startswith("['subscribename'")):
         botFunctions.unsubscribeFromWindow(bot, types, call)
     if (call.data == "backToHome"):
@@ -273,13 +281,17 @@ def  handle_query(call):
     if (call.data.startswith("['superadmin'")):
         botFunctions.sureOrNot(bot, types, call)
     if (call.data.startswith("['removesuperadmin'")):
-        botFunctions.removeSuperAdmin(bot, types, call)
+        botFunctions.removeSuperAdminQuery(bot, types, call)
     if (call.data.startswith("['group'")):
+        botFunctions.sureOrNot(bot, types, call)
+    if (call.data.startswith("['sureRemoveBannedGroup'")):
         botFunctions.sureOrNot(bot, types, call)
     if (call.data.startswith("['removegroup'")):
         botFunctions.removeGroup(bot, types, call)
     if (call.data.startswith("['viewgroup'")):
         botFunctions.viewGroupInfo(bot, types, call)
+    if (call.data.startswith("['removeBannedGroup'")):
+        botFunctions.removeBannedGroup(bot, types, call)
     if (call.data == "no"):
         bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
 
