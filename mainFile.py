@@ -85,7 +85,7 @@ def handle_command_subscribe(message):
 
 @bot.message_handler(commands=['subscribewindow'])
 def handle_command_subscribewindow(message):
-    botFunctions.subscribewindow(bot, types, message, False)
+    botFunctions.subscribewindow(bot, types, message, False, "")
 
 @bot.message_handler(content_types=['new_chat_title'])
 def handle_new_chat_title(message):

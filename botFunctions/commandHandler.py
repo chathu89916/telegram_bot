@@ -81,7 +81,7 @@ def subscribe(bot, message):
 #         except:
 #             print('Cannot remove more than one subscribe name same time')
 
-def subscribewindow(bot, types, message, status):
+def subscribewindow(bot, types, message, status, name):
     subList = botFunctions.subscribelistDB(message.from_user.id)
     title = "<b>Subscribe Name List</b>"
     markup = None
@@ -97,7 +97,7 @@ def subscribewindow(bot, types, message, status):
                 types.InlineKeyboardButton(text=emojiList.crossIcon, callback_data="['subscribename', "+str(message.from_user.id)+", '"+subName+"']"))
     if(status):
         bot.answer_callback_query(callback_query_id=message.id, show_alert=False,
-                                  text="Subscribe name Successfully removed " + emojiList.successFaceIcon)
+                                  text="Subscribe name " + name + " Successfully removed " + emojiList.successFaceIcon)
         bot.edit_message_text(chat_id=message.message.chat.id, text=title, message_id=message.message.message_id,
                               reply_markup=markup, parse_mode='HTML')
     else:
@@ -107,7 +107,7 @@ def unsubscribeFromWindow(bot, types, call):
     removeID = ast.literal_eval(call.data)[1]
     removeSubscribeName = ast.literal_eval(call.data)[2]
     if(botFunctions.unsubscribeDB(removeSubscribeName, removeID)=='success'):
-        subscribewindow(bot, types, call, True)
+        subscribewindow(bot, types, call, True, removeSubscribeName)
     else:
         bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
                                   text="Cannot remove subscribe name this time, please try again later " + emojiList.failFaceIcon)
