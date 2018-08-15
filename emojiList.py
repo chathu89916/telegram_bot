@@ -19,3 +19,5 @@ houseIcon = u"\U0001F3E1"
 groupAdmindminIcon = u"\U0001F60E"
 
 exclamationMarkIcon = u"\u2757\uFE0F"
+
+bannedGroupIcon = u"\U0001F6B7"
