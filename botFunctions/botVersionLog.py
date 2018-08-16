@@ -5,7 +5,9 @@ def botVesion():
 
 * Click the cross icon to remove the subscribe name easily.
 
-* When someone calls you in your subscribe name it will be counted and you will see it from the /subscribewindow ."""
+* When someone calls you by your subscribe name it will be counted and you will see it from the /subscribewindow .
+
+* It Can be subscribed more than one word at a time by separating space or comma(/subscribe name1 name2 | /subscribe name1 , name2)."""
 
     return BOT_VERSION
 
@@ -16,7 +18,9 @@ def changeLOG():
 
 * Click the cross icon to remove the subscribe name easily.
 
-* When someone calls you in your subscribe name it will be counted and you will see it from the /subscribewindow .
+* When someone calls you by your subscribe name it will be counted and you will see it from the /subscribewindow .
+
+* It Can be subscribed more than one word at a time by separating space or comma(/subscribe name1 name2 | /subscribe name1 , name2).
 
 <b>Version 2.6</b>
 
@@ -27,8 +31,6 @@ def changeLOG():
 <b>Version 2.5</b>
 
 * You can change the permissions of the Bot when the bot is a admin of the group. Otherwise Bot doesn't change it.
-
-* It Can be subscribed more than one word at a time by separating space or comma(/subscribe name1 name2 | /subscribe name1 , name2).
 
 * If the Bot is not in the database group table, Bot will left the chat automatically.
 
