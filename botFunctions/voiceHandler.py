@@ -64,7 +64,8 @@ def mentionOneVoice(bot, message):
                         for subName in botFunctions.getSubscribeName(uname):
                             for sname in listSUB:
                                 if(sname.lower()==subName.lower()):
-                                    botFunctions.updateSubscribeNameCount(sname, uname)
+                                    for i in range(text.count(sname)):
+                                        botFunctions.updateSubscribeNameCount(sname, uname)
                                     p = re.compile(r"\b{0}\b".format(sname))
                                     text = p.sub("<b>" + sname + "</b>", text)
                     if(str(repliedUser)!=uname):
