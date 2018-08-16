@@ -24,3 +24,5 @@ bannedGroupIcon = u"\U0001F6B7"
 
 frogFaceIcon = u"\U0001F438"
 handDonwIcon = u"\U0001F447"
+thumbsUpIcon = u"\U0001F44D"
+clapIcon = u"\U0001F44F"
