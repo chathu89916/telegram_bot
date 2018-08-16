@@ -18,6 +18,12 @@ CREATE TABLE IF NOT EXISTS groups(
 	welcomeMessage TEXT,
 	stickerPermission TEXT,
 	hhhPermission TEXT,
+	audioPermission TEXT,
+	videoPermission TEXT,
+	documentPermission TEXT,
+	textPermission TEXT,
+	locationPermission TEXT,
+	contactPermission TEXT,
 	PRIMARY KEY (groupid)
 );
 
