@@ -22,10 +22,10 @@ CREATE TABLE IF NOT EXISTS groups(
 );
 
 CREATE TABLE IF NOT EXISTS subscribe(
-	subsname TEXT,
 	userid TEXT,
+	subsname TEXT,
 	count INTEGER,
-	PRIMARY KEY (subsname, userid),
+	PRIMARY KEY (userid, subsname),
 	FOREIGN KEY (userid) REFERENCES allusers(userid)
 );
 
