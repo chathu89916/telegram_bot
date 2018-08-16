@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import re
 import ast
 import configuration
+import re
 import botFunctions
 import emojiList
+import welcomeMessage
 from telebot import util
 
 admin = configuration.admin
@@ -499,6 +500,11 @@ def start(bot, message):
             bot.send_message(chat_id=message.from_user.id, text='Thank you for STARTing me ' + botFunctions.getName(message.from_user) + " " + emojiList.successFaceIcon)
         except:
             print('User start failed')
+    if(message.chat.type == 'private' and botFunctions.memberInTheGroup(bot, configuration.RsLKID, message.from_user.id)):
+        try:
+            bot.send_message(chat_id=message.from_user.id, text=welcomeMessage.formDetails(botFunctions.getName(message.from_user)), parse_mode='HTML')
+        except:
+            print('User update failed')
 
 def addSuperAdmin(bot, message):
     if(message.reply_to_message.from_user.is_bot==False):
