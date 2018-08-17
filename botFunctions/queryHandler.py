@@ -154,10 +154,7 @@ def viewGroupInfo(bot, types, call, passID):
         markup.add(types.InlineKeyboardButton("Location Permission", callback_data="['permission','" + str(
             botFunctions.getLocationPermission(groupID)) + "', 'Contact Permission' ]"),
                    types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getLocationPermission(
-                       groupID) else emojiList.permissionFalseIcon,
-                                              callback_data="['cp', " + str(groupID) + ", " + str(
-                                                  botFunctions.getLocationPermission(
-                                                      groupID)) + ", 'locationPermission', 'Location']"))
+                       groupID) else emojiList.permissionFalseIcon,callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getLocationPermission(groupID)) + ", 'locationPermission', 'Location']"))
 
         markup.add(types.InlineKeyboardButton("Contact Permission", callback_data="['permission','" + str(botFunctions.getContactPermission(groupID)) + "', 'Contact Permission' ]"),
                    types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getContactPermission(
