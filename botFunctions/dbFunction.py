@@ -184,7 +184,7 @@ def addToGroup(groupID, title):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO groups (groupid, title, welcomeMessage, stickerPermission, hhhPermission, audioPermission, videoPermission, documentPermission, textPermission, locationPermission, contactPermission) VALUES ('"+ str(groupID) +"', '"+ title+"', 'Welcome #uname for <b>#title</b>', 'True', 'True', 'True', 'True', 'True', 'True', 'True','True')")
+        c.execute("INSERT INTO groups (groupid, title, welcomeMessage, stickerPermission, hhhPermission, audioPermission, videoPermission, documentPermission, textPermission, locationPermission, contactPermission, voicePermission, photoPermission) VALUES ('"+ str(groupID) +"', '"+ title+"', 'Welcome #uname for <b>#title</b>', 'True', 'True', 'True', 'True', 'True', 'True', 'True','True', 'True', 'True')")
         conn.commit()
         status = 'success'
     except Exception as e:
