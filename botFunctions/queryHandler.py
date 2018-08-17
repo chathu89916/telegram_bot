@@ -127,38 +127,37 @@ def viewGroupInfo(bot, types, call, passID):
         groupID=passID
     markup = types.InlineKeyboardMarkup()
     if(botFunctions.isBotCanDeleteMessage(bot, groupID)):
-        markup.add(types.InlineKeyboardButton("Sticker Permission", callback_data="['permission','" + str(botFunctions.getStickerPermission(groupID)) + "', 'Sticker Permission' ]"),
-                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getStickerPermission(
-                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getStickerPermission(groupID)) + ", 'stickerPermission', 'Sticker']"))
+        markup.add(types.InlineKeyboardButton("Sticker Permission", callback_data="['permission','" + str(botFunctions.getStatusOfGroupPermission('stickerPermission', groupID)) + "', 'Sticker Permission' ]"),
+                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getStatusOfGroupPermission('stickerPermission',
+                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getStatusOfGroupPermission('stickerPermission', groupID)) + ", 'stickerPermission', 'Sticker']"))
 
-        markup.add(types.InlineKeyboardButton("HHH Permission", callback_data="['permission','" + str(botFunctions.getHHHPermission(groupID)) + "', 'HHH Permission' ]"),
-                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getHHHPermission(
-                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getHHHPermission(groupID)) + ", 'hhhPermission', 'HHH']"))
+        markup.add(types.InlineKeyboardButton("HHH Permission", callback_data="['permission','" + str(botFunctions.getStatusOfGroupPermission('hhhPermission', groupID)) + "', 'HHH Permission' ]"),
+                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getStatusOfGroupPermission('hhhPermission',
+                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getStatusOfGroupPermission('hhhPermission', groupID)) + ", 'hhhPermission', 'HHH']"))
 
-        markup.add(types.InlineKeyboardButton("Audio Permission", callback_data="['permission','" + str(botFunctions.getAudioPermission(groupID)) + "', 'Audio Permission' ]"),
-                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getAudioPermission(
-                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getAudioPermission(groupID)) + ", 'audioPermission', 'Audio']"))
+        markup.add(types.InlineKeyboardButton("Audio Permission", callback_data="['permission','" + str(botFunctions.getStatusOfGroupPermission('audioPermission', groupID)) + "', 'Audio Permission' ]"),
+                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getStatusOfGroupPermission('audioPermission',
+                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getStatusOfGroupPermission('audioPermission', groupID)) + ", 'audioPermission', 'Audio']"))
 
-        markup.add(types.InlineKeyboardButton("Video Permission", callback_data="['permission','" + str(botFunctions.getVideoPermission(groupID)) + "', 'Video Permission' ]"),
-                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getVideoPermission(
-                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getVideoPermission(groupID)) + ", 'videoPermission', 'Video']"))
+        markup.add(types.InlineKeyboardButton("Video Permission", callback_data="['permission','" + str(botFunctions.getStatusOfGroupPermission('videoPermission', groupID)) + "', 'Video Permission' ]"),
+                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getStatusOfGroupPermission('videoPermission',
+                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getStatusOfGroupPermission('videoPermission', groupID)) + ", 'videoPermission', 'Video']"))
 
-        markup.add(types.InlineKeyboardButton("Document Permission", callback_data="['permission','" + str(botFunctions.getDocumentPermission(groupID)) + "', 'Document Permission' ]"),
-                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getDocumentPermission(
-                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getDocumentPermission(groupID)) + ", 'documentPermission', 'Document']"))
+        markup.add(types.InlineKeyboardButton("Document Permission", callback_data="['permission','" + str(botFunctions.getStatusOfGroupPermission('documentPermission', groupID)) + "', 'Document Permission' ]"),
+                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getStatusOfGroupPermission('documentPermission',
+                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getStatusOfGroupPermission('documentPermission', groupID)) + ", 'documentPermission', 'Document']"))
 
-        markup.add(types.InlineKeyboardButton("Text Permission", callback_data="['permission','" + str(botFunctions.getTextPermission(groupID)) + "', 'Text Permission' ]"),
-                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getTextPermission(
-                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getTextPermission(groupID)) + ", 'textPermission', 'Text']"))
+        markup.add(types.InlineKeyboardButton("Text Permission", callback_data="['permission','" + str(botFunctions.getStatusOfGroupPermission('textPermission', groupID)) + "', 'Text Permission' ]"),
+                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getStatusOfGroupPermission('textPermission',
+                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getStatusOfGroupPermission('textPermission', groupID)) + ", 'textPermission', 'Text']"))
 
-        markup.add(types.InlineKeyboardButton("Location Permission", callback_data="['permission','" + str(
-            botFunctions.getLocationPermission(groupID)) + "', 'Contact Permission' ]"),
-                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getLocationPermission(
-                       groupID) else emojiList.permissionFalseIcon,callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getLocationPermission(groupID)) + ", 'locationPermission', 'Location']"))
+        markup.add(types.InlineKeyboardButton("Location Permission", callback_data="['permission','" + str(botFunctions.getStatusOfGroupPermission('locationPermission', groupID)) + "', 'Contact Permission' ]"),
+                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getStatusOfGroupPermission('locationPermission',
+                       groupID) else emojiList.permissionFalseIcon,callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getStatusOfGroupPermission('locationPermission', groupID)) + ", 'locationPermission', 'Location']"))
 
-        markup.add(types.InlineKeyboardButton("Contact Permission", callback_data="['permission','" + str(botFunctions.getContactPermission(groupID)) + "', 'Contact Permission' ]"),
-                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getContactPermission(
-                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getContactPermission(groupID)) + ", 'contactPermission', 'Contact']"))
+        markup.add(types.InlineKeyboardButton("Contact Permission", callback_data="['permission','" + str(botFunctions.getStatusOfGroupPermission('contactPermission', groupID)) + "', 'Contact Permission' ]"),
+                   types.InlineKeyboardButton(text=emojiList.permissionTrueIcon if botFunctions.getStatusOfGroupPermission('contactPermission',
+                       groupID) else emojiList.permissionFalseIcon, callback_data="['cp', " + str(groupID) + ", " + str(botFunctions.getStatusOfGroupPermission('contactPermission', groupID)) + ", 'contactPermission', 'Contact']"))
 
     markup.add(types.InlineKeyboardButton("< back", callback_data="groups"),
                types.InlineKeyboardButton(text=emojiList.crossIcon, callback_data="['group'," + str(groupID) + "]"))

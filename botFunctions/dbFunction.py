@@ -180,126 +180,6 @@ def getSubscribeNameCount(subname, userID):
         conn.close()
         return wordCount
 
-def getStickerPermission(groupID):
-    stickerPermission = True
-    try:
-        conn, c = connectDB()
-        c.execute("SELECT stickerPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
-        for permission in c.fetchall():
-            stickerPermission = botFunctions.stringToBoolean(permission[0])
-    except Exception as e:
-        stickerPermission = True
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return stickerPermission
-
-def getHHHPermission(groupID):
-    hhhPermission = True
-    try:
-        conn, c = connectDB()
-        c.execute("SELECT hhhPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
-        for permission in c.fetchall():
-            hhhPermission = botFunctions.stringToBoolean(permission[0])
-    except Exception as e:
-        hhhPermission = True
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return hhhPermission
-
-def getAudioPermission(groupID):
-    audioPermission = True
-    try:
-        conn, c = connectDB()
-        c.execute("SELECT audioPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
-        for permission in c.fetchall():
-            audioPermission = botFunctions.stringToBoolean(permission[0])
-    except Exception as e:
-        audioPermission = True
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return audioPermission
-
-def getVideoPermission(groupID):
-    videoPermission = True
-    try:
-        conn, c = connectDB()
-        c.execute("SELECT videoPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
-        for permission in c.fetchall():
-            videoPermission = botFunctions.stringToBoolean(permission[0])
-    except Exception as e:
-        videoPermission = True
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return videoPermission
-
-def getTextPermission(groupID):
-    textPermission = True
-    try:
-        conn, c = connectDB()
-        c.execute("SELECT textPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
-        for permission in c.fetchall():
-            textPermission = botFunctions.stringToBoolean(permission[0])
-    except Exception as e:
-        textPermission = True
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return textPermission
-
-def getContactPermission(groupID):
-    contactPermission = True
-    try:
-        conn, c = connectDB()
-        c.execute("SELECT contactPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
-        for permission in c.fetchall():
-            contactPermission = botFunctions.stringToBoolean(permission[0])
-    except Exception as e:
-        contactPermission = True
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return contactPermission
-
-def getLocationPermission(groupID):
-    locationPermission = True
-    try:
-        conn, c = connectDB()
-        c.execute("SELECT locationPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
-        for permission in c.fetchall():
-            locationPermission = botFunctions.stringToBoolean(permission[0])
-    except Exception as e:
-        locationPermission = True
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return locationPermission
-
-def getDocumentPermission(groupID):
-    documentPermission = True
-    try:
-        conn, c = connectDB()
-        c.execute("SELECT documentPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
-        for permission in c.fetchall():
-            documentPermission = botFunctions.stringToBoolean(permission[0])
-    except Exception as e:
-        documentPermission = True
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return documentPermission
-
 def addToGroup(groupID, title):
     status = ''
     try:
@@ -712,3 +592,18 @@ def changePermissionInGroups(permissionStatus, columnName, groupID):
         c.close()
         conn.close()
         return status
+
+def getStatusOfGroupPermission(columnName, groupID):
+    permission = True
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT "+columnName+" FROM groups WHERE groupid='"+ str(groupID) +"'")
+        for permission in c.fetchall():
+            permission = botFunctions.stringToBoolean(permission[0])
+    except Exception as e:
+        permission = True
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return permission

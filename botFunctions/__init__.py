@@ -2,7 +2,6 @@
 
 from .botVersionLog import botVesion
 from .botVersionLog import changeLOG
-from .dbFunction import getHHHPermission
 from .dbFunction import kikBotDB
 from .dbFunction import updateGroupIDDB
 from .dbFunction import subscribelistDB
@@ -26,7 +25,6 @@ from .dbFunction import getSubscribeName
 from .dbFunction import leftOfKikMember
 from .dbFunction import addToGroup
 from .dbFunction import getWelcomeMessage
-from .dbFunction import getStickerPermission
 from .dbFunction import addToSuperAdmin
 from .dbFunction import removeFromSuperAdmin
 from .dbFunction import getSubscribeUserCount
@@ -41,13 +39,8 @@ from .dbFunction import getBanGroups
 from .dbFunction import removeFromBanGroup
 from .dbFunction import getBannedGroupIDTitle
 from .dbFunction import getBannedGroupTitle
-from .dbFunction import getAudioPermission
-from .dbFunction import getVideoPermission
-from .dbFunction import getTextPermission
-from .dbFunction import getDocumentPermission
-from .dbFunction import getContactPermission
-from .dbFunction import getLocationPermission
 from .dbFunction import changePermissionInGroups
+from .dbFunction import getStatusOfGroupPermission
 from .commandHandler import start
 from .commandHandler import botVersion
 from .commandHandler import botLog
