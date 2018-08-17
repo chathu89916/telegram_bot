@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS groups(
 	textPermission TEXT,
 	locationPermission TEXT,
 	contactPermission TEXT,
+	voicePermission TEXT,
+	photoPermission TEXT,
 	PRIMARY KEY (groupid)
 );
 
