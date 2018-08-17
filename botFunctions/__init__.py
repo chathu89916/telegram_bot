@@ -88,6 +88,7 @@ from .common import setupFullName
 from .common import structureGroupDetails
 from .common import mentionForAllCommands
 from .common import getAllGroupAdmins
+from .common import deleteMessageAccordingToPermission
 from .photoHandler import privatePhoto
 from .photoHandler import mentionOnePhoto
 from .photoHandler import mentionAllPhoto
@@ -108,7 +109,6 @@ from .locationHandler import replyToLocation
 from .contactHandler import privateContact
 from .contactHandler import replyToContact
 from .stickerHandler import privateSticker
-from .stickerHandler import deleteSticker
 from .newChatMemberHandler import checkAndAdd
 from .newChatMemberHandler import welcomeToUser
 from .newChatMemberHandler import addingUser
