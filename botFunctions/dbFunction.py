@@ -381,38 +381,6 @@ def getWelcomeMessage(groupID):
         conn.close()
         return welcomeMessage
 
-def updateHHHPermission(permission, groupID):
-    status = ''
-    try:
-        conn, c = connectDB()
-        c.execute("UPDATE groups SET hhhPermission='"+ str(permission) +"' WHERE groupid='"+ str(groupID) +"'")
-        conn.commit()
-        status = 'success'
-    except Exception as e:
-        status = 'failed'
-        conn.rollback()
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return status
-
-def updateStickerPermission(permission, groupID):
-    status = ''
-    try:
-        conn, c = connectDB()
-        c.execute("UPDATE groups SET stickerPermission='"+ str(permission) +"' WHERE groupid='"+ str(groupID) +"'")
-        conn.commit()
-        status = 'success'
-    except Exception as e:
-        status = 'failed'
-        conn.rollback()
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        return status
-
 def updateWelcomeMessage(msg, groupID):
     try:
         conn, c = connectDB()

@@ -161,7 +161,7 @@ def hhhpermission(bot, message):
                         except:
                             print('hhhpermission must be True or False')
                         return
-                    if (botFunctions.updateHHHPermission(hhhpermission, message.chat.id) == 'success'):
+                    if (botFunctions.changePermissionInGroups(hhhpermission, 'hhhPermission', message.chat.id)):
                         try:
                             bot.send_message(chat_id=userID, text='hhh permission successfully changed ' + emojiList.successFaceIcon)
                         except:
@@ -211,7 +211,7 @@ def stickerpermission(bot, message):
                             print('Sticker Permission must be True or False')
                         return
                     if(botFunctions.isBotCanDeleteMessage(bot, message.chat.id)):
-                        if (botFunctions.updateStickerPermission(stickerPermission, message.chat.id) == 'success'):
+                        if (botFunctions.changePermissionInGroups(stickerPermission,'stickerPermission', message.chat.id)):
                             try:
                                 bot.send_message(chat_id=userID, text='Sticker Permission successfully changed ' + emojiList.successFaceIcon)
                             except:
