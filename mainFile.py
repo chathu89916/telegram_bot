@@ -278,6 +278,10 @@ def handle_stickers(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'stickerPermission', 'Stickers')
 
+    if (message.reply_to_message != None):
+        if (message.reply_to_message.from_user.id != botID):
+            botFunctions.replyToSticker(bot, message, types)
+
 @bot.message_handler(content_types=["new_chat_members", "group_chat_created"])
 def handle_new_chat_members_and_group_chat_created(message):
     if(message.content_type=='group_chat_created' or botID==message.new_chat_member.id):

@@ -109,6 +109,7 @@ from .locationHandler import replyToLocation
 from .contactHandler import privateContact
 from .contactHandler import replyToContact
 from .stickerHandler import privateSticker
+from .stickerHandler import replyToSticker
 from .newChatMemberHandler import checkAndAdd
 from .newChatMemberHandler import welcomeToUser
 from .newChatMemberHandler import addingUser
