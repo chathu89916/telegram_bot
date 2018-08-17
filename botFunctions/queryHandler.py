@@ -32,8 +32,8 @@ def removeSuperAdminQuery(bot, types, call):
     else:
         successMessage = "Super Admin Deletion Failed " + emojiList.failFaceIcon
     bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=successMessage)
-    bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id-1)
+    bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     superAdminHandler(bot, types, call, False)
 
 def allgroupsHandler(bot, types, call, status):
@@ -82,8 +82,8 @@ def removeBannedGroup(bot, types, call):
     else:
         successMessage = "Banned Group Deletion Failed " + emojiList.failFaceIcon
     bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=successMessage)
-    bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id - 1)
+    bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     bannedGroupHandler(bot, types, call, False)
 
 def groupHandler(bot, types, call, status):
@@ -116,8 +116,8 @@ def removeGroup(bot, types, call):
     bot.send_message(chat_id=removeID, text="Sorry, <b>Bot admin</b> has decided to <b>kick</b> me from this group " + emojiList.failFaceIcon, parse_mode='HTML')
     bot.leave_chat(chat_id=removeID)
     bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text=successMessage)
-    bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id - 1)
+    bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
     groupHandler(bot, types, call, False)
 
 def viewGroupInfo(bot, types, call, passID):
