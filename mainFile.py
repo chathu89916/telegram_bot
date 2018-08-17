@@ -75,6 +75,30 @@ def handle_command_stickerpermission(message):
 def handle_command_hhhpermission(message):
     botFunctions.commandPermissionChange(bot, message, 'hhhPermission', 'HHH Permission')
 
+@bot.message_handler(commands=['audiopermission'])
+def handle_command_hhhpermission(message):
+    botFunctions.commandPermissionChange(bot, message, 'audioPermission', 'Audio Permission')
+
+@bot.message_handler(commands=['videopermission'])
+def handle_command_hhhpermission(message):
+    botFunctions.commandPermissionChange(bot, message, 'videoPermission', 'Video Permission')
+
+@bot.message_handler(commands=['documentpermission'])
+def handle_command_hhhpermission(message):
+    botFunctions.commandPermissionChange(bot, message, 'documentPermission', 'Document Permission')
+
+@bot.message_handler(commands=['textpermission'])
+def handle_command_hhhpermission(message):
+    botFunctions.commandPermissionChange(bot, message, 'textPermission', 'Text Permission')
+
+@bot.message_handler(commands=['locationpermission'])
+def handle_command_hhhpermission(message):
+    botFunctions.commandPermissionChange(bot, message, 'locationPermission', 'Location Permission')
+
+@bot.message_handler(commands=['contactpermission'])
+def handle_command_hhhpermission(message):
+    botFunctions.commandPermissionChange(bot, message, 'contactPermission', 'Contact Permission')
+
 @bot.message_handler(commands=['subscribe'])
 def handle_command_subscribe(message):
     botFunctions.subscribe(bot, message)
