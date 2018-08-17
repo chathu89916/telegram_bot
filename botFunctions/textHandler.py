@@ -53,6 +53,12 @@ def mentionAllText(bot, message):
                             bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
                     except:
                         print('@all mention failed')
+                    if (message.reply_to_message != None):
+                        try:
+                            bot.forward_message(chat_id=userid, from_chat_id=message.chat.id,
+                                                message_id=message.reply_to_message.message_id)
+                        except:
+                            print('@all forward failed')
 
 def mentionOneText(bot, message):
     if (message.chat.type != 'private'):
