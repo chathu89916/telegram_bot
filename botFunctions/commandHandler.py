@@ -138,12 +138,12 @@ def unsubscribeFromWindow(bot, types, call):
 #         except:
 #             print('Subscribe Name List sending failed')
 
-def hhhpermission(bot, message):
+def commandPermissionChange(bot, message, permissionColumn, permissionName):
     if (message.chat.type == 'private'):
         try:
             bot.send_message(chat_id=message.from_user.id, text="Please use this command inside the groups " + emojiList.successFaceIcon)
         except:
-            print('hhhpermission private send failed')
+            print(permissionName+' private send failed')
     else:
         if (botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id)):
             userID = message.from_user.id
@@ -152,92 +152,35 @@ def hhhpermission(bot, message):
                 if (subList[2] != ''):
                     subname = subList[2].lower()
                     if(subname == "false"):
-                        hhhpermission = False
+                        permission = False
                     elif(subname == "true"):
-                        hhhpermission = True
+                        permission = True
                     else:
                         try:
-                            bot.send_message(chat_id=userID, text='hhhpermission must be True or False ' + emojiList.failFaceIcon)
+                            bot.send_message(chat_id=userID, text=permissionName+ ' must be True or False ' + emojiList.failFaceIcon)
                         except:
-                            print('hhhpermission must be True or False')
+                            print(permissionName + ' must be True or False')
                         return
-                    if (botFunctions.changePermissionInGroups(hhhpermission, 'hhhPermission', message.chat.id)):
+                    if (botFunctions.changePermissionInGroups(permission, permissionColumn, message.chat.id)):
                         try:
-                            bot.send_message(chat_id=userID, text='hhh permission successfully changed ' + emojiList.successFaceIcon)
+                            bot.send_message(chat_id=userID, text=permissionName + ' successfully changed ' + emojiList.successFaceIcon)
                         except:
-                            print('hhh permission successfully changed failed')
+                            print(permissionName + ' successfully changed failed')
                     else:
                         try:
-                            bot.send_message(chat_id=userID, text='hhh permission successfully changing failed ' + emojiList.failFaceIcon)
+                            bot.send_message(chat_id=userID, text=permissionName + ' successfully changing failed ' + emojiList.failFaceIcon)
                         except:
-                            print('hhh permission successfully changing failed')
+                            print(permissionName + ' successfully changing failed')
                 else:
                     try:
-                        bot.send_message(chat_id=userID, text='hhh permission cannot be empty ' + emojiList.failFaceIcon)
+                        bot.send_message(chat_id=userID, text=permissionName + ' cannot be empty ' + emojiList.failFaceIcon)
                     except:
-                        print('hhh permission cannot be empty')
+                        print(permissionName + ' cannot be empty')
             elif (len(subList) == 2):
                 try:
-                    bot.send_message(chat_id=userID, text='Please add a hhh permission ' + emojiList.successFaceIcon)
+                    bot.send_message(chat_id=userID, text='Please add a/an ' + permissionName + ' ' + emojiList.successFaceIcon)
                 except:
-                    print('hhh permission not found')
-            else:
-                try:
-                    bot.send_message(chat_id=userID, text='Can add only one permission ' + emojiList.failFaceIcon)
-                except:
-                    print('Cann add only one permission same time')
-
-def stickerpermission(bot, message):
-    if (message.chat.type == 'private'):
-        try:
-            bot.send_message(chat_id=message.from_user.id, text="Please use this command inside the groups " + emojiList.successFaceIcon)
-        except:
-            print('hhhpermission private send failed')
-    else:
-        if (botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id)):
-            userID = message.from_user.id
-            subList = re.split('\W+', message.text, re.U)
-            if (len(subList) == 3):
-                if (subList[2] != ''):
-                    subname = subList[2].lower()
-                    if(subname == "false"):
-                        stickerPermission = False
-                    elif(subname == "true"):
-                        stickerPermission = True
-                    else:
-                        try:
-                            bot.send_message(chat_id=userID, text='Sticker Permission must be True or False ' + emojiList.failFaceIcon)
-                        except:
-                            print('Sticker Permission must be True or False')
-                        return
-                    if(botFunctions.isBotCanDeleteMessage(bot, message.chat.id)):
-                        if (botFunctions.changePermissionInGroups(stickerPermission,'stickerPermission', message.chat.id)):
-                            try:
-                                bot.send_message(chat_id=userID, text='Sticker Permission successfully changed ' + emojiList.successFaceIcon)
-                            except:
-                                print('Sticker Permission successfully changed failed')
-                        else:
-                            try:
-                                bot.send_message(chat_id=userID, text='Sticker Permission successfully changing failed ' + emojiList.failFaceIcon)
-                            except:
-                                print('Sticker Permission successfully changing failed')
-                    else:
-                        try:
-                            bot.send_message(chat_id=userID,
-                                             text='Cannot delete Stickers in <b>' + message.chat.title + '</b>\n* Please <b>Make</b> me as an <b>Admin</b> or <b>Enable</b> my Delete Message <b>Permission</b> ' + emojiList.failFaceIcon,
-                                             parse_mode='HTML')
-                        except:
-                            print('Sticker Permission successfully changing failed')
-                else:
-                    try:
-                        bot.send_message(chat_id=userID, text='Sticker Permission cannot be empty ' + emojiList.failFaceIcon)
-                    except:
-                        print('Sticker Permission cannot be empty')
-            elif (len(subList) == 2):
-                try:
-                    bot.send_message(chat_id=userID, text='Please add a Sticker Permission ' + emojiList.successFaceIcon)
-                except:
-                    print('Sticker Permission not found')
+                    print(permissionName + ' not found')
             else:
                 try:
                     bot.send_message(chat_id=userID, text='Can add only one permission ' + emojiList.failFaceIcon)

@@ -69,11 +69,11 @@ def handle_command_welcomemessage(message):
 
 @bot.message_handler(commands=['stickerpermission'])
 def handle_command_stickerpermission(message):
-    botFunctions.stickerpermission(bot, message)
+    botFunctions.commandPermissionChange(bot, message, 'stickerPermission', 'Sticker Permission')
 
 @bot.message_handler(commands=['hhhpermission'])
 def handle_command_hhhpermission(message):
-    botFunctions.hhhpermission(bot, message)
+    botFunctions.commandPermissionChange(bot, message, 'hhhPermission', 'HHH Permission')
 
 @bot.message_handler(commands=['subscribe'])
 def handle_command_subscribe(message):

@@ -17,8 +17,6 @@ from .dbFunction import updateGroupTitle
 from .dbFunction import addToUser
 from .dbFunction import addToAllUser
 from .dbFunction import updateToAllUser
-from .dbFunction import updateHHHPermission
-from .dbFunction import updateStickerPermission
 from .dbFunction import updateWelcomeMessage
 from .dbFunction import allDB
 from .dbFunction import allusersDB
@@ -62,14 +60,13 @@ from .commandHandler import allsuperadmins
 from .commandHandler import allusers
 from .commandHandler import allgroups
 from .commandHandler import welcomemessage
-from .commandHandler import stickerpermission
-from .commandHandler import hhhpermission
 from .commandHandler import subscribe
 # from .commandHandler import unsubscribe
 from .commandHandler import subscribewindow
 from .commandHandler import adminWindow
 from .commandHandler import adminWindowHandler
 from .commandHandler import unsubscribeFromWindow
+from .commandHandler import commandPermissionChange
 from .newChatTitleHandler import updateChatTitle
 from .migrateToChatIdHandler import updateGroupID
 from .pinnedMessageHandler import pinnedPost
