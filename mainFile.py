@@ -99,6 +99,14 @@ def handle_command_hhhpermission(message):
 def handle_command_hhhpermission(message):
     botFunctions.commandPermissionChange(bot, message, 'contactPermission', 'Contact Permission')
 
+@bot.message_handler(commands=['voicepermission'])
+def handle_command_hhhpermission(message):
+    botFunctions.commandPermissionChange(bot, message, 'voicePermission', 'Voice Permission')
+
+@bot.message_handler(commands=['photopermission'])
+def handle_command_hhhpermission(message):
+    botFunctions.commandPermissionChange(bot, message, 'photoPermission', 'Photo Permission')
+
 @bot.message_handler(commands=['subscribe'])
 def handle_command_subscribe(message):
     botFunctions.subscribe(bot, message)
@@ -131,9 +139,10 @@ def handle_text(message):
 
     botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
+    botFunctions.deleteMessageAccordingToPermission(bot, message, 'textPermission', 'Text')
 
     if (message.reply_to_message == None):
-        if (botFunctions.getHHHPermission(message.chat.id)):
+        if (botFunctions.getStatusOfGroupPermission('hhhPermission', message.chat.id)):
             botFunctions.hhhFunc(bot, message)
     if (botFunctions.allCheck(message.text)):
         botFunctions.mentionAllText(bot, message)
@@ -149,6 +158,7 @@ def handle_photo(message):
 
     botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
+    botFunctions.deleteMessageAccordingToPermission(bot, message, 'photoPermission', 'Photo')
 
     if (message.reply_to_message == None):
         if(message.caption != None):
@@ -166,6 +176,7 @@ def handle_audio(message):
 
     botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
+    botFunctions.deleteMessageAccordingToPermission(bot, message, 'audioPermission', 'Audio')
 
     if (message.reply_to_message == None):
         if(message.caption != None):
@@ -183,6 +194,7 @@ def handle_video(message):
 
     botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
+    botFunctions.deleteMessageAccordingToPermission(bot, message, 'videoPermission', 'Video')
 
     if (message.reply_to_message == None):
         if(message.caption != None):
@@ -200,6 +212,7 @@ def handle_document(message):
 
     botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
+    botFunctions.deleteMessageAccordingToPermission(bot, message, 'documentPermission', 'Document')
 
     if (message.reply_to_message == None):
         if(message.caption != None):
@@ -217,6 +230,7 @@ def handle_voice(message):
 
     botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
+    botFunctions.deleteMessageAccordingToPermission(bot, message, 'voicePermission', 'Voice')
 
     if (message.reply_to_message == None):
         if(message.caption != None):
@@ -234,6 +248,7 @@ def handle_location(message):
 
     botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
+    botFunctions.deleteMessageAccordingToPermission(bot, message, 'locationPermission', 'Location')
 
     if (message.reply_to_message != None):
         if (message.reply_to_message.from_user.id != botID):
@@ -247,6 +262,7 @@ def handle_contact(message):
 
     botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
+    botFunctions.deleteMessageAccordingToPermission(bot, message, 'contactPermission', 'Contact')
 
     if (message.reply_to_message != None):
         if (message.reply_to_message.from_user.id != botID):
@@ -260,7 +276,7 @@ def handle_stickers(message):
 
     botFunctions.checkGroupStatus(bot, message)
     botFunctions.autoAddDetails(message, bot, types)
-    botFunctions.deleteSticker(bot, message)
+    botFunctions.deleteMessageAccordingToPermission(bot, message, 'stickerPermission', 'Stickers')
 
 @bot.message_handler(content_types=["new_chat_members", "group_chat_created"])
 def handle_new_chat_members_and_group_chat_created(message):

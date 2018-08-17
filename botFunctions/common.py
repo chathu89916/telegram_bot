@@ -262,3 +262,19 @@ def mentionForAllCommands(bot, message, commandName):
                                 message_id=message.reply_to_message.message_id)
         except:
             print("mentionForAllCommands failed in /" + commandName)
+
+def deleteMessageAccordingToPermission(bot, message, permissionColumn, permissionName):
+    if(not(botFunctions.getStatusOfGroupPermission(permissionColumn, message.chat.id))):
+        if(botFunctions.isBotCanDeleteMessage(bot, message.chat.id)):
+            try:
+                bot.delete_message(message.chat.id, message.message_id)
+            except:
+                print(permissionName + ' Delete Failed')
+        else:
+            adminList = botFunctions.groupAndSuperAdmin(bot, message)
+            for chat in adminList:
+                try:
+                    bot.send_message(chat_id=chat, text='Cannot delete ' + permissionName + ' in <b>' + message.chat.title + '</b>\n* Please <b>Make</b> me as an <b>Admin</b> or <b>Enable</b> my Delete Message <b>Permission</b>', parse_mode='HTML')
+                except:
+                    print('failed to send message to group admin')
+        return
