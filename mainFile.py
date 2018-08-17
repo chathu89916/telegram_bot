@@ -289,9 +289,13 @@ def  handle_query(call):
     if (call.data.startswith("['removegroup'")):
         botFunctions.removeGroup(bot, types, call)
     if (call.data.startswith("['viewgroup'")):
-        botFunctions.viewGroupInfo(bot, types, call)
+        botFunctions.viewGroupInfo(bot, types, call, '')
     if (call.data.startswith("['removeBannedGroup'")):
         botFunctions.removeBannedGroup(bot, types, call)
+    if (call.data.startswith("['permission'")):
+        botFunctions.displayPermissionStatus(bot, call)
+    if (call.data.startswith("['cp'")):
+        botFunctions.changePermissionStatus(bot, types, call)
     if (call.data == "no"):
         bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
 

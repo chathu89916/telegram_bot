@@ -210,11 +210,101 @@ def getHHHPermission(groupID):
         conn.close()
         return hhhPermission
 
+def getAudioPermission(groupID):
+    audioPermission = True
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT audioPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
+        for permission in c.fetchall():
+            audioPermission = botFunctions.stringToBoolean(permission[0])
+    except Exception as e:
+        audioPermission = True
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return audioPermission
+
+def getVideoPermission(groupID):
+    videoPermission = True
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT videoPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
+        for permission in c.fetchall():
+            videoPermission = botFunctions.stringToBoolean(permission[0])
+    except Exception as e:
+        videoPermission = True
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return videoPermission
+
+def getTextPermission(groupID):
+    textPermission = True
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT textPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
+        for permission in c.fetchall():
+            textPermission = botFunctions.stringToBoolean(permission[0])
+    except Exception as e:
+        textPermission = True
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return textPermission
+
+def getContactPermission(groupID):
+    contactPermission = True
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT contactPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
+        for permission in c.fetchall():
+            contactPermission = botFunctions.stringToBoolean(permission[0])
+    except Exception as e:
+        contactPermission = True
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return contactPermission
+
+def getLocationPermission(groupID):
+    locationPermission = True
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT locationPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
+        for permission in c.fetchall():
+            locationPermission = botFunctions.stringToBoolean(permission[0])
+    except Exception as e:
+        locationPermission = True
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return locationPermission
+
+def getDocumentPermission(groupID):
+    documentPermission = True
+    try:
+        conn, c = connectDB()
+        c.execute("SELECT documentPermission FROM groups WHERE groupid='"+ str(groupID) +"'")
+        for permission in c.fetchall():
+            documentPermission = botFunctions.stringToBoolean(permission[0])
+    except Exception as e:
+        documentPermission = True
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return documentPermission
+
 def addToGroup(groupID, title):
     status = ''
     try:
         conn, c = connectDB()
-        c.execute("INSERT INTO groups (groupid, title, welcomeMessage, stickerPermission, hhhPermission) VALUES ('"+ str(groupID) +"', '"+ title+"', 'Welcome #uname for <b>#title</b>', 'True', 'True')")
+        c.execute("INSERT INTO groups (groupid, title, welcomeMessage, stickerPermission, hhhPermission, audioPermission, videoPermission, documentPermission, textPermission, locationPermission, contactPermission) VALUES ('"+ str(groupID) +"', '"+ title+"', 'Welcome #uname for <b>#title</b>', 'True', 'True', 'True', 'True', 'True', 'True', 'True','True')")
         conn.commit()
         status = 'success'
     except Exception as e:
@@ -637,3 +727,20 @@ def getBannedGroupIDTitle():
         c.close()
         conn.close()
         return groupsArray
+
+def changePermissionInGroups(permissionStatus, columnName, groupID):
+    status = False
+    try:
+        conn, c = connectDB()
+        c.execute("UPDATE groups SET "+columnName+"='" + str(permissionStatus) + "' WHERE groupid='" + str(groupID) + "'")
+        conn.commit()
+        status = True
+    except Exception as e:
+        status = False
+        conn.rollback()
+        print(e)
+        raise e
+    finally:
+        c.close()
+        conn.close()
+        return status

@@ -26,3 +26,6 @@ frogFaceIcon = u"\U0001F438"
 handDonwIcon = u"\U0001F447"
 thumbsUpIcon = u"\U0001F44D"
 clapIcon = u"\U0001F44F"
+
+permissionTrueIcon = u"\u2705"
+permissionFalseIcon = u"\u2611\uFE0F"

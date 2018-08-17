@@ -43,6 +43,13 @@ from .dbFunction import getBanGroups
 from .dbFunction import removeFromBanGroup
 from .dbFunction import getBannedGroupIDTitle
 from .dbFunction import getBannedGroupTitle
+from .dbFunction import getAudioPermission
+from .dbFunction import getVideoPermission
+from .dbFunction import getTextPermission
+from .dbFunction import getDocumentPermission
+from .dbFunction import getContactPermission
+from .dbFunction import getLocationPermission
+from .dbFunction import changePermissionInGroups
 from .commandHandler import start
 from .commandHandler import botVersion
 from .commandHandler import botLog
@@ -79,6 +86,7 @@ from .common import isUserSuperAdmin
 from .common import exceptionHandling
 from .common import stringToBoolean
 from .common import isBotAdmin
+from .common import isBotCanDeleteMessage
 from .common import formatUserData
 from .common import groupAndSuperAdmin
 from .common import sureOrNot
@@ -124,3 +132,5 @@ from .queryHandler import viewGroupInfo
 from .queryHandler import allgroupsHandler
 from .queryHandler import bannedGroupHandler
 from .queryHandler import removeBannedGroup
+from .queryHandler import displayPermissionStatus
+from .queryHandler import changePermissionStatus
