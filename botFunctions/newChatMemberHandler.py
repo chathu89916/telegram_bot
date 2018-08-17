@@ -102,13 +102,13 @@ def welcomeToUser(bot, message, types):
         welcomeMsg = botFunctions.getWelcomeMessage(message.chat.id)
 
         p = re.compile('(#uname)')
-        welcomeMsg = p.sub("@"+str(message.new_chat_member.username), welcomeMsg)
+        welcomeMsg = p.sub("@"+message.new_chat_member.username, welcomeMsg)
         p = re.compile('(#fname)')
-        welcomeMsg = p.sub(str(message.new_chat_member.first_name), welcomeMsg)
+        welcomeMsg = p.sub(message.new_chat_member.first_name, welcomeMsg)
         p = re.compile('(#lname)')
-        welcomeMsg = p.sub(str(message.new_chat_member.last_name), welcomeMsg)
+        welcomeMsg = p.sub(message.new_chat_member.last_name, welcomeMsg)
         p = re.compile('(#title)')
-        welcomeMsg = p.sub(str(message.chat.title), welcomeMsg)
+        welcomeMsg = p.sub(message.chat.title, welcomeMsg)
 
     try:
         bot.send_message(chat_id=message.chat.id, text=welcomeMsg, reply_markup=markup, parse_mode='HTML')
