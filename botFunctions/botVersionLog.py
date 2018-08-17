@@ -22,9 +22,13 @@ def changeLOG():
 
 * It Can be subscribed more than one word at a time by separating space or comma(/subscribe name1 name2 | /subscribe name1 , name2).
 
+<b>Version 2.7.1</b>
+
+* Permission added for handle Photos and Voice( /photopermission , /voicepermission )
+
 <b>Version 2.7</b>
 
-* New 6 functions are introduced for admins ( /audiopermission, /videopermission, /documentpermission, /textpermission, /locationpermission, /contactpermission )
+* New 6 functions are introduced for admins ( /audiopermission , /videopermission , /documentpermission , /textpermission , /locationpermission , /contactpermission )
 
 <b>Version 2.6</b>
 
