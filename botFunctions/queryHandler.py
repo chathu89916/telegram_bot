@@ -19,7 +19,7 @@ def superAdminHandler(bot, types, call, status):
                 markup.add(types.InlineKeyboardButton(text=adminDetails, url='https://telegram.me/'+adminID[3]+'?start=XXXX'), types.InlineKeyboardButton(text=emojiList.crossIcon, callback_data="['superadmin',"+str(adminID[0])+"]"))
             else:
                 markup.add(types.InlineKeyboardButton(text=adminDetails,  callback_data='noUserName'), types.InlineKeyboardButton(text=emojiList.crossIcon, callback_data="['superadmin',"+str(adminID[0])+"]"))
-        markup.add(types.InlineKeyboardButton("< back", callback_data="backToHome"))
+        markup.add(types.InlineKeyboardButton(emojiList.backIcon, callback_data="backToHome"))
         if(status):
             bot.edit_message_text(chat_id=call.message.chat.id, text=title, message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
         else:
@@ -45,7 +45,7 @@ def allgroupsHandler(bot, types, call, status):
                   + emojiList.bannedGroupIcon + " All Banned Group Count : " + str(allBanedGroupCount)
     markup.add(types.InlineKeyboardButton(text="All Groups", callback_data="groups"),
         types.InlineKeyboardButton(text="All Banned Groups", callback_data="bannedgroups"))
-    markup.add(types.InlineKeyboardButton("< back", callback_data="backToHome"))
+    markup.add(types.InlineKeyboardButton(emojiList.backIcon, callback_data="backToHome"))
     if(status):
         bot.edit_message_text(chat_id=call.message.chat.id, text=title, message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
     else:
@@ -67,7 +67,7 @@ def bannedGroupHandler(bot, types, call, status):
             markup.add(
                 types.InlineKeyboardButton(text=groupID[1], callback_data="noGroupName"),
                 types.InlineKeyboardButton(text=emojiList.crossIcon, callback_data="['sureRemoveBannedGroup',"+str(groupID[0])+"]"))
-        markup.add(types.InlineKeyboardButton("< back", callback_data="backToAllGroup"))
+        markup.add(types.InlineKeyboardButton(emojiList.backIcon, callback_data="backToAllGroup"))
         if (status):
             bot.edit_message_text(chat_id=call.message.chat.id, text=title,
                                   message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
@@ -98,7 +98,7 @@ def groupHandler(bot, types, call, status):
     else:
         for groupID in groupList:
             markup.add(types.InlineKeyboardButton(text=groupID[1], callback_data="['viewgroup'," + str(groupID[0]) + "]"))
-        markup.add(types.InlineKeyboardButton("< back", callback_data="backToAllGroup"))
+        markup.add(types.InlineKeyboardButton(emojiList.backIcon, callback_data="backToAllGroup"))
         if (status):
             bot.edit_message_text(chat_id=call.message.chat.id, text=title,
                                   message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
@@ -219,7 +219,7 @@ def viewGroupInfo(bot, types, call, passID):
                            botFunctions.getStatusOfGroupPermission('voicePermission',
                                                                    groupID)) + ", 'voicePermission', 'Voice']"))
 
-    markup.add(types.InlineKeyboardButton("< back", callback_data="groups"),
+    markup.add(types.InlineKeyboardButton(emojiList.backIcon, callback_data="groups"),
                types.InlineKeyboardButton(text=emojiList.crossIcon, callback_data="['group'," + str(groupID) + "]"))
     bot.edit_message_text(chat_id=call.message.chat.id, text=botFunctions.structureGroupDetails(bot, groupID), message_id=call.message.message_id, reply_markup=markup, parse_mode='HTML')
 

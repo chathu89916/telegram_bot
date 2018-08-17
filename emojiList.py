@@ -29,3 +29,5 @@ clapIcon = u"\U0001F44F"
 
 permissionTrueIcon = u"\u2705"
 permissionFalseIcon = u"\u2611\uFE0F"
+
+backIcon = u"\U0001F519"
