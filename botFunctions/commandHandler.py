@@ -210,7 +210,7 @@ def stickerpermission(bot, message):
                         except:
                             print('Sticker Permission must be True or False')
                         return
-                    if(botFunctions.isBotAdmin(bot, message)):
+                    if(botFunctions.isBotCanDeleteMessage(bot, message.chat.id)):
                         if (botFunctions.updateStickerPermission(stickerPermission, message.chat.id) == 'success'):
                             try:
                                 bot.send_message(chat_id=userID, text='Sticker Permission successfully changed ' + emojiList.successFaceIcon)

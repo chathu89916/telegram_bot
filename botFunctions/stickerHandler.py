@@ -17,7 +17,7 @@ def privateSticker(bot, message):
 
 def deleteSticker(bot, message):
     if(not(botFunctions.getStickerPermission(message.chat.id))):
-        if(botFunctions.isBotAdmin(bot, message)):
+        if(botFunctions.isBotCanDeleteMessage(bot, message.chat.id)):
             try:
                 bot.delete_message(message.chat.id, message.message_id)
             except:

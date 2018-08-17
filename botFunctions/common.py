@@ -75,8 +75,14 @@ def mentionedList(groupID, text):
                 finalMentionedUsers.append(mentionUsers)
     return finalMentionedUsers
 
-def isBotAdmin(bot, message):
-    for getID in bot.get_chat_administrators(message.chat.id):
+def isBotAdmin(bot, groupID):
+    for getID in bot.get_chat_administrators(groupID):
+        if(getID.user.id==configuration.botID):
+            return True
+    return False
+
+def isBotCanDeleteMessage(bot, groupID):
+    for getID in bot.get_chat_administrators(groupID):
         if(getID.user.id==configuration.botID):
             if(getID.can_delete_messages):
                 return True
