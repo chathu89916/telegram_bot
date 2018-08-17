@@ -1,5 +1,5 @@
 def botVesion():
-    BOT_VERSION = """\n\n<b>What's New in Version 2.8</b>
+    BOT_VERSION = """\n\n<b>What's New in Version 2.9</b>
 
 * Introducing new feature call /subscribewindow to manage your all subscribes names instead of /subscribelist.
 
@@ -12,7 +12,7 @@ def botVesion():
     return BOT_VERSION
 
 def changeLOG():
-    changeLOG = """\n\n<b>Version 2.8</b>
+    changeLOG = """\n\n<b>Version 2.9</b>
 
 * Introducing new feature call /subscribewindow to manage your all subscribes names instead of /subscribelist.
 
@@ -21,6 +21,10 @@ def changeLOG():
 * When someone calls you by your subscribe name it will be counted and you will see it from the /subscribewindow .
 
 * It Can be subscribed more than one word at a time by separating space or comma(/subscribe name1 name2 | /subscribe name1 , name2).
+
+<b>Version 2.8</b>
+
+* When you replied with @all keyword that message will be forwarded to all users in the group. 
 
 <b>Version 2.7.1</b>
 
