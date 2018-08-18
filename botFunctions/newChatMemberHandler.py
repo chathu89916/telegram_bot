@@ -101,12 +101,16 @@ def welcomeToUser(bot, message, types):
     else:
         welcomeMsg = botFunctions.getWelcomeMessage(message.chat.id)
 
-        p = re.compile('(#uname)')
-        welcomeMsg = p.sub("@"+message.new_chat_member.username, welcomeMsg)
-        p = re.compile('(#fname)')
-        welcomeMsg = p.sub(message.new_chat_member.first_name, welcomeMsg)
-        p = re.compile('(#lname)')
-        welcomeMsg = p.sub(message.new_chat_member.last_name, welcomeMsg)
+        if(message.new_chat_member.username!=None):
+            p = re.compile('(#uname)')
+            welcomeMsg = p.sub("@"+message.new_chat_member.username, welcomeMsg)
+        if (message.new_chat_member.first_name != None):
+            p = re.compile('(#fname)')
+            welcomeMsg = p.sub(message.new_chat_member.first_name, welcomeMsg)
+        if (message.new_chat_member.last_name != None):
+            p = re.compile('(#lname)')
+            welcomeMsg = p.sub(message.new_chat_member.last_name, welcomeMsg)
+
         p = re.compile('(#title)')
         welcomeMsg = p.sub(message.chat.title, welcomeMsg)
 
