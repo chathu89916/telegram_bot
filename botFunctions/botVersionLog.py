@@ -26,6 +26,8 @@ def changeLOG():
 
 * When you replied with @all keyword that message will be forwarded to all users in the group. 
 
+* When you replied with mentioning someone, that message will be forwarded to all mentioned users in the group. 
+
 <b>Version 2.7.1</b>
 
 * Permission added for handle Photos and Voice( /photopermission , /voicepermission )

@@ -89,3 +89,10 @@ def mentionOneText(bot, message):
                             bot.send_message(chat_id=uname, text=text, parse_mode='HTML')
                     except:
                         print('single mention/subscribe failed')
+                    if (message.reply_to_message != None):
+                        if(str(message.reply_to_message.from_user.id)!=uname):
+                            try:
+                                bot.forward_message(chat_id=uname, from_chat_id=message.chat.id,
+                                                    message_id=message.reply_to_message.message_id)
+                            except:
+                                print('single mention/subscribe forward failed')
