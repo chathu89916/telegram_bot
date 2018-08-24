@@ -1,5 +1,5 @@
-from botFunctions import *
+import botFunctions
 
 
 def updateChatTitle(message):
-    updateGroupTitle(message.chat.id, message.chat.title)
+    botFunctions.updateGroupTitle(message.chat.id, message.chat.title)

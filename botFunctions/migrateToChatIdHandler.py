@@ -1,5 +1,5 @@
-from botFunctions import *
+import botFunctions
 
 
 def updateGroupID(message):
-    updateGroupIDDB(message.chat.id, message.migrate_to_chat_id)
+    botFunctions.updateGroupIDDB(message.chat.id, message.migrate_to_chat_id)

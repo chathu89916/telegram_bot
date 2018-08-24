@@ -2,7 +2,7 @@
 import ast
 import configuration
 import re
-from botFunctions import *
+import botFunctions
 import emojiList
 import welcomeMessage
 import importantNotice
@@ -19,7 +19,7 @@ def subscribe(bot, message):
             for names in subList[2:]:
                 if names != '':
                     subname = names.lower()
-                    if subscribeDB(userID, subname) == 'success':
+                    if botFunctions.subscribeDB(userID, subname) == 'success':
                         try:
                             bot.send_message(chat_id=userID,
                                              text="Subscribe name <b>" + names + "</b> Successfully added " + emojiList.successFaceIcon,
@@ -57,10 +57,10 @@ def subscribe(bot, message):
 #     if(len(subList)==3):
 #         if(subList[2]!=''):
 #             subname = subList[2].lower()
-#             subNameList = subscribelistDB(userID)
+#             subNameList = botFunctions.subscribelistDB(userID)
 #             for snm in subNameList:
 #                 if(snm==subname):
-#                     if(unsubscribeDB(subname, userID)=='success'):
+#                     if(botFunctions.unsubscribeDB(subname, userID)=='success'):
 #                         try:
 #                             bot.send_message(chat_id=userID, text='Subscribe name Successfully Removed ' + emojiList.successFaceIcon)
 #                         except:
@@ -92,7 +92,7 @@ def subscribe(bot, message):
 #             print('Cannot remove more than one subscribe name same time')
 
 def subscribewindow(bot, types, message, status, name):
-    subList = subscribelistDB(message.from_user.id)
+    subList = botFunctions.subscribelistDB(message.from_user.id)
     title = "<b>Subscribe Name List</b>"
     markup = None
     if subList == []:
@@ -108,7 +108,7 @@ def subscribewindow(bot, types, message, status, name):
         markup = types.InlineKeyboardMarkup()
         title = title + "\n\n" + emojiList.subscribeUserIcon + " Subscribe Name Count : " + str(len(subList))
         for subName in subList:
-            wordCount = getSubscribeNameCount(subName, message.from_user.id)
+            wordCount = botFunctions.getSubscribeNameCount(subName, message.from_user.id)
             markup.add(
                 types.InlineKeyboardButton(text=subName + " " + emojiList.handIcon + " " + str(wordCount),
                                            callback_data="subscribenameNotification"),
@@ -126,7 +126,7 @@ def subscribewindow(bot, types, message, status, name):
 def unsubscribeFromWindow(bot, types, call):
     removeID = ast.literal_eval(call.data)[1]
     removeSubscribeName = ast.literal_eval(call.data)[2]
-    if unsubscribeDB(removeSubscribeName, removeID) == 'success':
+    if botFunctions.unsubscribeDB(removeSubscribeName, removeID) == 'success':
         subscribewindow(bot, types, call, True, removeSubscribeName)
     else:
         bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
@@ -135,7 +135,7 @@ def unsubscribeFromWindow(bot, types, call):
 
 # def subscribelist(bot, message):
 #     userID = message.from_user.id
-#     subList = subscribelistDB(userID)
+#     subList = botFunctions.subscribelistDB(userID)
 #     if(len(subList)!=0):
 #         txt = 'Here is your Subscribed Name List\n\n'
 #         for subname in subList:
@@ -158,7 +158,7 @@ def commandPermissionChange(bot, message, permissionColumn, permissionName):
         except:
             print(permissionName + ' private send failed')
     else:
-        if checkAdmin(bot, message.chat.id, message.from_user.id):
+        if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id):
             userID = message.from_user.id
             subList = re.split('\W+', message.text, re.U)
             if len(subList) == 3:
@@ -175,7 +175,7 @@ def commandPermissionChange(bot, message, permissionColumn, permissionName):
                         except:
                             print(permissionName + ' must be True or False')
                         return
-                    if changePermissionInGroups(permission, permissionColumn, message.chat.id):
+                    if botFunctions.changePermissionInGroups(permission, permissionColumn, message.chat.id):
                         try:
                             bot.send_message(chat_id=userID,
                                              text=permissionName + ' successfully changed ' + emojiList.successFaceIcon)
@@ -214,13 +214,13 @@ def welcomemessage(bot, message):
         except:
             print('welcome message private send failed')
     else:
-        if checkAdmin(bot, message.chat.id, message.from_user.id):
+        if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id):
             userID = message.from_user.id
             subList = re.split(r'/welcomemessage\W', message.text, 1)
             if len(subList) == 2:
                 if subList[1] != '':
                     welcomeMessage = subList[1]
-                    if updateWelcomeMessage(welcomeMessage, message.chat.id) == 'success':
+                    if botFunctions.updateWelcomeMessage(welcomeMessage, message.chat.id) == 'success':
                         try:
                             bot.send_message(chat_id=userID,
                                              text='Welcome Message successfully changed ' + emojiList.successFaceIcon)
@@ -247,9 +247,9 @@ def welcomemessage(bot, message):
 
 
 def test(bot, message):
-    if isUserSuperAdmin(message.from_user.id):
+    if botFunctions.isUserSuperAdmin(message.from_user.id):
         if message.reply_to_message is not None:
-            mentionForAllCommands(bot, message, "test")
+            botFunctions.mentionForAllCommands(bot, message, "test")
             return
         if message.chat.type != 'private':
             try:
@@ -261,7 +261,7 @@ def test(bot, message):
             subList = re.split(r'/test\W', message.text, 1)
             if len(subList) == 2:
                 if subList[1] != '':
-                    allMessage = subList[1] + '\n\n/test by ' + getName(message.from_user)
+                    allMessage = subList[1] + '\n\n/test by ' + botFunctions.getName(message.from_user)
                     try:
                         splitted_text = util.split_string(allMessage, 3000)
                         for text in splitted_text:
@@ -282,9 +282,9 @@ def test(bot, message):
 
 
 def all(bot, message):
-    if isUserSuperAdmin(message.from_user.id):
+    if botFunctions.isUserSuperAdmin(message.from_user.id):
         if message.reply_to_message is not None:
-            mentionForAllCommands(bot, message, "all")
+            botFunctions.mentionForAllCommands(bot, message, "all")
             return
         if message.chat.type != 'private':
             try:
@@ -296,8 +296,8 @@ def all(bot, message):
             subList = re.split(r'/all\W', message.text, 1)
             if len(subList) == 2:
                 if subList[1] != '':
-                    allMessage = subList[1] + '\n\n/all by ' + getName(message.from_user)
-                    for allID in allDB():
+                    allMessage = subList[1] + '\n\n/all by ' + botFunctions.getName(message.from_user)
+                    for allID in botFunctions.allDB():
                         try:
                             splitted_text = util.split_string(allMessage, 3000)
                             for text in splitted_text:
@@ -317,9 +317,9 @@ def all(bot, message):
 
 
 def allusers(bot, message):
-    if isUserSuperAdmin(message.from_user.id):
+    if botFunctions.isUserSuperAdmin(message.from_user.id):
         if message.reply_to_message is not None:
-            mentionForAllCommands(bot, message, "allusers")
+            botFunctions.mentionForAllCommands(bot, message, "allusers")
             return
         if message.chat.type != 'private':
             try:
@@ -331,8 +331,8 @@ def allusers(bot, message):
             subList = re.split(r'/allusers\W', message.text, 1)
             if len(subList) == 2:
                 if subList[1] != '':
-                    allMessage = subList[1] + '\n\n/allusers by ' + getName(message.from_user)
-                    for allID in allusersDB():
+                    allMessage = subList[1] + '\n\n/allusers by ' + botFunctions.getName(message.from_user)
+                    for allID in botFunctions.allusersDB():
                         try:
                             splitted_text = util.split_string(allMessage, 3000)
                             for text in splitted_text:
@@ -354,9 +354,9 @@ def allusers(bot, message):
 
 
 def allgroups(bot, message):
-    if isUserSuperAdmin(message.from_user.id):
+    if botFunctions.isUserSuperAdmin(message.from_user.id):
         if message.reply_to_message is not None:
-            mentionForAllCommands(bot, message, "allgroups")
+            botFunctions.mentionForAllCommands(bot, message, "allgroups")
             return
         if message.chat.type != 'private':
             try:
@@ -368,8 +368,8 @@ def allgroups(bot, message):
             subList = re.split(r'/allgroups\W', message.text, 1)
             if len(subList) == 2:
                 if subList[1] != '':
-                    allMessage = subList[1] + '\n\n/allgroups by ' + getName(message.from_user)
-                    for allID in allgroupsDB():
+                    allMessage = subList[1] + '\n\n/allgroups by ' + botFunctions.getName(message.from_user)
+                    for allID in botFunctions.allgroupsDB():
                         try:
                             splitted_text = util.split_string(allMessage, 3000)
                             for text in splitted_text:
@@ -391,9 +391,9 @@ def allgroups(bot, message):
 
 
 def allgroupsadmins(bot, message):
-    if isUserSuperAdmin(message.from_user.id):
+    if botFunctions.isUserSuperAdmin(message.from_user.id):
         if message.reply_to_message is not None:
-            mentionForAllCommands(bot, message, "allgroupsadmins")
+            botFunctions.mentionForAllCommands(bot, message, "allgroupsadmins")
             return
         if message.chat.type != 'private':
             try:
@@ -406,8 +406,8 @@ def allgroupsadmins(bot, message):
             subList = re.split(r'/allgroupsadmins\W', message.text, 1)
             if len(subList) == 2:
                 if subList[1] != '':
-                    allMessage = subList[1] + '\n\n/allgroupsadmins by ' + getName(message.from_user)
-                    for allID in getAllGroupAdmins(bot):
+                    allMessage = subList[1] + '\n\n/allgroupsadmins by ' + botFunctions.getName(message.from_user)
+                    for allID in botFunctions.getAllGroupAdmins(bot):
                         try:
                             splitted_text = util.split_string(allMessage, 3000)
                             for text in splitted_text:
@@ -431,7 +431,7 @@ def allgroupsadmins(bot, message):
 def allsuperadmins(bot, message):
     if message.from_user.id == configuration.admin:
         if message.reply_to_message is not None:
-            mentionForAllCommands(bot, message, "allsuperadmins")
+            botFunctions.mentionForAllCommands(bot, message, "allsuperadmins")
             return
         if message.chat.type != 'private':
             try:
@@ -443,8 +443,8 @@ def allsuperadmins(bot, message):
             subList = re.split(r'/allsuperadmins\W', message.text, 1)
             if len(subList) == 2:
                 if subList[1] != '':
-                    allMessage = subList[1] + '\n\n/allsuperadmins by ' + getName(message.from_user)
-                    for allID in getAdmin():
+                    allMessage = subList[1] + '\n\n/allsuperadmins by ' + botFunctions.getName(message.from_user)
+                    for allID in botFunctions.getAdmin():
                         try:
                             splitted_text = util.split_string(allMessage, 3000)
                             for text in splitted_text:
@@ -466,34 +466,34 @@ def allsuperadmins(bot, message):
 
 
 def start(bot, message):
-    if addToAllUser(message.from_user) == 'failed':
-        if updateToAllUser(message.from_user) == 'failed':
+    if botFunctions.addToAllUser(message.from_user) == 'failed':
+        if botFunctions.updateToAllUser(message.from_user) == 'failed':
             try:
                 bot.send_message(chat_id=message.from_user.id,
-                                 text='Cannot update your details ' + getName(
+                                 text='Cannot update your details ' + botFunctions.getName(
                                      message.from_user) + " " + + emojiList.failFaceIcon)
             except:
                 print('User update failed')
                 bot.send_message(chat_id=admin,
-                                 text='Cannot update details for ' + getName(message.from_user))
+                                 text='Cannot update details for ' + botFunctions.getName(message.from_user))
         else:
             try:
-                bot.send_message(chat_id=message.from_user.id, text='You Already STARTed me ' + getName(
+                bot.send_message(chat_id=message.from_user.id, text='You Already STARTed me ' + botFunctions.getName(
                     message.from_user) + ' and updated your personal details ' + emojiList.successFaceIcon)
             except:
                 print('User update failed')
     else:
         try:
-            bot.send_message(chat_id=admin, text='Bot started for ' + getName(message.from_user))
-            bot.send_message(chat_id=message.from_user.id, text='Thank you for STARTing me ' + getName(
+            bot.send_message(chat_id=admin, text='Bot started for ' + botFunctions.getName(message.from_user))
+            bot.send_message(chat_id=message.from_user.id, text='Thank you for STARTing me ' + botFunctions.getName(
                 message.from_user) + " " + emojiList.successFaceIcon)
         except:
             print('User start failed')
     if message.chat.type == 'private':
-        if memberInTheGroup(bot, configuration.RsLKID, message.from_user.id):
+        if botFunctions.memberInTheGroup(bot, configuration.RsLKID, message.from_user.id):
             try:
                 bot.send_message(chat_id=message.from_user.id,
-                                 text=welcomeMessage.formDetails(getName(message.from_user)),
+                                 text=welcomeMessage.formDetails(botFunctions.getName(message.from_user)),
                                  parse_mode='HTML')
             except:
                 print('formDetails sending failed')
@@ -507,27 +507,27 @@ def start(bot, message):
 
 def addSuperAdmin(bot, message):
     if not message.reply_to_message.from_user.is_bot:
-        if addToSuperAdmin(message.reply_to_message.from_user.id):
-            bot.send_message(chat_id=admin, text='Successfully added ' + getName(
+        if botFunctions.addToSuperAdmin(message.reply_to_message.from_user.id):
+            bot.send_message(chat_id=admin, text='Successfully added ' + botFunctions.getName(
                 message.reply_to_message.from_user) + ' as a Super Admin ' + emojiList.successFaceIcon)
         else:
-            bot.send_message(chat_id=admin, text='Failed to add ' + getName(
+            bot.send_message(chat_id=admin, text='Failed to add ' + botFunctions.getName(
                 message.reply_to_message.from_user) + ' as a Super Admin ' + emojiList.failFaceIcon)
 
 
 def removeSuperAdmin(bot, message):
     if not message.reply_to_message.from_user.is_bot:
-        if removeFromSuperAdmin(message.reply_to_message.from_user.id):
-            bot.send_message(chat_id=admin, text='Successfully removed ' + getName(
+        if botFunctions.removeFromSuperAdmin(message.reply_to_message.from_user.id):
+            bot.send_message(chat_id=admin, text='Successfully removed ' + botFunctions.getName(
                 message.reply_to_message.from_user) + ' from Super Admin ' + emojiList.successFaceIcon)
         else:
-            bot.send_message(chat_id=admin, text='Failed to remove ' + getName(
+            bot.send_message(chat_id=admin, text='Failed to remove ' + botFunctions.getName(
                 message.reply_to_message.from_user) + ' from Super Admin ' + emojiList.failFaceIcon)
 
 
 def botVersion(bot, message):
     try:
-        splitted_text = util.split_string(botVesion(), 3000)
+        splitted_text = util.split_string(botFunctions.botVesion(), 3000)
         for text in splitted_text:
             bot.send_message(chat_id=message.chat.id, text=text, parse_mode='HTML')
     except:
@@ -536,7 +536,7 @@ def botVersion(bot, message):
 
 def botLog(bot, message):
     try:
-        splitted_text = util.split_string(changeLOG(), 3000)
+        splitted_text = util.split_string(botFunctions.changeLOG(), 3000)
         for text in splitted_text:
             bot.send_message(chat_id=message.chat.id, text=text, parse_mode='HTML')
     except:
@@ -553,11 +553,11 @@ def adminWindowHandler(bot, types, message):
 
 
 def adminWindow(bot, types, message, status):
-    allUserCount = allusersDB().__len__()
-    allGroupCount = allgroupsDB().__len__()
-    allSuperAdminCount = getAdmin().__len__()
-    subscribeUserCount = getSubscribeUserCount()
-    allBanedGroupCount = getBanGroups().__len__()
+    allUserCount = botFunctions.allusersDB().__len__()
+    allGroupCount = botFunctions.allgroupsDB().__len__()
+    allSuperAdminCount = botFunctions.getAdmin().__len__()
+    subscribeUserCount = botFunctions.getSubscribeUserCount()
+    allBanedGroupCount = botFunctions.getBanGroups().__len__()
     firstMessage = """<b>Admin Window</b>
     
 """ + emojiList.usersIcon + """ All Users : """ + str(allUserCount) + """

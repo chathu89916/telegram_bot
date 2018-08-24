@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import configuration
-from botFunctions import *
+import botFunctions
 import re
 
 admin = configuration.admin
@@ -19,12 +19,12 @@ def privateVideo(bot, message):
 
 
 def mentionAllVideo(bot, message):
-    if checkAdmin(bot, message.chat.id, message.from_user.id):
+    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id):
         if message.chat.type != 'private':
-            mentionedUser = getName(message.from_user)
+            mentionedUser = botFunctions.getName(message.from_user)
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
-            for userid in getAllUsers(message.chat.id):
-                if memberInTheGroup(bot, message.chat.id, userid):
+            for userid in botFunctions.getAllUsers(message.chat.id):
+                if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
                     try:
                         bot.send_video(chat_id=userid, data=message.video.file_id, caption=text, parse_mode='HTML')
                     except:
@@ -36,16 +36,16 @@ def mentionOneVideo(bot, message):
         listUser = []
         repliedUser = ''
         if message.caption is not None:
-            listUser = mentionedList(message.chat.id, message.caption)
+            listUser = botFunctions.mentionedList(message.chat.id, message.caption)
         if message.reply_to_message is not None:
-            mentionedUser = getName(message.reply_to_message.from_user)
+            mentionedUser = botFunctions.getName(message.reply_to_message.from_user)
             if not message.reply_to_message.from_user.is_bot:
-                if isAvailable(message.chat.id, message.reply_to_message.from_user.id):
-                    if memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id):
+                if botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id):
+                    if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id):
                         repliedUser = message.reply_to_message.from_user.id
                         try:
                             bot.send_message(chat_id=repliedUser,
-                                             text=getName(
+                                             text=botFunctions.getName(
                                                  message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as a Video',
                                              parse_mode='HTML')
                         except:
@@ -56,20 +56,20 @@ def mentionOneVideo(bot, message):
                         if str(message.reply_to_message.from_user.id) in listUser:
                             listUser.remove(str(message.reply_to_message.from_user.id))
         else:
-            mentionedUser = getName(message.from_user)
+            mentionedUser = botFunctions.getName(message.from_user)
         if len(listUser) > 0:
             for uname in listUser:
-                if memberInTheGroup(bot, message.chat.id, uname):
+                if botFunctions.memberInTheGroup(bot, message.chat.id, uname):
                     text = None
                     if message.caption is not None:
                         text = message.caption
                         listSUB = re.split('\W+', message.caption)
                         listSUB = list(set(listSUB))
-                        for subName in getSubscribeName(uname):
+                        for subName in botFunctions.getSubscribeName(uname):
                             for sname in listSUB:
                                 if sname.lower() == subName.lower():
                                     for i in range(text.count(sname)):
-                                        updateSubscribeNameCount(sname, uname)
+                                        botFunctions.updateSubscribeNameCount(sname, uname)
                                     p = re.compile(r"\b{0}\b".format(sname))
                                     text = p.sub("<b>" + sname + "</b>", text)
                     if str(repliedUser) != uname:
