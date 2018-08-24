@@ -6,6 +6,7 @@ from telebot import types
 import configuration
 import botFunctions
 import emojiList
+import time
 
 bot = telebot.TeleBot(configuration.botToken)
 botID = configuration.botID
@@ -343,4 +344,8 @@ def  handle_query(call):
     if (call.data == "no"):
         bot.delete_message(chat_id=call.message.chat.id, message_id=call.message.message_id)
 
-bot.polling(none_stop=True, interval=0, timeout=0)
+while True:
+    try:
+        bot.polling(none_stop=True, interval=0, timeout=0)
+    except:
+        time.sleep(10)
