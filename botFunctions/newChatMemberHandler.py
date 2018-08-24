@@ -7,10 +7,11 @@ import welcomeMessage
 
 admin = configuration.admin
 
+
 def checkBotAddingStatus(bot, message):
     groupIDList = botFunctions.getBanGroups()
-    if (str(message.chat.id) in groupIDList):
-        if(message.from_user.id == configuration.admin):
+    if str(message.chat.id) in groupIDList:
+        if message.from_user.id == configuration.admin:
             botFunctions.removeFromBanGroup(message.chat.id)
             addingBot(bot, message, False)
         else:
@@ -20,14 +21,16 @@ def checkBotAddingStatus(bot, message):
             bot.send_message(chat_id=configuration.admin, text=adminMessage, parse_mode='HTML')
 
             bot.send_message(chat_id=message.chat.id,
-                             text="This group is <b>banned</b> by Bot <b>admin</b>. " + emojiList.failFaceIcon + " Please <b>contact</b> the <b>admin if you want</b> me to be added to this group. " + emojiList.successFaceIcon, parse_mode='HTML')
+                             text="This group is <b>banned</b> by Bot <b>admin</b>. " + emojiList.failFaceIcon + " Please <b>contact</b> the <b>admin if you want</b> me to be added to this group. " + emojiList.successFaceIcon,
+                             parse_mode='HTML')
             bot.leave_chat(chat_id=message.chat.id)
     else:
         addingBot(bot, message, True)
 
+
 def addingBot(bot, message, status):
-    if (botFunctions.addToGroup(message.chat.id, message.chat.title) == 'success'):
-        if (status):
+    if botFunctions.addToGroup(message.chat.id, message.chat.title) == 'success':
+        if status:
             bot.send_message(chat_id=admin,
                              text="<b>Successfully Added me for a Group</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(
                                  bot, message.chat.id) + "\n\nAdded me by " + botFunctions.getName(message.from_user),
@@ -49,15 +52,15 @@ def addingBot(bot, message, status):
     adminList = []
     failedDic = {}
     for chat in bot.get_chat_administrators(message.chat.id):
-        if (chat.user.is_bot == False):
+        if not chat.user.is_bot:
             adminList.append(chat.user.id)
-            if (botFunctions.addToAllUser(chat.user) == "success"):
+            if botFunctions.addToAllUser(chat.user) == "success":
                 failedDic[str(chat.user.id)] = botFunctions.getName(chat.user)
             botFunctions.addToUser(message.chat.id, chat.user.id)
 
-    if (failedDic != {}):
+    if failedDic != {}:
         for admn in adminList:
-            if (str(admn) not in list(failedDic.keys())):
+            if str(admn) not in list(failedDic.keys()):
                 for nm in list(failedDic.values()):
                     try:
                         bot.send_message(chat_id=admn,
@@ -66,48 +69,57 @@ def addingBot(bot, message, status):
                     except:
                         print("Failed to send message to the admin")
 
+
 def getOtherAdmins(bot, message):
-    adminMessage = "<b>BOT Added to the Group by an Unauthorized Person</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(bot, message.chat.id)
+    adminMessage = "<b>BOT Added to the Group by an Unauthorized Person</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(
+        bot, message.chat.id)
 
     bot.send_message(chat_id=message.chat.id,
-                     text= botFunctions.getName(message.from_user) + ' you have <b>no permission</b> to add me to <b>' + message.chat.title + '</b> ' + message.chat.type + " " + emojiList.failFaceIcon +'. It will be <b>reported to creator</b> of this Bot\n\nThank You ' + emojiList.successFaceIcon, parse_mode='HTML')
+                     text=botFunctions.getName(
+                         message.from_user) + ' you have <b>no permission</b> to add me to <b>' + message.chat.title + '</b> ' + message.chat.type + " " + emojiList.failFaceIcon + '. It will be <b>reported to creator</b> of this Bot\n\nThank You ' + emojiList.successFaceIcon,
+                     parse_mode='HTML')
     bot.leave_chat(chat_id=message.chat.id)
 
     adminMessage = adminMessage + "\n\nAdded me by " + botFunctions.getName(message.from_user)
     bot.send_message(chat_id=configuration.admin, text=adminMessage, parse_mode='HTML')
 
+
 def addingUser(bot, message, types):
     botFunctions.addToUser(message.chat.id, message.new_chat_member.id)
-    if(botFunctions.addToAllUser(message.new_chat_member)=='failed'):
+    if botFunctions.addToAllUser(message.new_chat_member) == 'failed':
         botFunctions.updateToAllUser(message.new_chat_member)
     else:
         try:
-            bot.send_message(chat_id=message.from_user.id, text='<b>Tell</b> ' + botFunctions.getName(message.new_chat_member) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> '+ botFunctions.getName(message.new_chat_member) + " " + emojiList.failFaceIcon,  parse_mode='HTML')
+            bot.send_message(chat_id=message.from_user.id, text='<b>Tell</b> ' + botFunctions.getName(
+                message.new_chat_member) + ' <b>to START me in privately. This is important, otherwise I cannot send message to</b> ' + botFunctions.getName(
+                message.new_chat_member) + " " + emojiList.failFaceIcon, parse_mode='HTML')
             botFunctions.exceptionHandling(message, bot, types, message.new_chat_member)
         except:
             print('Cannot send message to admin')
 
+
 def welcomeToUser(bot, message, types):
     markup = None
 
-    if(configuration.RsLKID==str(message.chat.id)):
+    if configuration.RsLKID == str(message.chat.id):
         markup = types.InlineKeyboardMarkup()
         markup.add(types.InlineKeyboardButton(text="Google+", url=configuration.googlePlusURL),
                    types.InlineKeyboardButton(text="Twitter", url=configuration.twitterURL))
         markup.add(types.InlineKeyboardButton(text="Facebook", url=configuration.facebookURL),
                    types.InlineKeyboardButton(text="Telegram Channel", url=configuration.telegramChannelURL))
-        markup.add(types.InlineKeyboardButton(text="To START @"+configuration.botUsername, url="https://telegram.me/"+configuration.botUsername+"?start=XXXX"))
+        markup.add(types.InlineKeyboardButton(text="To START @" + configuration.botUsername,
+                                              url="https://telegram.me/" + configuration.botUsername + "?start=XXXX"))
         welcomeMsg = welcomeMessage.ResistanceLKMessage(botFunctions.getName(message.new_chat_member))
     else:
         welcomeMsg = botFunctions.getWelcomeMessage(message.chat.id)
 
-        if(message.new_chat_member.username!=None):
+        if message.new_chat_member.username is not None:
             p = re.compile('(#uname)')
-            welcomeMsg = p.sub("@"+message.new_chat_member.username, welcomeMsg)
-        if (message.new_chat_member.first_name != None):
+            welcomeMsg = p.sub("@" + message.new_chat_member.username, welcomeMsg)
+        if message.new_chat_member.first_name is not None:
             p = re.compile('(#fname)')
             welcomeMsg = p.sub(message.new_chat_member.first_name, welcomeMsg)
-        if (message.new_chat_member.last_name != None):
+        if message.new_chat_member.last_name is not None:
             p = re.compile('(#lname)')
             welcomeMsg = p.sub(message.new_chat_member.last_name, welcomeMsg)
 
@@ -119,8 +131,9 @@ def welcomeToUser(bot, message, types):
     except:
         print("welcome message sending failed")
 
+
 def checkAndAdd(bot, message):
-    if (botFunctions.isUserSuperAdmin(message.from_user.id)):
+    if botFunctions.isUserSuperAdmin(message.from_user.id):
         checkBotAddingStatus(bot, message)
     else:
         getOtherAdmins(bot, message)

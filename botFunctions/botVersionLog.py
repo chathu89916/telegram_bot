@@ -11,6 +11,7 @@ def botVesion():
 
     return BOT_VERSION
 
+
 def changeLOG():
     changeLOG = """\n\n<b>Version 2.9</b>
 
