@@ -25,19 +25,19 @@ def hhhFunc(bot, message):
             try:
                 bot.send_message(chat_id=message.chat.id, text='Hi ' + botFunctions.getName(message.from_user))
             except:
-                bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
+                print('>>> exception found in hhhFunc')
             return
         if(message.text.lower() == 'hello'):
             try:
                 bot.send_message(chat_id=message.chat.id, text='hello ' + botFunctions.getName(message.from_user))
             except:
-                bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
+                print('>>> exception found in hhhFunc')
             return
         if(message.text.lower() == 'how are you' or message.text.lower() == 'how are you?'):
             try:
                 bot.send_message(chat_id=message.chat.id, text='Im fine. How about you ' + botFunctions.getName(message.from_user))
             except:
-                bot.send_message(chat_id=admin, text='>>> exception found in hhhFunc')
+                print('>>> exception found in hhhFunc')
             return
 
 def mentionAllText(bot, message):
