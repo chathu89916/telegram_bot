@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import configuration
-import botFunctions
+from botFunctions import *
 import re
 from telebot import util
 
@@ -25,32 +25,32 @@ def hhhFunc(bot, message):
     if message.forward_from is None:
         if message.text.lower() == 'hi':
             try:
-                bot.send_message(chat_id=message.chat.id, text='Hi ' + botFunctions.getName(message.from_user))
+                bot.send_message(chat_id=message.chat.id, text='Hi ' + getName(message.from_user))
             except:
                 print('>>> exception found in hhhFunc')
             return
         if message.text.lower() == 'hello':
             try:
-                bot.send_message(chat_id=message.chat.id, text='hello ' + botFunctions.getName(message.from_user))
+                bot.send_message(chat_id=message.chat.id, text='hello ' + getName(message.from_user))
             except:
                 print('>>> exception found in hhhFunc')
             return
         if message.text.lower() == 'how are you' or message.text.lower() == 'how are you?':
             try:
                 bot.send_message(chat_id=message.chat.id,
-                                 text='Im fine. How about you ' + botFunctions.getName(message.from_user))
+                                 text='Im fine. How about you ' + getName(message.from_user))
             except:
                 print('>>> exception found in hhhFunc')
             return
 
 
 def mentionAllText(bot, message):
-    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id):
+    if checkAdmin(bot, message.chat.id, message.from_user.id):
         if message.chat.type != 'private':
-            mentionedUser = botFunctions.getName(message.from_user)
+            mentionedUser = getName(message.from_user)
             text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.text
-            for userid in botFunctions.getAllUsers(message.chat.id):
-                if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
+            for userid in getAllUsers(message.chat.id):
+                if memberInTheGroup(bot, message.chat.id, userid):
                     try:
                         splitted_text = util.split_string(text, 3000)
                         for text in splitted_text:
@@ -67,24 +67,24 @@ def mentionAllText(bot, message):
 
 def mentionOneText(bot, message):
     if message.chat.type != 'private':
-        listUsers = botFunctions.mentionedList(message.chat.id, message.text)
+        listUsers = mentionedList(message.chat.id, message.text)
         if message.reply_to_message is not None:
             if not message.reply_to_message.from_user.is_bot:
-                if botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id):
+                if isAvailable(message.chat.id, message.reply_to_message.from_user.id):
                     listUsers.append(str(message.reply_to_message.from_user.id))
                     listUsers = list(set(listUsers))
         listSUB = re.split('\W+', message.text)
         listSUB = list(set(listSUB))
         if len(listUsers) > 0:
-            mentionedUser = botFunctions.getName(message.from_user)
+            mentionedUser = getName(message.from_user)
             for uname in listUsers:
-                if botFunctions.memberInTheGroup(bot, message.chat.id, uname):
+                if memberInTheGroup(bot, message.chat.id, uname):
                     content = message.text
-                    for subName in botFunctions.getSubscribeName(uname):
+                    for subName in getSubscribeName(uname):
                         for sname in listSUB:
                             if sname.lower() == subName.lower():
                                 for i in range(content.count(sname)):
-                                    botFunctions.updateSubscribeNameCount(sname, uname)
+                                    updateSubscribeNameCount(sname, uname)
                                 p = re.compile(r"\b{0}\b".format(sname))
                                 content = p.sub("<b>" + sname + "</b>", content)
                     text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + content

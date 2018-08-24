@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import configuration
-import botFunctions
+from botFunctions import *
 
 admin = configuration.admin
 
@@ -23,10 +23,10 @@ def privateContact(bot, message):
 
 
 def replyToContact(bot, message, types):
-    if botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id):
+    if isAvailable(message.chat.id, message.reply_to_message.from_user.id):
         try:
             bot.send_message(chat_id=message.reply_to_message.from_user.id,
-                             text=botFunctions.getName(
+                             text=getName(
                                  message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as a Contact',
                              parse_mode='HTML')
             if message.contact.last_name is not None:
@@ -37,4 +37,4 @@ def replyToContact(bot, message, types):
                 bot.send_contact(chat_id=message.reply_to_message.from_user.id,
                                  phone_number=message.contact.phone_number, first_name=message.contact.first_name)
         except:
-            botFunctions.exceptionHandling(message, bot, types, message.from_user)
+            exceptionHandling(message, bot, types, message.from_user)

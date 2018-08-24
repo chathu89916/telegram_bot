@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 import ast
-import botFunctions
+from botFunctions import *
 import configuration
 import emojiList
 
@@ -53,7 +53,7 @@ def checkAdmin(bot, chatID, userID):
 def isUserSuperAdmin(userID):
     if userID == configuration.admin:
         return True
-    for admin in botFunctions.getAdmin():
+    for admin in getAdmin():
         if admin == str(userID):
             return True
     return False
@@ -66,20 +66,20 @@ def mentionedList(groupID, text):
     if len(listAT) > 0:
         for uname in listAT:
             username = re.split(r'[@]', uname)[1]
-            userID = botFunctions.getMentionedUser(groupID, username.lower())
+            userID = getMentionedUser(groupID, username.lower())
             if userID != '':
                 mentionedList.append(userID)
     listSUB = re.split('\W+', text)
     listSUB = list(set(listSUB))
     if len(listSUB) > 0:
         for subname in listSUB:
-            userID = botFunctions.getSubscribeUser(subname.lower())
+            userID = getSubscribeUser(subname.lower())
             if len(userID) > 0:
                 for uID in userID:
                     mentionedList.append(uID)
     mentionedList = list(set(mentionedList))
     finalMentionedUsers = []
-    for getAllUsers in botFunctions.getAllUsers(groupID):
+    for getAllUsers in getAllUsers(groupID):
         for mentionUsers in mentionedList:
             if str(getAllUsers) == str(mentionUsers):
                 finalMentionedUsers.append(mentionUsers)
@@ -109,16 +109,16 @@ def stringToBoolean(text):
 
 
 # def updateGroupID(message):
-#     for IDTitle in botFunctions.getGroupIDTitle():
+#     for IDTitle in getGroupIDTitle():
 #         if(str(message.chat.id) == IDTitle[0]):
-#             botFunctions.updateGroupTitle(message.chat.id, message.chat.title)
+#             updateGroupTitle(message.chat.id, message.chat.title)
 #             return
 #         if(message.chat.title==IDTitle[1]):
-#             botFunctions.updateGroupID(message)
+#             updateGroupID(message)
 
 def autoAddDetails(message, bot, types):
-    botFunctions.addToUser(message.chat.id, message.from_user.id)
-    if botFunctions.addToAllUser(message.from_user) == 'success':
+    addToUser(message.chat.id, message.from_user.id)
+    if addToAllUser(message.from_user) == 'success':
         for admin in bot.get_chat_administrators(chat_id=message.chat.id):
             try:
                 bot.send_message(chat_id=admin.user.id, text='<b>Tell</b> ' + getName(
@@ -128,7 +128,7 @@ def autoAddDetails(message, bot, types):
                 print('Cannot send message to admin')
         exceptionHandling(message, bot, types, message.from_user)
         return
-    botFunctions.updateToAllUser(message.from_user)
+    updateToAllUser(message.from_user)
 
 
 def formatUserData(user):
@@ -147,9 +147,9 @@ def formatUserData(user):
 
 
 def groupAndSuperAdmin(bot, message):
-    adminID = botFunctions.getAdmin()
+    adminID = getAdmin()
     adminID.append(str(configuration.admin))
-    allUsersID = botFunctions.getAllUsers(message.chat.id)
+    allUsersID = getAllUsers(message.chat.id)
     return list(set(
         [i for i in adminID if i in allUsersID] + [str(k.user.id) for k in bot.get_chat_administrators(message.chat.id)
                                                    if not k.user.is_bot]))
@@ -177,15 +177,15 @@ def sureOrNot(bot, types, call):
     searchID = ast.literal_eval(call.data)[1]
     if call.data.startswith("['superadmin'"):
         groupOrUser = "Super Admin"
-        userGroupDetails = userDetailFormatter(botFunctions.detailsOfUser(searchID))
+        userGroupDetails = userDetailFormatter(detailsOfUser(searchID))
         callBackDetails = "['removesuperadmin'," + str(searchID) + "]"
     elif call.data.startswith("['sureRemoveBannedGroup'"):
         groupOrUser = "Banned Group"
-        userGroupDetails = botFunctions.getBannedGroupTitle(searchID)
+        userGroupDetails = getBannedGroupTitle(searchID)
         callBackDetails = "['removeBannedGroup'," + str(searchID) + "]"
     else:
         groupOrUser = "Group"
-        userGroupDetails = botFunctions.detailsOfGroup(searchID)
+        userGroupDetails = detailsOfGroup(searchID)
         callBackDetails = "['removegroup'," + str(searchID) + "]"
     message = """<b>Are you sure want to remove this """ + groupOrUser + """?</b>
 """ + userGroupDetails + """
@@ -202,16 +202,16 @@ def memberInTheGroup(bot, groupID, userID):
         return True
     except Exception as inst:
         if re.split(r"USER_ID_INVALID", str(inst)):
-            botFunctions.leftOfKikMember(groupID, userID)
+            leftOfKikMember(groupID, userID)
             return False
         else:
             return True
 
 
 def checkGroupStatus(bot, message):
-    groupIDList = botFunctions.allgroupsDB()
+    groupIDList = allgroupsDB()
     if not str(message.chat.id) in groupIDList:
-        adminMessage = "<b>Found a group which is not in the DataBase</b>" + emojiList.exclamationMarkIcon + "\n\n" + botFunctions.structureGroupDetails(
+        adminMessage = "<b>Found a group which is not in the DataBase</b>" + emojiList.exclamationMarkIcon + "\n\n" + structureGroupDetails(
             bot, message.chat.id)
 
         bot.send_message(chat_id=message.chat.id,
@@ -220,7 +220,7 @@ def checkGroupStatus(bot, message):
         bot.leave_chat(chat_id=message.chat.id)
 
         bot.send_message(chat_id=configuration.admin, text=adminMessage, parse_mode='HTML')
-        botFunctions.kikBotDB(message.chat.id)
+        kikBotDB(message.chat.id)
         return
 
 
@@ -256,14 +256,14 @@ def structureGroupDetails(bot, groupID):
 
 def getAllGroupAdmins(bot):
     adminList = []
-    for allID in botFunctions.allgroupsDB():
+    for allID in allgroupsDB():
         try:
             for admin in bot.get_chat_administrators(allID):
                 if not admin.user.is_bot:
                     adminList.append(admin.user.id)
         except:
             print("Getdmins ID failed in  : " + str(allID))
-    for allSuperAdmins in botFunctions.getAdmin():
+    for allSuperAdmins in getAdmin():
         adminList.append(allSuperAdmins)
     adminList = list(set(adminList))
     return adminList
@@ -274,20 +274,20 @@ def mentionForAllCommands(bot, message, commandName):
     if commandName == "test":
         allID.append(message.from_user.id)
     elif commandName == "all":
-        allID = botFunctions.allDB()
+        allID = allDB()
     elif commandName == "allusers":
-        allID = botFunctions.allusersDB()
+        allID = allusersDB()
     elif commandName == "allgroups":
-        allID = botFunctions.allgroupsDB()
+        allID = allgroupsDB()
     elif commandName == "allgroupsadmins":
         allID = getAllGroupAdmins(bot)
     elif commandName == "allsuperadmins":
-        allID = botFunctions.getAdmin()
+        allID = getAdmin()
 
     for oneByOneID in allID:
         try:
             bot.send_message(chat_id=oneByOneID,
-                             text="/" + commandName + " by " + botFunctions.getName(
+                             text="/" + commandName + " by " + getName(
                                  message.from_user),
                              parse_mode='HTML')
             bot.forward_message(chat_id=oneByOneID, from_chat_id=message.chat.id,
@@ -297,14 +297,14 @@ def mentionForAllCommands(bot, message, commandName):
 
 
 def deleteMessageAccordingToPermission(bot, message, permissionColumn, permissionName):
-    if not (botFunctions.getStatusOfGroupPermission(permissionColumn, message.chat.id)):
-        if botFunctions.isBotCanDeleteMessage(bot, message.chat.id):
+    if not (getStatusOfGroupPermission(permissionColumn, message.chat.id)):
+        if isBotCanDeleteMessage(bot, message.chat.id):
             try:
                 bot.delete_message(message.chat.id, message.message_id)
             except:
                 print(permissionName + ' Delete Failed')
         else:
-            adminList = botFunctions.groupAndSuperAdmin(bot, message)
+            adminList = groupAndSuperAdmin(bot, message)
             for chat in adminList:
                 try:
                     bot.send_message(chat_id=chat,

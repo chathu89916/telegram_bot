@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import sqlite3
-import botFunctions
+from botFunctions import *
 import configuration
 
 dbName = configuration.dbName
@@ -233,7 +233,7 @@ def addToUser(groupID, userID):
 
 
 def addToAllUser(user):
-    firstName, lastName, userName = botFunctions.formatUserData(user)
+    firstName, lastName, userName = formatUserData(user)
     status = ''
     try:
         conn, c = connectDB()
@@ -252,7 +252,7 @@ def addToAllUser(user):
 
 
 def updateToAllUser(user):
-    firstName, lastName, userName = botFunctions.formatUserData(user)
+    firstName, lastName, userName = formatUserData(user)
     status = ''
     try:
         conn, c = connectDB()
@@ -649,7 +649,7 @@ def getStatusOfGroupPermission(columnName, groupID):
         conn, c = connectDB()
         c.execute("SELECT " + columnName + " FROM groups WHERE groupid='" + str(groupID) + "'")
         for permission in c.fetchall():
-            permission = botFunctions.stringToBoolean(permission[0])
+            permission = stringToBoolean(permission[0])
     except Exception as e:
         permission = True
         raise e
