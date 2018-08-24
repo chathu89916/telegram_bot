@@ -172,9 +172,8 @@ def handle_text(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'textPermission', 'Text')
 
-    if message.reply_to_message is None:
-        if botFunctions.getStatusOfGroupPermission('hhhPermission', message.chat.id):
-            botFunctions.hhhFunc(bot, message)
+    if message.reply_to_message is None and botFunctions.getStatusOfGroupPermission('hhhPermission', message.chat.id):
+        botFunctions.hhhFunc(bot, message)
     if botFunctions.allCheck(message.text):
         botFunctions.mentionAllText(bot, message)
         return
@@ -192,11 +191,9 @@ def handle_photo(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'photoPermission', 'Photo')
 
-    if message.reply_to_message is None:
-        if message.caption is not None:
-            if botFunctions.allCheck(message.caption):
-                botFunctions.mentionAllPhoto(bot, message)
-                return
+    if message.reply_to_message is None and message.caption is not None and botFunctions.allCheck(message.caption):
+        botFunctions.mentionAllPhoto(bot, message)
+        return
 
     botFunctions.mentionOnePhoto(bot, message)
 
@@ -211,11 +208,9 @@ def handle_audio(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'audioPermission', 'Audio')
 
-    if message.reply_to_message is None:
-        if message.caption is not None:
-            if botFunctions.allCheck(message.caption):
-                botFunctions.mentionAllAudio(bot, message)
-                return
+    if message.reply_to_message is None and message.caption is not None and botFunctions.allCheck(message.caption):
+        botFunctions.mentionAllAudio(bot, message)
+        return
 
     botFunctions.mentionOneAudio(bot, message)
 
@@ -230,11 +225,9 @@ def handle_video(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'videoPermission', 'Video')
 
-    if message.reply_to_message is None:
-        if message.caption is not None:
-            if botFunctions.allCheck(message.caption):
-                botFunctions.mentionAllVideo(bot, message)
-                return
+    if message.reply_to_message is None and message.caption is not None and botFunctions.allCheck(message.caption):
+        botFunctions.mentionAllVideo(bot, message)
+        return
 
     botFunctions.mentionOneVideo(bot, message)
 
@@ -249,11 +242,9 @@ def handle_document(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'documentPermission', 'Document')
 
-    if message.reply_to_message is None:
-        if message.caption is not None:
-            if botFunctions.allCheck(message.caption):
-                botFunctions.mentionAllDocument(bot, message)
-                return
+    if message.reply_to_message is None and message.caption is not None and botFunctions.allCheck(message.caption):
+        botFunctions.mentionAllDocument(bot, message)
+        return
 
     botFunctions.mentionOneDocument(bot, message)
 
@@ -268,11 +259,9 @@ def handle_voice(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'voicePermission', 'Voice')
 
-    if message.reply_to_message is None:
-        if message.caption is not None:
-            if botFunctions.allCheck(message.caption):
-                botFunctions.mentionAllVoice(bot, message)
-                return
+    if message.reply_to_message is None and message.caption is not None and botFunctions.allCheck(message.caption):
+        botFunctions.mentionAllVoice(bot, message)
+        return
 
     botFunctions.mentionOneVoice(bot, message)
 
@@ -287,9 +276,8 @@ def handle_location(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'locationPermission', 'Location')
 
-    if message.reply_to_message is not None:
-        if message.reply_to_message.from_user.id != botID:
-            botFunctions.replyToLocation(bot, message, types)
+    if message.reply_to_message is not None and message.reply_to_message.from_user.id != botID:
+        botFunctions.replyToLocation(bot, message, types)
 
 
 @bot.message_handler(content_types=['contact'])
@@ -302,9 +290,8 @@ def handle_contact(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'contactPermission', 'Contact')
 
-    if message.reply_to_message is not None:
-        if (message.reply_to_message.from_user.id != botID):
-            botFunctions.replyToContact(bot, message, types)
+    if message.reply_to_message is not None and (message.reply_to_message.from_user.id != botID):
+        botFunctions.replyToContact(bot, message, types)
 
 
 @bot.message_handler(content_types=['sticker'])
@@ -317,9 +304,8 @@ def handle_stickers(message):
     botFunctions.autoAddDetails(message, bot, types)
     botFunctions.deleteMessageAccordingToPermission(bot, message, 'stickerPermission', 'Stickers')
 
-    if message.reply_to_message is not None:
-        if message.reply_to_message.from_user.id != botID:
-            botFunctions.replyToSticker(bot, message, types)
+    if message.reply_to_message is not None and message.reply_to_message.from_user.id != botID:
+        botFunctions.replyToSticker(bot, message, types)
 
 
 @bot.message_handler(content_types=["new_chat_members", "group_chat_created"])

@@ -19,18 +19,17 @@ def privatePhoto(bot, message):
 
 
 def mentionAllPhoto(bot, message):
-    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id):
-        if message.chat.type != 'private':
-            mentionedUser = botFunctions.getName(message.from_user)
-            text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention @all in a photo'
-            for userid in botFunctions.getAllUsers(message.chat.id):
-                if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
-                    try:
-                        bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
-                        bot.send_photo(chat_id=userid, photo=message.photo[-1].file_id, caption=message.caption,
-                                       parse_mode='HTML')
-                    except:
-                        print('@all mention failed')
+    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id) and message.chat.type != 'private':
+        mentionedUser = botFunctions.getName(message.from_user)
+        text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention @all in a photo'
+        for userid in botFunctions.getAllUsers(message.chat.id):
+            if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
+                try:
+                    bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
+                    bot.send_photo(chat_id=userid, photo=message.photo[-1].file_id, caption=message.caption,
+                                   parse_mode='HTML')
+                except:
+                    print('@all mention failed')
 
 
 def mentionOnePhoto(bot, message):
@@ -41,22 +40,22 @@ def mentionOnePhoto(bot, message):
             listUser = botFunctions.mentionedList(message.chat.id, message.caption)
         if message.reply_to_message is not None:
             mentionedUser = botFunctions.getName(message.reply_to_message.from_user)
-            if not message.reply_to_message.from_user.is_bot:
-                if botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id):
-                    if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id):
-                        repliedUser = message.reply_to_message.from_user.id
-                        try:
-                            bot.send_message(chat_id=repliedUser,
-                                             text=botFunctions.getName(
-                                                 message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as a Photo',
-                                             parse_mode='HTML')
-                        except:
-                            print('reply to photo failed')
-                        listUser.append(str(message.reply_to_message.from_user.id))
-                        listUser = list(set(listUser))
-                    else:
-                        if str(message.reply_to_message.from_user.id) in listUser:
-                            listUser.remove(str(message.reply_to_message.from_user.id))
+            if not message.reply_to_message.from_user.is_bot and botFunctions.isAvailable(message.chat.id,
+                                                                                          message.reply_to_message.from_user.id):
+                if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id):
+                    repliedUser = message.reply_to_message.from_user.id
+                    try:
+                        bot.send_message(chat_id=repliedUser,
+                                         text=botFunctions.getName(
+                                             message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as a Photo',
+                                         parse_mode='HTML')
+                    except:
+                        print('reply to photo failed')
+                    listUser.append(str(message.reply_to_message.from_user.id))
+                    listUser = list(set(listUser))
+                else:
+                    if str(message.reply_to_message.from_user.id) in listUser:
+                        listUser.remove(str(message.reply_to_message.from_user.id))
         else:
             mentionedUser = botFunctions.getName(message.from_user)
         if len(listUser) > 0:

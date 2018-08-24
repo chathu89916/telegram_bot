@@ -19,16 +19,15 @@ def privateVoice(bot, message):
 
 
 def mentionAllVoice(bot, message):
-    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id):
-        if message.chat.type != 'private':
-            mentionedUser = botFunctions.getName(message.from_user)
-            text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
-            for userid in botFunctions.getAllUsers(message.chat.id):
-                if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
-                    try:
-                        bot.send_voice(chat_id=userid, data=message.voice.file_id, caption=text, parse_mode='HTML')
-                    except:
-                        print('@all mention failed')
+    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id) and message.chat.type != 'private':
+        mentionedUser = botFunctions.getName(message.from_user)
+        text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
+        for userid in botFunctions.getAllUsers(message.chat.id):
+            if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
+                try:
+                    bot.send_voice(chat_id=userid, data=message.voice.file_id, caption=text, parse_mode='HTML')
+                except:
+                    print('@all mention failed')
 
 
 def mentionOneVoice(bot, message):

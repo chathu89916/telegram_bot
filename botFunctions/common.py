@@ -95,9 +95,8 @@ def isBotAdmin(bot, groupID):
 
 def isBotCanDeleteMessage(bot, groupID):
     for getID in bot.get_chat_administrators(groupID):
-        if getID.user.id == configuration.botID:
-            if getID.can_delete_messages:
-                return True
+        if getID.user.id == configuration.botID and getID.can_delete_messages:
+            return True
     return False
 
 

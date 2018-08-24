@@ -45,34 +45,33 @@ def hhhFunc(bot, message):
 
 
 def mentionAllText(bot, message):
-    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id):
-        if message.chat.type != 'private':
-            mentionedUser = botFunctions.getName(message.from_user)
-            text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.text
-            for userid in botFunctions.getAllUsers(message.chat.id):
-                if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
+    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id) and message.chat.type != 'private':
+        mentionedUser = botFunctions.getName(message.from_user)
+        text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.text
+        for userid in botFunctions.getAllUsers(message.chat.id):
+            if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
+                try:
+                    splitted_text = util.split_string(text, 3000)
+                    for text in splitted_text:
+                        bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
+                except:
+                    print('@all mention failed')
+                if message.reply_to_message is not None:
                     try:
-                        splitted_text = util.split_string(text, 3000)
-                        for text in splitted_text:
-                            bot.send_message(chat_id=userid, text=text, parse_mode='HTML')
+                        bot.forward_message(chat_id=userid, from_chat_id=message.chat.id,
+                                            message_id=message.reply_to_message.message_id)
                     except:
-                        print('@all mention failed')
-                    if message.reply_to_message is not None:
-                        try:
-                            bot.forward_message(chat_id=userid, from_chat_id=message.chat.id,
-                                                message_id=message.reply_to_message.message_id)
-                        except:
-                            print('@all forward failed')
+                        print('@all forward failed')
 
 
 def mentionOneText(bot, message):
     if message.chat.type != 'private':
         listUsers = botFunctions.mentionedList(message.chat.id, message.text)
-        if message.reply_to_message is not None:
-            if not message.reply_to_message.from_user.is_bot:
-                if botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id):
-                    listUsers.append(str(message.reply_to_message.from_user.id))
-                    listUsers = list(set(listUsers))
+        if message.reply_to_message is not None and not message.reply_to_message.from_user.is_bot and botFunctions.isAvailable(
+                message.chat.id,
+                message.reply_to_message.from_user.id):
+            listUsers.append(str(message.reply_to_message.from_user.id))
+            listUsers = list(set(listUsers))
         listSUB = re.split('\W+', message.text)
         listSUB = list(set(listSUB))
         if len(listUsers) > 0:
@@ -94,10 +93,9 @@ def mentionOneText(bot, message):
                             bot.send_message(chat_id=uname, text=text, parse_mode='HTML')
                     except:
                         print('single mention/subscribe failed')
-                    if message.reply_to_message is not None:
-                        if str(message.reply_to_message.from_user.id) != uname:
-                            try:
-                                bot.forward_message(chat_id=uname, from_chat_id=message.chat.id,
-                                                    message_id=message.reply_to_message.message_id)
-                            except:
-                                print('single mention/subscribe forward failed')
+                    if message.reply_to_message is not None and str(message.reply_to_message.from_user.id) != uname:
+                        try:
+                            bot.forward_message(chat_id=uname, from_chat_id=message.chat.id,
+                                                message_id=message.reply_to_message.message_id)
+                        except:
+                            print('single mention/subscribe forward failed')

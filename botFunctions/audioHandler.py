@@ -19,16 +19,15 @@ def privateAudio(bot, message):
 
 
 def mentionAllAudio(bot, message):
-    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id):
-        if message.chat.type != 'private':
-            mentionedUser = botFunctions.getName(message.from_user)
-            text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
-            for userid in botFunctions.getAllUsers(message.chat.id):
-                if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
-                    try:
-                        bot.send_audio(chat_id=userid, data=message.audio.file_id, caption=text, parse_mode='HTML')
-                    except:
-                        print('@all mention failed')
+    if botFunctions.checkAdmin(bot, message.chat.id, message.from_user.id) and message.chat.type != 'private':
+        mentionedUser = botFunctions.getName(message.from_user)
+        text = mentionedUser + ' @ <b>' + message.chat.title + '</b> : ' + message.caption
+        for userid in botFunctions.getAllUsers(message.chat.id):
+            if botFunctions.memberInTheGroup(bot, message.chat.id, userid):
+                try:
+                    bot.send_audio(chat_id=userid, data=message.audio.file_id, caption=text, parse_mode='HTML')
+                except:
+                    print('@all mention failed')
 
 
 def mentionOneAudio(bot, message):
@@ -39,22 +38,22 @@ def mentionOneAudio(bot, message):
             listUser = botFunctions.mentionedList(message.chat.id, message.caption)
         if message.reply_to_message is not None:
             mentionedUser = botFunctions.getName(message.reply_to_message.from_user)
-            if not message.reply_to_message.from_user.is_bot:
-                if botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id):
-                    if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id):
-                        repliedUser = message.reply_to_message.from_user.id
-                        try:
-                            bot.send_message(chat_id=repliedUser,
-                                             text=botFunctions.getName(
-                                                 message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as an Audio',
-                                             parse_mode='HTML')
-                        except:
-                            print('reply to audio failed')
-                        listUser.append(str(message.reply_to_message.from_user.id))
-                        listUser = list(set(listUser))
-                    else:
-                        if str(message.reply_to_message.from_user.id) in listUser:
-                            listUser.remove(str(message.reply_to_message.from_user.id))
+            if not message.reply_to_message.from_user.is_bot and botFunctions.isAvailable(message.chat.id,
+                                                                                          message.reply_to_message.from_user.id):
+                if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id):
+                    repliedUser = message.reply_to_message.from_user.id
+                    try:
+                        bot.send_message(chat_id=repliedUser,
+                                         text=botFunctions.getName(
+                                             message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as an Audio',
+                                         parse_mode='HTML')
+                    except:
+                        print('reply to audio failed')
+                    listUser.append(str(message.reply_to_message.from_user.id))
+                    listUser = list(set(listUser))
+                else:
+                    if str(message.reply_to_message.from_user.id) in listUser:
+                        listUser.remove(str(message.reply_to_message.from_user.id))
         else:
             mentionedUser = botFunctions.getName(message.from_user)
         if len(listUser) > 0:
