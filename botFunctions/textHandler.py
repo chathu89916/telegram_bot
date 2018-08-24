@@ -77,7 +77,7 @@ def mentionOneText(bot, message):
         if len(listUsers) > 0:
             mentionedUser = botFunctions.getName(message.from_user)
             for uname in listUsers:
-                if botFunctions.memberInTheGroup(bot, message.chat.id, uname):
+                if botFunctions.memberInTheGroup(bot, message.chat.id, uname) and str(message.from_user.id) != uname:
                     content = message.text
                     for subName in botFunctions.getSubscribeName(uname):
                         for sname in listSUB:

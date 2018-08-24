@@ -40,10 +40,9 @@ def mentionOneVoice(bot, message):
             mentionedUser = botFunctions.getName(message.reply_to_message.from_user)
             if not message.reply_to_message.from_user.is_bot:
                 if botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id):
-                    if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id):
-                        repliedUser = message.reply_to_message.from_user.id
+                    if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id) and str(message.from_user.id) != str(message.reply_to_message.from_user.id):
                         try:
-                            bot.send_message(chat_id=repliedUser,
+                            bot.send_message(chat_id=message.reply_to_message.from_user.id,
                                              text=botFunctions.getName(
                                                  message.from_user) + ' @ <b>' + message.chat.title + '</b> : reply as a Voice',
                                              parse_mode='HTML')
@@ -58,7 +57,7 @@ def mentionOneVoice(bot, message):
             mentionedUser = botFunctions.getName(message.from_user)
         if len(listUser) > 0:
             for uname in listUser:
-                if botFunctions.memberInTheGroup(bot, message.chat.id, uname):
+                if botFunctions.memberInTheGroup(bot, message.chat.id, uname) and str(message.from_user.id) != uname:
                     text = None
                     if message.caption is not None:
                         text = message.caption
