@@ -48,6 +48,7 @@ def addingBot(bot, message, status):
                          text='Failed to Add bot for ' + message.chat.title + ' ' + message.chat.type + '. Try to added me by ' + botFunctions.getName(
                              message.from_user) + " " + emojiList.failFaceIcon)
         bot.leave_chat(chat_id=message.chat.id)
+        botFunctions.kikBotDB(message.chat.id)
 
     adminList = []
     failedDic = {}
