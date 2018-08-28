@@ -93,23 +93,23 @@ def getSubscribeName(userID):
         return subscribersArray
 
 
-def isAvailable(groupID, useID):
-    userID = ''
-    try:
-        conn, c = connectDB()
-        c.execute("SELECT userid FROM users WHERE groupid='" + str(groupID) + "' AND userid='" + str(useID) + "'")
-        for uID in c.fetchall():
-            userID = uID[0]
-    except Exception as e:
-        userID = ''
-        raise e
-    finally:
-        c.close()
-        conn.close()
-        if userID == '':
-            return False
-        else:
-            return True
+# def isAvailable(groupID, useID):
+#     userID = ''
+#     try:
+#         conn, c = connectDB()
+#         c.execute("SELECT userid FROM users WHERE groupid='" + str(groupID) + "' AND userid='" + str(useID) + "'")
+#         for uID in c.fetchall():
+#             userID = uID[0]
+#     except Exception as e:
+#         userID = ''
+#         raise e
+#     finally:
+#         c.close()
+#         conn.close()
+#         if userID == '':
+#             return False
+#         else:
+#             return True
 
 
 def subscribeDB(userID, subname):

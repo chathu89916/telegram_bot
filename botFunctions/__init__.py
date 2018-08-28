@@ -20,7 +20,7 @@ from .dbFunction import updateWelcomeMessage
 from .dbFunction import allDB
 from .dbFunction import allusersDB
 from .dbFunction import allgroupsDB
-from .dbFunction import isAvailable
+# from .dbFunction import isAvailable
 from .dbFunction import getSubscribeName
 from .dbFunction import leftOfKikMember
 from .dbFunction import addToGroup
