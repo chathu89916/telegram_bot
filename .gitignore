@@ -5,11 +5,14 @@
 __pycache__
 *.pyc
 
-#Configuration File
+# Configuration File
 configuration.py
 
-#Welcome Messages File
+# Welcome Messages File
 welcomeMessage.py
 
-#DataBase File
+# DataBase File
 *.db
+
+# Credentials File
+*.json
