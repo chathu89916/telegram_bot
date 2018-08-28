@@ -40,7 +40,7 @@ def mentionOnePhoto(bot, message):
             listUser = botFunctions.mentionedList(message.chat.id, message.caption)
         if message.reply_to_message is not None:
             mentionedUser = botFunctions.getName(message.reply_to_message.from_user)
-            if not message.reply_to_message.from_user.is_bot and botFunctions.isAvailable(message.chat.id,
+            if not message.reply_to_message.from_user.is_bot and botFunctions.memberInTheGroup(bot, message.chat.id,
                                                                                           message.reply_to_message.from_user.id):
                 if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id) and str(message.from_user.id) != str(message.reply_to_message.from_user.id):
                     try:

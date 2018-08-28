@@ -67,7 +67,7 @@ def mentionAllText(bot, message):
 def mentionOneText(bot, message):
     if message.chat.type != 'private':
         listUsers = botFunctions.mentionedList(message.chat.id, message.text)
-        if message.reply_to_message is not None and not message.reply_to_message.from_user.is_bot and botFunctions.isAvailable(
+        if message.reply_to_message is not None and not message.reply_to_message.from_user.is_bot and botFunctions.memberInTheGroup(bot,
                 message.chat.id,
                 message.reply_to_message.from_user.id):
             listUsers.append(str(message.reply_to_message.from_user.id))

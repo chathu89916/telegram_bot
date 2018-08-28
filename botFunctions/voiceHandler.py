@@ -39,7 +39,7 @@ def mentionOneVoice(bot, message):
         if message.reply_to_message is not None:
             mentionedUser = botFunctions.getName(message.reply_to_message.from_user)
             if not message.reply_to_message.from_user.is_bot:
-                if botFunctions.isAvailable(message.chat.id, message.reply_to_message.from_user.id):
+                if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id):
                     if botFunctions.memberInTheGroup(bot, message.chat.id, message.reply_to_message.from_user.id) and str(message.from_user.id) != str(message.reply_to_message.from_user.id):
                         try:
                             bot.send_message(chat_id=message.reply_to_message.from_user.id,
