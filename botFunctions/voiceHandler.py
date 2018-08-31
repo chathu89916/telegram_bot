@@ -70,13 +70,13 @@ def mentionOneVoice(bot, message):
                                         botFunctions.updateSubscribeNameCount(sname, uname)
                                     p = re.compile(r"\b{0}\b".format(sname))
                                     text = p.sub("<b>" + sname + "</b>", text)
-                    if str(repliedUser) != uname:
-                        try:
-                            bot.send_message(chat_id=uname,
-                                             text=mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention you in a voice',
-                                             parse_mode='HTML')
-                        except:
-                            print("single mention/subscribe failed in voice")
+                        if str(repliedUser) != uname:
+                            try:
+                                bot.send_message(chat_id=uname,
+                                                 text=mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention you in a voice',
+                                                 parse_mode='HTML')
+                            except:
+                                print("single mention/subscribe failed in voice")
                     try:
                         bot.send_voice(chat_id=uname, data=message.voice.file_id, caption=text, parse_mode='HTML')
                     except:

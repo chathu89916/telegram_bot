@@ -70,13 +70,13 @@ def mentionOneAudio(bot, message):
                                         botFunctions.updateSubscribeNameCount(sname, uname)
                                     p = re.compile(r"\b{0}\b".format(sname))
                                     text = p.sub("<b>" + sname + "</b>", text)
-                    if str(repliedUser) != uname:
-                        try:
-                            bot.send_message(chat_id=uname,
-                                             text=mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention you in aa audio',
-                                             parse_mode='HTML')
-                        except:
-                            print("single mention/subscribe failed in audio")
+                        if str(repliedUser) != uname:
+                            try:
+                                bot.send_message(chat_id=uname,
+                                                 text=mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention you in aa audio',
+                                                 parse_mode='HTML')
+                            except:
+                                print("single mention/subscribe failed in audio")
                     try:
                         bot.send_audio(chat_id=uname, data=message.audio.file_id, caption=text, parse_mode='HTML')
                     except:

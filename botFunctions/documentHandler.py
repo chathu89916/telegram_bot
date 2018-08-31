@@ -71,13 +71,13 @@ def mentionOneDocument(bot, message):
                                         botFunctions.updateSubscribeNameCount(sname, uname)
                                     p = re.compile(r"\b{0}\b".format(sname))
                                     text = p.sub("<b>" + sname + "</b>", text)
-                    if str(repliedUser) != uname:
-                        try:
-                            bot.send_message(chat_id=uname,
-                                             text=mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention you in a document',
-                                             parse_mode='HTML')
-                        except:
-                            print("single mention/subscribe failed in document")
+                        if str(repliedUser) != uname:
+                            try:
+                                bot.send_message(chat_id=uname,
+                                                 text=mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention you in a document',
+                                                 parse_mode='HTML')
+                            except:
+                                print("single mention/subscribe failed in document")
                     try:
                         bot.send_document(chat_id=uname, data=message.document.file_id, caption=text, parse_mode='HTML')
                     except:

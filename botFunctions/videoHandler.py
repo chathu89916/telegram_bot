@@ -70,13 +70,13 @@ def mentionOneVideo(bot, message):
                                         botFunctions.updateSubscribeNameCount(sname, uname)
                                     p = re.compile(r"\b{0}\b".format(sname))
                                     text = p.sub("<b>" + sname + "</b>", text)
-                    if str(repliedUser) != uname:
-                        try:
-                            bot.send_message(chat_id=uname,
-                                             text=mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention you in a video',
-                                             parse_mode='HTML')
-                        except:
-                            print("single mention/subscribe failed in video")
+                        if str(repliedUser) != uname:
+                            try:
+                                bot.send_message(chat_id=uname,
+                                                 text=mentionedUser + ' @ <b>' + message.chat.title + '</b> : mention you in a video',
+                                                 parse_mode='HTML')
+                            except:
+                                print("single mention/subscribe failed in video")
                     try:
                         bot.send_video(chat_id=uname, data=message.video.file_id, caption=text, parse_mode='HTML')
                     except:
