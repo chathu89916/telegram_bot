@@ -13,6 +13,7 @@ welcomeMessage.py
 
 # DataBase File
 *.db
+*.db-journal
 
 # Credentials File
 *.json
