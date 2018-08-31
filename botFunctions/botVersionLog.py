@@ -1,19 +1,17 @@
 def botVesion():
-    BOT_VERSION = """\n\n<b>What's New in Version 2.9</b>
+    BOT_VERSION = """\n\n<b>What's New in Version 2.10</b>
 
-* Introducing new feature call /subscribewindow to manage your all subscribes names instead of /subscribelist.
-
-* Click the cross icon to remove the subscribe name easily.
-
-* When someone calls you by your subscribe name it will be counted and you will see it from the /subscribewindow .
-
-* It Can be subscribed more than one word at a time by separating space or comma(/subscribe name1 name2 | /subscribe name1 , name2)."""
+* Bug fixed when mention or reply in media files."""
 
     return BOT_VERSION
 
 
 def changeLOG():
-    changeLOG = """\n\n<b>Version 2.9</b>
+    changeLOG = """\n\n<b>Version 2.10</b>
+
+* Bug fixed when mention or reply in media files.
+ 
+<b>Version 2.9</b>
 
 * Introducing new feature call /subscribewindow to manage your all subscribes names instead of /subscribelist.
 
