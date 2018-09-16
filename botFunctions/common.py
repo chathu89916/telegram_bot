@@ -196,9 +196,13 @@ def sureOrNot(bot, types, call):
 
 
 def memberInTheGroup(bot, groupID, userID):
+    userID = int(userID)
     try:
-        bot.get_chat_member(chat_id=groupID, user_id=userID)
-        return True
+        if(bot.get_chat_member(chat_id=groupID, user_id=userID).status == 'left'):
+            botFunctions.leftOfKikMember(groupID, userID)
+            return False
+        else:
+            return True
     except Exception as inst:
         if re.split(r"USER_ID_INVALID", str(inst)):
             botFunctions.leftOfKikMember(groupID, userID)
