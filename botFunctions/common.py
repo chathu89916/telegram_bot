@@ -42,9 +42,9 @@ def allCheck(text):
 
 
 def checkAdmin(bot, chatID, userID):
-    for chat in bot.get_chat_administrators(chatID):
-        if chat.user.id == userID and not chat.user.is_bot:
-            return True
+    result = bot.get_chat_member(chat_id=str(chatID), user_id=int(userID))
+    if (result.status == 'administrator' or result.status == 'creator') and result.user.is_bot is False:
+        return True
     if isUserSuperAdmin(userID):
         return True
     return False
@@ -198,7 +198,8 @@ def sureOrNot(bot, types, call):
 def memberInTheGroup(bot, groupID, userID):
     userID = int(userID)
     try:
-        if(bot.get_chat_member(chat_id=groupID, user_id=userID).status == 'left'):
+        result = bot.get_chat_member(chat_id=groupID, user_id=userID)
+        if (result.status == 'left' or result.status == 'kicked') and result.user.is_bot is False:
             botFunctions.leftOfKikMember(groupID, userID)
             return False
         else:
